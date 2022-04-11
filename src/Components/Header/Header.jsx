@@ -22,7 +22,7 @@ export class Header extends PureComponent {
                             <img src={'assets/arrow_down.svg'} alt={'select currency'} className={styles.action_list_item__arrow}/>
                         </li>
                         <li className={styles.action_list_item}>
-                            <img src={'assets/empty_cart.svg'} alt={'cart'} className={styles.action_list_item_cart}/>
+                            <img src={'assets/empty_cart_black.svg'} alt={'cart'} className={styles.action_list_item_cart}/>
                         </li>
                     </ul>
                 </nav>
