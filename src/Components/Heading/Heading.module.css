@@ -1,0 +1,7 @@
+.category_name {
+    margin: 0;
+    padding: 1em 3em;
+    font-size: 2.625rem; /* 42px */
+    font-weight: var(--font-weight-regular);
+    line-height: 160%;
+}
