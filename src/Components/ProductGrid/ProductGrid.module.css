@@ -1,0 +1,8 @@
+/* TODO: fix the styling for the grid */
+.product_grid {
+    display: grid;
+    grid-template-columns: fit-content(33%) fit-content(33%) fit-content(33%);
+    /*justify-items: center;*/
+    column-gap: 40px;
+    width: 100%;
+}
