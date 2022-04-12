@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import styles from './Header.module.css';
+import CartOverlay from "../CartOverlay/CartOverlay";
 
 export class Header extends PureComponent {
     render () {
@@ -23,6 +24,7 @@ export class Header extends PureComponent {
                         </li>
                         <li className={styles.action_list_item}>
                             <img src={'assets/empty_cart_black.svg'} alt={'cart'} className={styles.action_list_item_cart}/>
+                            <CartOverlay/>
                         </li>
                     </ul>
                 </nav>

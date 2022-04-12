@@ -1,4 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600&display=swap');
+/* Raleway */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap');
+
+/* Roboto */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 
 *,
 *:before,
@@ -12,11 +16,13 @@
   --c-primary: rgba(94, 206, 123, 1);
   --c-text: rgba(29, 31, 34, 1);
   --c-black: rgba(29, 31, 34, 1);
+  --c_white: rgba(255, 255, 255, 1);
 
   --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 }
 
 html, body {

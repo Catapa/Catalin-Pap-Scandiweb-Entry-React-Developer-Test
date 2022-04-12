@@ -8,6 +8,8 @@
     font-size: 1rem; /* 16px */
     line-height: 120%;
     font-weight: var(--font-weight-regular);
+    position: sticky;
+    z-index: 5;
 }
 .navigation {
     text-decoration: none;
