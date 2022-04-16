@@ -4,6 +4,10 @@
 /* Roboto */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 
+/* Source Sans Pro */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+
+
 *,
 *:before,
 *:after {
@@ -12,12 +16,26 @@
   padding: 0;
 }
 
+/* Hide scrollbars */
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+* {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Global Variables */
 :root {
+  /* Colors */
   --c-primary: rgba(94, 206, 123, 1);
   --c-text: rgba(29, 31, 34, 1);
   --c-black: rgba(29, 31, 34, 1);
   --c_white: rgba(255, 255, 255, 1);
+  --c_gray: rgba(166, 166, 166, 1);
+  --c_gray_transparent: rgba(166, 166, 166, 0.2);
 
+  /* Font weights */
   --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-medium: 500;

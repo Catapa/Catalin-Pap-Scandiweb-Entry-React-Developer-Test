@@ -11,12 +11,14 @@
     display: flex;
     flex-direction: column;
     text-transform: none;
+
+    cursor: default !important;
 }
 
 .heading {
     display: flex;
     justify-content: flex-start;
-    margin: 0.5em 1em; /* 8px 16px */
+    margin: 0.5em 1em 0.75em; /* 8px 16px 12px*/
 }
 .heading__title {
     font-size: 1rem; /* 16px */
@@ -54,6 +56,8 @@
     background-color: var(--c_white);
     border: 1px solid var(--c-black);
     padding: 1em 2em; /* 16px 32px */
+
+    cursor: pointer;
 }
 .contrast {
     background-color: var(--c-primary);
@@ -63,6 +67,9 @@
 
 .items {
     flex: 1;
+    margin: 0.5em 1em; /* 8px 16px */
+    overflow-y: scroll;
+
 }
 
 .total {
