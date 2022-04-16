@@ -24,7 +24,7 @@ export class Header extends PureComponent {
                         </li>
                         <li className={styles.action_list_item}>
                             <img src={'assets/empty_cart_black.svg'} alt={'cart'} className={styles.action_list_item_cart}/>
-                            <CartOverlay/>
+                            {/*<CartOverlay/>*/}
                         </li>
                     </ul>
                 </nav>

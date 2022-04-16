@@ -3,11 +3,15 @@ import './App.css';
 import styles from './styles.module.css';
 
 import ProductListingPage from "./Pages/ProductListingPage/ProductListingPage";
+import Header from "./Components/Header/Header";
+import ProductDescriptionPage from "./Pages/ProductDescriptionPage/ProductDescriptionPage";
 
 function App() {
   return (
       <>
-        <ProductListingPage/>
+          <Header/>
+          {/*<ProductListingPage/>*/}
+          <ProductDescriptionPage/>
       </>
 
   );

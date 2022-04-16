@@ -27,7 +27,7 @@
 }
 .button {
     border: 1px solid var(--c-black);
-    font-family: 'Source Sans Pro';
+    font-family: 'Source Sans Pro', sans-serif;
     font-weight: var(--font-weight-regular);
     font-size: 0.875rem; /* 14px */
     text-align: center;
