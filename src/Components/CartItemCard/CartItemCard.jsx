@@ -1,6 +1,8 @@
 import React, {PureComponent} from 'react';
 import styles from './CartItemCard.module.css';
 
+
+// TODO: Create a 'minimize' prop so that you can choose whether to show a big or minimized version of the card (e.g. CartOverlay vs. CartPage)
 export class CartItemCard extends PureComponent {
     render () {
         return (

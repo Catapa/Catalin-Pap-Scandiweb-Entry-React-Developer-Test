@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import styles from './CartOverlay.module.css';
 import Backdrop from "../Backdrop/Backdrop";
-import CartItemCard from "./CartItemCard/CartItemCard";
+import CartItemCard from "../CartItemCard/CartItemCard";
 
 export class CartOverlay extends PureComponent {
     render () {
