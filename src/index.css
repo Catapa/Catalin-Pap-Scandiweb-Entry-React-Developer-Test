@@ -28,6 +28,7 @@
   scrollbar-width: none; /* Firefox */
 }
 
+/* TODO: rename c_white, c_gray, c_gray_transparent to c-white, c-gray, c-gray-transparent project-wide */
 /* Global Variables */
 :root {
   /* Colors */
