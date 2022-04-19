@@ -15,7 +15,7 @@ import ProductListingPage from "./Pages/ProductListingPage/ProductListingPage";
 import ProductDescriptionPage from "./Pages/ProductDescriptionPage/ProductDescriptionPage";
 import CartPage from "./Pages/CartPage/CartPage";
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
     uri: 'http://localhost:4000/', // endpoint running on port 4000
     cache: new InMemoryCache()
 });
