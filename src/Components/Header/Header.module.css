@@ -41,8 +41,13 @@
     cursor: pointer;
 }
 .action_list_item__currency {
-    width: 32px;
+    /*width: 42px;*/
+    width: 40%;
     height: 29px;
+    border: none;
+
+    font-size: 1.125rem;
+    font-weight: var(--font-weight-medium);
 }
 .action_list_item__arrow {
     margin-left: -0.5em;

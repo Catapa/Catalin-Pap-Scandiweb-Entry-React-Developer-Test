@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import styles from './Header.module.css';
 
 // queries
-import {CATEGORY_NAMES, PRODUCTS_BY_CATEGORY} from '../../Queries/queries';
+import {CATEGORY_NAMES, CURRENCIES, PRODUCTS_BY_CATEGORY} from '../../Queries/queries';
 
 // components
 import CartOverlay from "../CartOverlay/CartOverlay";
@@ -13,13 +13,25 @@ export class Header extends PureComponent {
         super(props);
         this.state = {
             categories: [],
+            all_currencies: [],
+            selected_currency: {
+                label: '',
+                symbol: ''
+            }
         };
     }
 
+
     componentDidMount() {
+        this.queryCategories();
+        this.queryCurrencies();
+
+        console.log(this.state);
+    }
+
+    queryCategories() {
         client.query({query: CATEGORY_NAMES})
             .then(result => {
-                // console.log(result.data.categories.map(category => category.name))
                 this.setState({
                     categories: result.data.categories.map(category => category.name)
                 })
@@ -40,6 +52,19 @@ export class Header extends PureComponent {
                 console.log(error);
             });
 
+    }
+
+    queryCurrencies() {
+        client.query({query: CURRENCIES})
+            .then(result => {
+                // console.log(result.data.currencies);
+                this.setState({
+                    all_currencies: result.data.currencies
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
 
@@ -64,17 +89,26 @@ export class Header extends PureComponent {
                 <nav className={styles.navigation}>
                     <ul className={styles.action_list}>
                         <li className={styles.action_list_item}>
-                            <img src={'assets/dollar_sign.svg'} alt={'currency is dollar'} className={styles.action_list_item__currency}/>
-                            <img src={'assets/arrow_down.svg'} alt={'select currency'} className={styles.action_list_item__arrow}/>
+                            {/*TODO: make the currency dropdown a standalone component*/}
+                            <select name={'currencies'} className={styles.action_list_item__currency}>
+                                {this.state.all_currencies.map(currency => {
+                                    return (
+                                        <option key={currency.label}
+                                                value={currency.label}>{currency.symbol} {currency.label}</option>
+                                    );
+                                })}
+                            </select>
                         </li>
+
                         <li className={styles.action_list_item}>
-                            <img src={'assets/empty_cart_black.svg'} alt={'cart'} className={styles.action_list_item_cart}/>
+                            <img src={'assets/empty_cart_black.svg'} alt={'cart'}
+                                 className={styles.action_list_item_cart}/>
                             {/*<CartOverlay/>*/}
                         </li>
                     </ul>
                 </nav>
             </header>
-        )
+        );
     }
 }
 

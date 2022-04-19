@@ -20,4 +20,13 @@ const PRODUCTS_BY_CATEGORY = gql`
     }
 `;
 
-export {CATEGORY_NAMES, PRODUCTS_BY_CATEGORY};
+const CURRENCIES = gql`
+    {
+        currencies {
+            label
+            symbol
+        }
+    }
+`;
+
+export {CATEGORY_NAMES, PRODUCTS_BY_CATEGORY, CURRENCIES};
