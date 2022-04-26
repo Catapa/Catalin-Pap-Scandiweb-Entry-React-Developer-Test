@@ -12,6 +12,7 @@ export class ProductCard extends PureComponent {
     }
 
     render () {
+        const {brand, name} = this.props.details;
         return (
             <Link to={'/product'}>
                 <div className={styles.product_card}>
@@ -19,7 +20,7 @@ export class ProductCard extends PureComponent {
                     <button className={styles.product_buy_button}>
                         <img src={'assets/empty_cart_white.svg'} alt={'Add to cart'}/>
                     </button>
-                    <span className={styles.product_name}>Apollo Running Short</span>
+                    <span className={styles.product_name}>{brand} {name}</span>
                     <span className={styles.product_price}>$50.00</span>
                 </div>
             </Link>

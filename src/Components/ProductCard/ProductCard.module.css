@@ -28,7 +28,7 @@ a {
     width: 100%;
     flex: 1;
 }
-.product_name {
+.product_name, .product_brand {
     font-weight: var(--font-weight-light);
     font-size: 1.125rem; /* 18px */
     line-height: 160%;

@@ -9,13 +9,17 @@ import Header from "./Components/Header/Header";
 import ProductDescriptionPage from "./Pages/ProductDescriptionPage/ProductDescriptionPage";
 import CartPage from "./Pages/CartPage/CartPage";
 
+import { DataProvider } from './Context/DataContext';
+
 
 function App() {
+    const data = {currency: {label: "pumni in gura", symbol: "@"}};
+    const setData = () => {};
   return (
-      <>
+      <DataProvider>
           <Header/>
           <Outlet/>
-      </>
+      </DataProvider>
 
   );
 }

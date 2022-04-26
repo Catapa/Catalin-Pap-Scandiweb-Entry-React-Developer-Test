@@ -15,6 +15,27 @@ const PRODUCTS_BY_CATEGORY = gql`
             products {
                 id
                 name
+                inStock
+                gallery
+                description
+                category
+                attributes {
+                    name
+                    type
+                    items {
+                        displayValue
+                        value
+                        id
+                    }
+                }
+                prices {
+                    currency {
+                        label
+                        symbol
+                    }
+                    amount
+                }
+                brand
             }
         }
     }

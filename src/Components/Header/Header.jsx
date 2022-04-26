@@ -4,29 +4,26 @@ import styles from './Header.module.css';
 // queries
 import {CATEGORY_NAMES, CURRENCIES, PRODUCTS_BY_CATEGORY} from '../../Queries/queries';
 
+// context
+import DataContext from '../../Context/DataContext';
+
 // components
 import CartOverlay from "../CartOverlay/CartOverlay";
 import {client} from "../../index";
 
 export class Header extends PureComponent {
+    static contextType = DataContext;
     constructor(props) {
         super(props);
         this.state = {
             categories: [],
             all_currencies: [],
-            selected_currency: {
-                label: '',
-                symbol: ''
-            }
         };
     }
-
 
     componentDidMount() {
         this.queryCategories();
         this.queryCurrencies();
-
-        console.log(this.state);
     }
 
     queryCategories() {
@@ -42,16 +39,16 @@ export class Header extends PureComponent {
     }
 
     queryProducts(category) {
-        console.log('clicked', category);
+        // console.log('clicked', category);
         client.query({query: PRODUCTS_BY_CATEGORY, variables: {title: category}})
             .then(result => {
                 const {name, products} = result.data.category;
-                console.log(products);
+                // console.log('asd', products);
+                this.context.setData({products: products});
             })
             .catch(error => {
                 console.log(error);
             });
-
     }
 
     queryCurrencies() {
@@ -67,9 +64,15 @@ export class Header extends PureComponent {
             })
     }
 
+    onCurrencyChange(value) {
+        const [symbol, label] = value.toString().split(' ');
+        // console.log(this.context);
+        this.context.setData({...this.context, currency: {label, symbol}});
+    }
+
 
     render () {
-
+        // console.log(this.context);
         return (
             <header className={styles.header}>
                 <nav className={styles.navigation}>
@@ -85,16 +88,21 @@ export class Header extends PureComponent {
                 </nav>
 
                 <img src={'assets/logo.svg'} alt={'logo'} className={styles.logo}/>
-
                 <nav className={styles.navigation}>
                     <ul className={styles.action_list}>
                         <li className={styles.action_list_item}>
                             {/*TODO: make the currency dropdown a standalone component*/}
-                            <select name={'currencies'} className={styles.action_list_item__currency}>
+                            <select
+                                name={'currencies'}
+                                className={styles.action_list_item__currency}
+                                onChange={(event) => this.onCurrencyChange(event.target.value)}
+                                value={this.context.currency.label}
+                            >
                                 {this.state.all_currencies.map(currency => {
+                                    const obj = {'label': currency.label, 'symbol': currency.symbol}
                                     return (
                                         <option key={currency.label}
-                                                value={currency.label}>{currency.symbol} {currency.label}</option>
+                                                data-value={obj}>{currency.symbol} {currency.label}</option>
                                     );
                                 })}
                             </select>
