@@ -12,8 +12,8 @@ export class DataProvider extends PureComponent {
 
     state = {
         currency: {
-            label: '',
-            symbol: ''
+            label: 'USD',
+            symbol: '$'
         },
         products: [],
         setData: this.setData

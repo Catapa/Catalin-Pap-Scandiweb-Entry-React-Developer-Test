@@ -42,7 +42,8 @@
 }
 .action_list_item__currency {
     /*width: 42px;*/
-    width: 40%;
+    /*width: 40%;*/
+    width: 100%;
     height: 29px;
     border: none;
 

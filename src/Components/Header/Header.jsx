@@ -66,8 +66,13 @@ export class Header extends PureComponent {
 
     onCurrencyChange(value) {
         const [symbol, label] = value.toString().split(' ');
-        // console.log(this.context);
-        this.context.setData({...this.context, currency: {label, symbol}});
+        try {
+            this.context.setData({...this.context, currency: {label, symbol}});
+        }
+        catch (error) {
+            console.log(error);
+        }
+
     }
 
 
@@ -96,13 +101,15 @@ export class Header extends PureComponent {
                                 name={'currencies'}
                                 className={styles.action_list_item__currency}
                                 onChange={(event) => this.onCurrencyChange(event.target.value)}
-                                value={this.context.currency.label}
+                                // value={`${this.context.currency.symbol} ${this.context.currency.label}`}
                             >
                                 {this.state.all_currencies.map(currency => {
-                                    const obj = {'label': currency.label, 'symbol': currency.symbol}
+                                    const obj = {label: currency.label, symbol: currency.symbol}
                                     return (
                                         <option key={currency.label}
-                                                data-value={obj}>{currency.symbol} {currency.label}</option>
+                                                data-value={obj}
+                                                // label={currency.symbol}
+                                                >{currency.symbol} {currency.label}</option>
                                     );
                                 })}
                             </select>

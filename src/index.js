@@ -26,8 +26,8 @@ ReactDOM.render(
             <BrowserRouter>
                 <Routes>
                     <Route path={'/'} element={<App/>}>
-                        <Route path={'home'} element={<ProductListingPage/>}/>
-                        <Route path={'product'} element={<ProductDescriptionPage/>}/>
+                        <Route path={'/'} element={<ProductListingPage/>}/>
+                        <Route exact path={'product/:id'} element={<ProductDescriptionPage/>}/>
                         <Route path={'cart'} element={<CartPage/>}/>
                     </Route>
                 </Routes>

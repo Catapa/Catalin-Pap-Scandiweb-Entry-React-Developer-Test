@@ -2,7 +2,12 @@ import React, {PureComponent} from 'react';
 import styles from './ProductDescriptionPage.module.css';
 
 export class ProductDescriptionPage extends PureComponent {
+    constructor(props) {
+        super(props);
+    }
+
     render () {
+        console.log(this.props.match);
         return (
             <main className={styles.description_page}>
                 <div className={styles.product_view}>

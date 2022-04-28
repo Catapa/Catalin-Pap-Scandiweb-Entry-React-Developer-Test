@@ -5,12 +5,17 @@ import DataContext from '../../Context/DataContext';
 
 export class ProductGrid extends PureComponent {
     static contextType = DataContext;
+
+    componentDidMount() {
+        console.log('context', this.context);
+    }
+
     render () {
         return (
             <div className={styles.product_grid}>
                 {this.context.products.map(details => {
                     return (
-                        <ProductCard details={details}/>
+                        <ProductCard key={details.id} details={details}/>
                     );
                 })}
             </div>
