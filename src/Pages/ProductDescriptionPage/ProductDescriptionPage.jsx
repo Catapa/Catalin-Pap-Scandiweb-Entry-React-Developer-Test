@@ -6,8 +6,13 @@ export class ProductDescriptionPage extends PureComponent {
         super(props);
     }
 
+    queryParams = () => {
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('id');
+        console.log('ProductDescriptionPage - location',  productId)
+    }
+
     render () {
-        console.log(this.props.match);
         return (
             <main className={styles.description_page}>
                 <div className={styles.product_view}>

@@ -31,7 +31,7 @@ export class ProductCard extends PureComponent {
         const {brand, name} = this.props.details;
         this.getPrice();
         return (
-            <Link to={`/product/${this.props.details.id}`}>
+            <Link to={`/product/?id=${this.props.details.id}`}>
                 <div className={styles.product_card}>
                     <img src={thumbnail_source} alt={'product image'} className={styles.product_image}/>
                     <button className={styles.product_buy_button}>

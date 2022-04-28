@@ -6,8 +6,6 @@ import {
     ApolloClient,
     InMemoryCache,
     ApolloProvider,
-    useQuery,
-    gql
 } from '@apollo/client';
 import {BrowserRouter} from "react-router-dom";
 import {Route, Routes} from "react-router";
@@ -27,7 +25,7 @@ ReactDOM.render(
                 <Routes>
                     <Route path={'/'} element={<App/>}>
                         <Route path={'/'} element={<ProductListingPage/>}/>
-                        <Route exact path={'product/:id'} element={<ProductDescriptionPage/>}/>
+                        <Route path={`product/*`} element={<ProductDescriptionPage/>}/>
                         <Route path={'cart'} element={<CartPage/>}/>
                     </Route>
                 </Routes>
