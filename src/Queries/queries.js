@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-const CATEGORY_NAMES = gql`
+export const CATEGORY_NAMES = gql`
     {
         categories {
             name
@@ -8,7 +8,7 @@ const CATEGORY_NAMES = gql`
     }
 `;
 
-const PRODUCTS_BY_CATEGORY = gql`
+export const PRODUCTS_BY_CATEGORY = gql`
     query category($title: String!) {
         category(input: {title: $title}) {
             name
@@ -41,7 +41,7 @@ const PRODUCTS_BY_CATEGORY = gql`
     }
 `;
 
-const CURRENCIES = gql`
+export const CURRENCIES = gql`
     {
         currencies {
             label
@@ -50,4 +50,32 @@ const CURRENCIES = gql`
     }
 `;
 
-export {CATEGORY_NAMES, PRODUCTS_BY_CATEGORY, CURRENCIES};
+export const PRODUCT_BY_ID = gql`
+        query product($id: String!) {
+            product(id: $id) {
+                name
+                inStock
+                gallery
+                description
+                category
+                attributes {
+                    id
+                    name
+                    type
+                    items {
+                        displayValue
+                        value
+                        id
+                    }
+                }
+                prices {
+                    currency {
+                        label
+                        symbol
+                    }
+                    amount
+                }
+                brand
+            }
+        }
+`;

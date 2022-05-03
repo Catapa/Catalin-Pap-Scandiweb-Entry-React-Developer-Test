@@ -7,7 +7,7 @@ export class ProductGrid extends PureComponent {
     static contextType = DataContext;
 
     componentDidMount() {
-        console.log('context', this.context);
+
     }
 
     render () {
