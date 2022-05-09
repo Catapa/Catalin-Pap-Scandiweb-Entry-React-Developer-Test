@@ -6,6 +6,7 @@ import DataContext from "../../Context/DataContext";
 
 export class ProductDescriptionPage extends PureComponent {
     static contextType = DataContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -16,7 +17,8 @@ export class ProductDescriptionPage extends PureComponent {
             gallery: [],
             prices: [],
             inStock: false,
-            price: {}
+            price: 0,
+            selected_image:''
         }
     }
 
@@ -31,6 +33,7 @@ export class ProductDescriptionPage extends PureComponent {
         client.query({query: PRODUCT_BY_ID, variables: {id: productId}})
             .then(result => {
                 const {brand, name, description, attributes, gallery, prices, inStock} = result.data.product;
+                // const price = this.state.prices.find(price => price.currency.label === this.context.currency.label );
                 this.setState({
                     brand: brand,
                     name: name,
@@ -39,26 +42,50 @@ export class ProductDescriptionPage extends PureComponent {
                     gallery: gallery,
                     prices: prices,
                     inStock: inStock,
-                    price: this.state.prices.find(price =>
-                        price.currency.label === this.context.currency.label )
+                    price: prices.find(price => price.currency.label === this.context.currency.label),
+                    selected_image: gallery[0]
                 })
-            } )
+            })
             .catch(error => {
                 console.log(error);
             })
+    };
+
+    selectImage = (source) => {
+        this.setState({
+            ...this.state,
+            selected_image: source
+        })
     }
 
-    render () {
+    componentDidMount = () => {
+        // this.updateProductInfo();
+    }
+
+    // shouldComponentUpdate(nextProps, nextState, nextContext) {
+    //     return (this.context.currency === this.state.price.currency);
+    // }
+
+
+    render() {
+        // console.log('rener');
         this.updateProductInfo();
         return (
             <main className={styles.description_page}>
+                {/*TODO: move the gallery to its own component*/}
+                {/*TODO: fix rendering when image selected*/}
                 <div className={styles.product_view}>
                     {/* Image Gallery */}
                     <div className={styles.gallery}>
                         {
                             this.state.gallery.map(imageSource => {
                                 return (
-                                    <img key={imageSource} src={imageSource} alt={'asl'} className={styles.gallery__image}/>
+                                    <img key={imageSource}
+                                         src={imageSource}
+                                         alt={'asl'}
+                                         className={styles.gallery__image}
+                                         onClick={() => this.selectImage(imageSource)}
+                                    />
                                 )
                             })
                         }
@@ -66,7 +93,8 @@ export class ProductDescriptionPage extends PureComponent {
 
                     {/* Image in focus */}
                     <div className={styles.product_view__main}>
-                        <img src={this.state.gallery[0]} alt={'main image'} className={styles.product_view__main__image}/>
+                        <img src={this.state.selected_image} alt={'main image'}
+                             className={styles.product_view__main__image}/>
                     </div>
                 </div>
 
@@ -78,29 +106,42 @@ export class ProductDescriptionPage extends PureComponent {
                         <h3 className={styles.panel__name__product}>{this.state.name}</h3>
                     </div>
 
-                    {/* Product Sizes */}
+                    {/* Product Attributes */}
                     <div className={styles.panel__attributes}>
-                        {this.state.attributes.map(attribute => {
+                        {this.state.attributes.map(attributeSet => {
                             return (
-                                <>
-                                <p className={styles.panel__attributes__label}>{attribute.name}:</p>
-                                <div className={styles.panel__attributes_selector}>
-                                    {attribute.items.map(item => {
-                                        return (
-                                            <button className={styles.panel__attributes_selector__button}>{item.displayValue}</button>
-                                        )
-                                    })}
+                                <div key={attributeSet.id}>
+                                    <p className={styles.panel__attributes__label}>{attributeSet.name}:</p>
+                                    <div className={styles.panel__attributes_selector}>
+                                        {attributeSet.items.map(attribute => {
+                                            return (
+                                                (attributeSet.type === 'swatch') ?
+                                                    <button key={attribute.id}
+                                                            className={styles.panel__attributes_selector__button}
+                                                    style={{backgroundColor: `${attribute.displayValue}`}}>
+                                                    </button>
+                                                    :
+                                                    <button key={attribute.id}
+                                                            className={styles.panel__attributes_selector__button}>
+                                                        {attribute.displayValue}
+                                                    </button>
+                                            )
+                                        })}
+                                    </div>
                                 </div>
-                                </>
                             )
                         })}
-                        <p className={styles.panel__attributes__label}>Size:</p>
-                        <div className={styles.panel__attributes_selector}>
-                            <button className={`${styles.panel__attributes_selector__button} ${styles.panel__attributes_selector__button__disabled}`}>XS</button>
-                            <button className={`${styles.panel__attributes_selector__button} ${styles.panel__attributes_selector__button__active}`}>S</button>
-                            <button className={styles.panel__attributes_selector__button}>M</button>
-                            <button className={styles.panel__attributes_selector__button}>L</button>
-                        </div>
+                        {/*<p className={styles.panel__attributes__label}>Size:</p>*/}
+                        {/*<div className={styles.panel__attributes_selector}>*/}
+                        {/*    <button*/}
+                        {/*        className={`${styles.panel__attributes_selector__button} ${styles.panel__attributes_selector__button__disabled}`}>XS*/}
+                        {/*    </button>*/}
+                        {/*    <button*/}
+                        {/*        className={`${styles.panel__attributes_selector__button} ${styles.panel__attributes_selector__button__active}`}>S*/}
+                        {/*    </button>*/}
+                        {/*    <button className={styles.panel__attributes_selector__button}>M</button>*/}
+                        {/*    <button className={styles.panel__attributes_selector__button}>L</button>*/}
+                        {/*</div>*/}
                     </div>
 
                     {/* Product Price */}
@@ -109,6 +150,7 @@ export class ProductDescriptionPage extends PureComponent {
                         <p className={styles.panel__price__value}>
                             {this.state.price && this.state.price.currency && this.state.price.currency.symbol}
                             {this.state.price && this.state.price.amount}
+                            {/*{this.state.price}*/}
                         </p>
                     </div>
 
@@ -116,9 +158,7 @@ export class ProductDescriptionPage extends PureComponent {
                     <button className={styles.panel__add_to_cart_button}>add to cart</button>
 
                     {/* Description */}
-                    <article className={styles.panel__description}>
-                        {this.state.description}
-                    </article>
+                    <article className={styles.panel__description} dangerouslySetInnerHTML={{__html: this.state.description}}/>
                 </div>
             </main>
         );
