@@ -4,9 +4,14 @@ import Backdrop from "../Backdrop/Backdrop";
 import CartItemCard from "../CartItemCard/CartItemCard";
 
 export class CartOverlay extends PureComponent {
+    constructor(props) {
+        super(props);
+    }
     render () {
+        const {visible} = this.props;
+        const visibilityClass = visible ? styles.visible : styles.hidden;
         return (
-            <div>
+            <div className={visibilityClass}>
                 <Backdrop/>
 
 

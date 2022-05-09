@@ -18,6 +18,7 @@ export class Header extends PureComponent {
         this.state = {
             categories: [],
             all_currencies: [],
+            cart_overlay: false
         };
     }
 
@@ -75,11 +76,26 @@ export class Header extends PureComponent {
 
     }
 
+    toggleCartOverlay = () => {
+        if (this.state.cart_overlay === true) {
+            this.setState({
+                cart_overlay: false
+            })
+        }
+        else {
+            this.setState({
+                cart_overlay: true
+            })
+        }
+    }
+
 
     render () {
         // console.log(this.context);
         return (
             <header className={styles.header}>
+
+                {/*CATEGORIES*/}
                 <nav className={styles.navigation}>
                     <ul className={styles.category_list}>
                         {this.state.categories.map(category => {
@@ -92,8 +108,11 @@ export class Header extends PureComponent {
                     </ul>
                 </nav>
 
+                {/*LOGO*/}
                 <img src={'assets/logo.svg'} alt={'logo'} className={styles.logo}/>
+
                 <nav className={styles.navigation}>
+                    {/*CURRENCIES*/}
                     <ul className={styles.action_list}>
                         <li className={styles.action_list_item}>
                             {/*TODO: make the currency dropdown a standalone component*/}
@@ -114,11 +133,11 @@ export class Header extends PureComponent {
                                 })}
                             </select>
                         </li>
-
-                        <li className={styles.action_list_item}>
+                        {/*CART*/}
+                        <li className={styles.action_list_item} onClick={this.toggleCartOverlay}>
                             <img src={'assets/empty_cart_black.svg'} alt={'cart'}
                                  className={styles.action_list_item_cart}/>
-                            {/*<CartOverlay/>*/}
+                            <CartOverlay visible={this.state.cart_overlay}/>
                         </li>
                     </ul>
                 </nav>
