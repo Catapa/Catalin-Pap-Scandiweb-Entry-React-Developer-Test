@@ -10,6 +10,7 @@ import DataContext from '../../Context/DataContext';
 // components
 import CartOverlay from "../CartOverlay/CartOverlay";
 import {client} from "../../index";
+import {Link} from "react-router-dom";
 
 export class Header extends PureComponent {
     static contextType = DataContext;
@@ -100,9 +101,9 @@ export class Header extends PureComponent {
                     <ul className={styles.category_list}>
                         {this.state.categories.map(category => {
                             return (
-                                <li key={category}
+                                <Link to={'/'} key={category}
                                     className={styles.category_list_item}
-                                    onClick={() => this.queryProducts(category)}><a>{category}</a></li>
+                                    onClick={() => this.queryProducts(category)}>{category}</Link>
                             )
                         })}
                     </ul>
