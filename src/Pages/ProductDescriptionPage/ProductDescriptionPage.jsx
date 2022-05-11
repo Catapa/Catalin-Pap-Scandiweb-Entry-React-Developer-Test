@@ -68,7 +68,8 @@ export class ProductDescriptionPage extends PureComponent {
                 name: this.state.name,
                 gallery: this.state.gallery,
                 prices: this.state.prices,
-                attributes: this.state.attributes
+                attributes: this.state.attributes,
+                quantity: 1
             }
             this.context.setData({
                ...this.context,

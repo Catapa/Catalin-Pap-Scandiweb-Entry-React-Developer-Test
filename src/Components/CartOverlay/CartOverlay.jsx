@@ -9,6 +9,15 @@ export class CartOverlay extends PureComponent {
     static contextType = DataContext;
     constructor(props) {
         super(props);
+        this.state = {
+            // cartItemsTotal: this.context.productsInCart.reduce(
+            //     (accumulator, product) =>
+            //         accumulator +
+            //         product.prices.find(price => price.currency.label === this.context.currency.label).amount *
+            //         product.quantity
+            //     , 0
+            // )
+        }
     }
 
     render() {
@@ -18,7 +27,8 @@ export class CartOverlay extends PureComponent {
         const cartItemsTotal = this.context.productsInCart.reduce(
             (accumulator, product) =>
                 accumulator +
-                product.prices.find(price => price.currency.label === this.context.currency.label).amount
+                product.prices.find(price => price.currency.label === this.context.currency.label).amount *
+                product.quantity
             , 0
         );
 
@@ -48,7 +58,7 @@ export class CartOverlay extends PureComponent {
                     {/*Total*/}
                     <span className={styles.total}>
                         <span className={styles.total__label}>total</span>
-                        <span className={styles.total__amount}>{this.context.currency.symbol}{cartItemsTotal}</span>
+                        <span className={styles.total__amount}>{this.context.currency.symbol}{cartItemsTotal.toFixed(2)}</span>
                     </span>
 
                     {/*Buttons*/}

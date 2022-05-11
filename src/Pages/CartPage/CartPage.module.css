@@ -2,3 +2,44 @@
     padding: 1em 8em;
     width: 80%;
 }
+
+.label {
+    font-size: 1.5rem; /* 24px */
+    font-weight: var(--font-weight-regular);
+    line-height: 1.75em; /* 28px */
+}
+.value {
+    font-size: 1.5rem; /* 24px */
+    font-weight: var(--font-weight-bold);
+    line-height: 1.75em; /* 28px */
+}
+.total_label {
+    font-size: 1.5rem; /* 24px */
+    font-weight: var(--font-weight-medium);
+    line-height: 1.75em; /* 28px */
+}
+.total_value {
+    font-size: 1.5rem; /* 24px */
+    font-weight: var(--font-weight-bold);
+    line-height: 1.5em; /* 28px */
+}
+.button {
+    /* font */
+    font-size: 0.875rem; /* 14px */
+    font-weight: var(--font-weight-semibold);
+    line-height: 120%;
+    text-transform: uppercase;
+    font-family: inherit;
+    color: inherit;
+    /* button styling */
+    background-color: var(--c_white);
+    border: 1px solid var(--c-black);
+    padding: 1em 2em; /* 16px 32px */
+
+    cursor: pointer;
+}
+.contrast {
+    background-color: var(--c-primary);
+    color: var(--c_white);
+    border-color: var(--c-primary);
+}
