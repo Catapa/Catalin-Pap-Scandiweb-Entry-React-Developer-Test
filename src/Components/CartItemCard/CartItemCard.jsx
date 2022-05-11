@@ -1,32 +1,72 @@
 import React, {PureComponent} from 'react';
 import styles from './CartItemCard.module.css';
+import DataContext from "../../Context/DataContext";
 
 
 // TODO: Create a 'minimize' prop so that you can choose whether to show a big or minimized version of the card (e.g. CartOverlay vs. CartPage)
 export class CartItemCard extends PureComponent {
-    render () {
+    static contextType = DataContext;
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            quantity: 1
+        }
+    };
+
+    increaseQuantity = () => {
+        this.setState({
+            quantity: this.state.quantity + 1
+        })
+    };
+
+    decreaseQuantity = () => {
+        if (this.state.quantity > 0)
+            this.setState({
+                quantity: this.state.quantity - 1
+            });
+    };
+
+    render() {
+        const {brand, name, gallery, prices, attributes} = this.props.details;
+        const price = prices.find(price => price.currency.label === this.context.currency.label);
+
         return (
             <div className={styles.item_card}>
                 <div className={styles.product_info}>
                     <div>
-                        <p className={styles.product_info__name}>Apollo Running Short</p>
-                        <p className={styles.product_info__price}>$50.00</p>
+                        <p className={styles.product_info__name}>{brand} {name}</p>
+                        <p className={styles.product_info__price}>{price.currency && price.currency.symbol}{price.amount}</p>
                     </div>
-                    <div className={styles.product_info__sizes}>
-                        <button className={styles.button}>S</button>
-                        <button className={`${styles.button} ${styles.button_disabled}`}>M</button>
-                    </div>
+                    {
+                        attributes.map(attribute => {
+                            return (
+                                <div key={attribute.id} className={styles.product_info__sizes}>
+                                    <p>{attribute.name}:</p>
+                                    {attribute.items.map(item => {
+                                        return (
+                                            <></>
+                                            // <button key={item.id} className={styles.button}>{item.displayValue}</button>
+                                        )
+                                    })}
+
+                                    {/*<button className={`${styles.button} ${styles.button_disabled}`}>M</button>*/}
+                                </div>
+                            );
+                        })
+                    }
+
                 </div>
 
                 <div className={styles.quantity_selector}>
-                    <button className={styles.button}>-</button>
-                    <span className={styles.quantity_label}>1</span>
-                    <button className={styles.button}>+</button>
+                    <button className={styles.button} onClick={this.decreaseQuantity}>-</button>
+                    <span className={styles.quantity_label}>{this.state.quantity}</span>
+                    <button className={styles.button} onClick={this.increaseQuantity}>+</button>
                 </div>
 
-                <img src={'./assets/demo_cart.svg'} alt={'product'}  className={styles.image}/>
+                <img src={gallery[0]} alt={'product'} className={styles.image}/>
             </div>
-        )
+        );
     }
 }
 

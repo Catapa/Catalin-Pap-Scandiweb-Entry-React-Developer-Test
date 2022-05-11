@@ -18,7 +18,7 @@ export class Header extends PureComponent {
         this.state = {
             categories: [],
             all_currencies: [],
-            cart_overlay: false
+            showCartOverlay: false
         };
     }
 
@@ -77,14 +77,14 @@ export class Header extends PureComponent {
     }
 
     toggleCartOverlay = () => {
-        if (this.state.cart_overlay === true) {
+        if (this.state.showCartOverlay === true) {
             this.setState({
-                cart_overlay: false
+                showCartOverlay: false
             })
         }
         else {
             this.setState({
-                cart_overlay: true
+                showCartOverlay: true
             })
         }
     }
@@ -137,7 +137,7 @@ export class Header extends PureComponent {
                         <li className={styles.action_list_item} onClick={this.toggleCartOverlay}>
                             <img src={'assets/empty_cart_black.svg'} alt={'cart'}
                                  className={styles.action_list_item_cart}/>
-                            <CartOverlay visible={this.state.cart_overlay}/>
+                            <CartOverlay visible={this.state.showCartOverlay}/>
                         </li>
                     </ul>
                 </nav>

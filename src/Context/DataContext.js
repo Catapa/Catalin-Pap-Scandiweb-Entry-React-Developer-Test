@@ -16,7 +16,8 @@ export class DataProvider extends PureComponent {
             symbol: '$'
         },
         products: [],
-        setData: this.setData
+        setData: this.setData,
+        productsInCart: []
     };
 
     render() {

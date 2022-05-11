@@ -10,6 +10,7 @@ export class ProductDescriptionPage extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
+            id: '',
             brand: 'Guccci',
             name: 'ala bun',
             description: 'nu bate nu troncane',
@@ -35,6 +36,7 @@ export class ProductDescriptionPage extends PureComponent {
                 const {brand, name, description, attributes, gallery, prices, inStock} = result.data.product;
                 // const price = this.state.prices.find(price => price.currency.label === this.context.currency.label );
                 this.setState({
+                    id: productId,
                     brand: brand,
                     name: name,
                     description: description,
@@ -48,27 +50,42 @@ export class ProductDescriptionPage extends PureComponent {
             })
             .catch(error => {
                 console.log(error);
-            })
+            });
     };
 
     selectImage = (source) => {
         this.setState({
             ...this.state,
             selected_image: source
-        })
+        });
+    }
+
+    addToCart = () => {
+        try {
+            const newProduct = {
+                id: this.state.id,
+                brand: this.state.brand,
+                name: this.state.name,
+                gallery: this.state.gallery,
+                prices: this.state.prices,
+                attributes: this.state.attributes
+            }
+            this.context.setData({
+               ...this.context,
+                productsInCart: [...this.context.productsInCart, newProduct]
+            });
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 
     componentDidMount = () => {
         // this.updateProductInfo();
     }
 
-    // shouldComponentUpdate(nextProps, nextState, nextContext) {
-    //     return (this.context.currency === this.state.price.currency);
-    // }
-
 
     render() {
-        // console.log('rener');
         this.updateProductInfo();
         return (
             <main className={styles.description_page}>
@@ -121,7 +138,7 @@ export class ProductDescriptionPage extends PureComponent {
                                                     style={{backgroundColor: `${attribute.displayValue}`}}>
                                                     </button>
                                                     :
-                                                    <button key={attribute.id}
+                                                    <button type={'radio'} key={attribute.id}
                                                             className={styles.panel__attributes_selector__button}>
                                                         {attribute.displayValue}
                                                     </button>
@@ -150,12 +167,11 @@ export class ProductDescriptionPage extends PureComponent {
                         <p className={styles.panel__price__value}>
                             {this.state.price && this.state.price.currency && this.state.price.currency.symbol}
                             {this.state.price && this.state.price.amount}
-                            {/*{this.state.price}*/}
                         </p>
                     </div>
 
                     {/* Add to cart button */}
-                    <button className={styles.panel__add_to_cart_button}>add to cart</button>
+                    <button className={styles.panel__add_to_cart_button} onClick={this.addToCart}>add to cart</button>
 
                     {/* Description */}
                     <article className={styles.panel__description} dangerouslySetInnerHTML={{__html: this.state.description}}/>
