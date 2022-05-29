@@ -26,6 +26,9 @@ export class Header extends PureComponent {
     componentDidMount() {
         this.queryCategories();
         this.queryCurrencies();
+
+        // TODO: find a non-hard-coded solution for this
+        this.queryProducts('all');
     }
 
     queryCategories() {

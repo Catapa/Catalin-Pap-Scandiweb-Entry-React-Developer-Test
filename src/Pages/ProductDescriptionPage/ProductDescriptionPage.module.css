@@ -90,6 +90,9 @@
 
     /* Background */
     background-color: var(--c_white);
+
+    /* Cursor */
+    cursor: pointer;
 }
 .panel__attributes_selector__button + .panel__attributes_selector__button {
     margin-left: 0.75em; /* 12px */
@@ -101,6 +104,15 @@
 .panel__attributes_selector__button__disabled {
     color: var(--c_gray);
     border-color: var(--c_gray);
+}
+.panel__attributes_selector__swatch {
+    width: 2em;
+    height: 2em;
+}
+.panel__attributes_selector__swatch__active {
+    border: 1px outset var(--c-primary);
+    box-shadow: 0 0 0px 1px white, 0 0 0px 3px var(--c-primary);
+    /*padding: 2rem; !* 1px *!*/
 }
 .panel__price {
 
@@ -133,6 +145,9 @@
     line-height: 120%;
     color: var(--c_white);
     text-transform: uppercase;
+
+    /* Cursor */
+    cursor: pointer;
 }
 .panel__description {
     font-family: 'Roboto', sans-serif;

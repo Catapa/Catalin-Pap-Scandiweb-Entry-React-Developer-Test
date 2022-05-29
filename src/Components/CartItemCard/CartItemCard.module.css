@@ -33,10 +33,14 @@
     text-align: center;
     background-color: var(--c_white);
     line-height: 160%;
-    width: 24px;
-    height: 24px;
+    width: 1.5em; /* 24px; */
+    height: 1.5em; /* 24px; */
     margin-right: 0.5em; /* 8px */
     cursor: pointer;
+}
+.button__swatch {
+    width: 1em;
+    height: 1em;
 }
 .button_disabled {
     border-color: var(--c_gray);

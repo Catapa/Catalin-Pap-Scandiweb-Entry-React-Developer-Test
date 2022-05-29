@@ -62,15 +62,20 @@ export class CartItemCard extends Component {
                         <p className={styles.product_info__price}>{price.currency && price.currency.symbol}{(price.amount * quantity).toFixed(2)}</p>
                     </div>
                     {
-                        attributes.map(attribute => {
+                        attributes.map(attributeSet => {
                             return (
-                                <div key={attribute.id} className={styles.product_info__sizes}>
-                                    <p>{attribute.name}:</p>
-                                    {attribute.items.map(item => {
+                                <div key={attributeSet.id} className={styles.product_info__sizes}>
+                                    <p>{attributeSet.name}:</p>
+                                    {attributeSet.items.map(attribute => {
                                         return (
-                                            <></>
-                                            // <button key={item.id} className={styles.button}>{item.displayValue}</button>
-                                        )
+                                            (attributeSet.type === 'swatch') ?
+                                                <button key={attribute.id}
+                                                        className={`${styles.button} ${styles.button__swatch}`}
+                                                        style={{backgroundColor: `${attribute.displayValue}`}}/>
+                                                :
+                                                <button key={attribute.id}
+                                                        className={styles.button}>{attribute.displayValue}</button>
+                                        );
                                     })}
 
                                     {/*<button className={`${styles.button} ${styles.button_disabled}`}>M</button>*/}
