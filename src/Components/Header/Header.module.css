@@ -1,18 +1,29 @@
 /*TODO: (Optional) refactor CSS for mobile*/
 .header {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    /*padding: 1.75em 7.3em; !*28px 117px*!*/
+
     text-align: center;
     text-transform: uppercase;
-
     font-size: 1rem; /* 16px */
     line-height: 120%;
     font-weight: var(--font-weight-regular);
     position: sticky;
-    z-index: 5;
+    /*z-index: 5;*/
 }
+
 .navigation {
     text-decoration: none;
+    flex: 1;
+    padding-right: 0.75em;
+}
+.navigation:last-of-type {
+    right: 0;
+}
+.navigation:first-of-type {
+    margin-right: auto;
 }
 
 .category_list, .action_list {
@@ -20,11 +31,15 @@
     list-style: none;
     align-items: center;
 }
+
 .category_list {
-    position: relative;
     flex-direction: row;
-    justify-content: space-between;
-    top: 3em;
+    height: 100%;
+    position: static;
+    justify-content: flex-start;
+}
+.category_list_item {
+    padding: 1.5em 0.75em;
 }
 .category_list_item:hover {
     color: var(--c-primary);
@@ -34,7 +49,9 @@
 }
 
 .action_list {
+    position: static;
     height: 100%;
+    justify-content: flex-end;
 }
 .action_list_item {
     margin-left: 1em !important;
@@ -63,49 +80,14 @@
 }
 
 .logo {
-    transform: scale(1);
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: static;
+    margin: auto;
+    height: 1.78em; /* 28.62px */
+    width: 1.94em; /* 31.18px */
 }
 
-@media only screen and (min-width: 500px) {
+@media only screen and (min-width: 1080px) {
     .header {
-        flex-direction: row;
-        align-items: center;
         padding: 1.75em 7.3em; /*28px 117px*/
-
-    }
-
-    .navigation {
-        flex: 1;
-        padding-right: 0.75em;
-    }
-    .navigation:last-of-type {
-        right: 0;
-    }
-    .navigation:first-of-type {
-        margin-right: auto;
-    }
-
-    .category_list {
-        height: 100%;
-        position: static;
-        top: 0;
-        justify-content: flex-start;
-    }
-    .category_list_item {
-        padding: 1.5em 0.75em;
-    }
-    .action_list {
-        position: static;
-        height: 100%;
-        justify-content: flex-end;
-    }
-    .logo {
-        position: static;
-        margin: auto;
-        height: 1.78em; /* 28.62px */
-        width: 1.94em; /* 31.18px */
     }
 }

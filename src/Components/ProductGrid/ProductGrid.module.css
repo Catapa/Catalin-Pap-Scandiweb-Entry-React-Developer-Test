@@ -3,7 +3,7 @@
     border-collapse: separate;
     display: grid;
     /*grid-template-columns: 31.5% 31.5% 31.5%;*/
-    grid-template-columns: auto;
+    grid-template-columns: 1fr;
     justify-items: center;
     column-gap: 20px;
     width: 100%;
@@ -12,19 +12,19 @@
 
 @media screen and (min-width: 450px) {
     .product_grid {
-        grid-template-columns: auto auto;
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media screen and (min-width: 1080px) {
     .product_grid {
-        grid-template-columns: auto auto auto;
+        grid-template-columns: repeat(3, 1fr);
         padding: 0 8em;
     }
 }
 
 @media screen and (min-width: 2560px) {
     .product_grid {
-        grid-template-columns: auto auto auto auto;
+        grid-template-columns: repeat(4, 1fr);
     }
 }

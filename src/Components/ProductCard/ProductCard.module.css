@@ -10,7 +10,7 @@
 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
 
     align-items: flex-start;
     position: relative;
@@ -25,13 +25,19 @@ a {
     box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
 }
 .product_image {
-    width: 100%;
-    flex: 1;
+    max-width: 100%;
+    max-height: 150px;
+    align-content: center;
+    /*background-position: bottom;*/
+    /*background-size: contain;*/
+    /*background-repeat: no-repeat;*/
+    /*flex: 1;*/
 }
 .product_name, .product_brand {
     font-weight: var(--font-weight-light);
     font-size: 1.125rem; /* 18px */
     line-height: 160%;
+
 }
 .product_price {
     font-weight: var(--font-weight-medium);
@@ -40,17 +46,69 @@ a {
 }
 .product_buy_button {
     border-style: none;
-    width: 3.25em; /* 52px */
-    height: 3.25em; /* 52px */
+    width: 2em;
+    height: 2em;
     background-color: var(--c-primary);
     border-radius: 100%;
     color: #ffffff;
     position: absolute;
-    bottom: 4.9em;
-    right: 2em;
+    bottom: 5.25em;
+    right: 1em;
     z-index: 1;
+}
+.product_buy_button img {
+    width: 55%;
+    transform: translate(-5%, 15%);
 }
 .product_buy_button:hover {
     cursor: pointer;
     box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+}
+
+@media screen and (min-width: 450px) {
+    .product_image {
+        max-height: 250px;
+    }
+    .product_buy_button {
+        width: 2.75em;
+        height: 2.75em;
+        bottom: 5em;
+        right: 0.75em;
+    }
+    .product_buy_button img {
+        width: 65%;
+        transform: translate(-5%, 15%);
+    }
+}
+
+@media screen and (min-width: 768px) {
+
+}
+
+@media screen and (min-width: 1080px) {
+    .product_image {
+        max-height: 400px;
+    }
+    .product_buy_button {
+        width: 3.25em; /* 52px */
+        height: 3.25em; /* 52px */
+        bottom: 4.9em;
+        right: 1em;
+    }
+    .product_buy_button img {
+        width: 75%;
+        transform: translate(-5%, 10%);
+    }
+}
+
+@media screen and (min-width: 2560px) {
+    .product_image {
+        max-height: 500px;
+    }
+    .product_buy_button {
+        width: 4.25em;
+        height: 4.25em;
+        bottom: 4.9em;
+        right: 1.5em;
+    }
 }

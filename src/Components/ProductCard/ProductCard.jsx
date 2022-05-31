@@ -33,7 +33,8 @@ export class ProductCard extends PureComponent {
         return (
             <Link to={`/product/?id=${this.props.details.id}`}>
                 <div className={styles.product_card}>
-                    <img src={thumbnail_source} alt={'product image'} className={styles.product_image}/>
+                    {/*<div style={{backgroundImage: `url(${thumbnail_source})` /*backgroundColor: "orange"*!/} className={styles.product_image}/>*/}
+                    <img src={thumbnail_source} alt={'asd'} className={styles.product_image}/>
                     <button className={styles.product_buy_button}>
                         <img src={'assets/empty_cart_white.svg'} alt={'Add to cart'}/>
                     </button>
