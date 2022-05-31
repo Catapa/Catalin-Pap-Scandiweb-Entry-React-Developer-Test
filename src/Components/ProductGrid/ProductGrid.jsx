@@ -15,7 +15,7 @@ export class ProductGrid extends PureComponent {
             <div className={styles.product_grid}>
                 {this.context.products.map(details => {
                     return (
-                        <ProductCard key={details.id} details={details}/>
+                        <ProductCard className={styles} key={details.id} details={details}/>
                     );
                 })}
             </div>
