@@ -26,22 +26,48 @@ export class ProductCard extends PureComponent {
         })
     }
 
+    addToCart = (details) => {
+        try {
+            const {id, brand, name, gallery, prices, attributes} = details;
+            const newProduct = {
+                id: id,
+                brand: brand,
+                name: name,
+                gallery: gallery,
+                prices: prices,
+                attributes: attributes,
+                quantity: 1
+            }
+            this.context.setData({
+                ...this.context,
+                productsInCart: [...this.context.productsInCart, newProduct]
+            });
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
     render () {
         const thumbnail_source = this.props.details.gallery[0];
-        const {brand, name} = this.props.details;
+        const {id, brand, name} = this.props.details;
         this.getPrice();
         return (
-            <Link to={`/product/?id=${this.props.details.id}`}>
-                <div className={styles.product_card}>
-                    {/*<div style={{backgroundImage: `url(${thumbnail_source})` /*backgroundColor: "orange"*!/} className={styles.product_image}/>*/}
-                    <img src={thumbnail_source} alt={'asd'} className={styles.product_image}/>
-                    <button className={styles.product_buy_button}>
-                        <img src={'assets/empty_cart_white.svg'} alt={'Add to cart'}/>
-                    </button>
-                    <span className={styles.product_name}>{brand} {name}</span>
-                    <span className={styles.product_price}>{this.state.price_symbol}{this.state.price_amount}</span>
-                </div>
-            </Link>
+            <article>
+                <Link to={`/product/?id=${id}`}>
+                    <div className={styles.product_card}>
+                        {/*<div style={{backgroundImage: `url(${thumbnail_source})` /*backgroundColor: "orange"*!/} className={styles.product_image}/>*/}
+                        <img src={thumbnail_source} alt={'asd'} className={styles.product_image}/>
+
+                        <span className={styles.product_name}>{brand} {name}</span>
+                        <span className={styles.product_price}>{this.state.price_symbol}{this.state.price_amount}</span>
+                    </div>
+                </Link>
+                <button className={styles.product_buy_button}
+                        onClick={() => this.addToCart(this.props.details)}>
+                    <img src={'assets/empty_cart_white.svg'} alt={'Add to cart'}/>
+                </button>
+            </article>
         );
     }
 }
