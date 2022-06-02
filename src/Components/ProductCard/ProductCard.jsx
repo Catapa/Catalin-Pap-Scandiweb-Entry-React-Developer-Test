@@ -42,6 +42,7 @@ export class ProductCard extends PureComponent {
                 ...this.context,
                 productsInCart: [...this.context.productsInCart, newProduct]
             });
+            alert(`Added ${brand} ${name} to shopping cart`);
         }
         catch (error) {
             console.log(error);

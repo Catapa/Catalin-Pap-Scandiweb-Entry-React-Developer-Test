@@ -48,8 +48,7 @@ export class Header extends PureComponent {
         client.query({query: PRODUCTS_BY_CATEGORY, variables: {title: category}})
             .then(result => {
                 const {name, products} = result.data.category;
-                // console.log('asd', products);
-                this.context.setData({products: products});
+                this.context.setData({category: category, products: products});
             })
             .catch(error => {
                 console.log(error);

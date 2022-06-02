@@ -33,8 +33,11 @@
     text-align: center;
     background-color: var(--c_white);
     line-height: 160%;
-    width: 1.5em; /* 24px; */
-    height: 1.5em; /* 24px; */
+    /*width: 1.5em; !* 24px; *!*/
+    /*height: 1.5em; !* 24px; *!*/
+    width: auto;
+    height: auto;
+    padding: 0 0.33em;
     margin-right: 0.5em; /* 8px */
     cursor: pointer;
 }
@@ -46,6 +49,15 @@
     border-color: var(--c_gray);
     color: var(--c_gray);
     background-color: var(--c_gray_transparent);
+}
+
+.text_attribute_active {
+    color: var(--c_white);
+    background-color: var(--c-black);
+}
+.swatch_attribute_active {
+    border: 1px outset var(--c-primary);
+    box-shadow: 0 0 0px 1px white, 0 0 0px 3px var(--c-primary);
 }
 
 .quantity_selector {
