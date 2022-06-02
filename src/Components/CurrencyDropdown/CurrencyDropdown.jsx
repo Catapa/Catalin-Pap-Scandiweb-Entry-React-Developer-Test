@@ -41,7 +41,7 @@ class CurrencyDropdown extends PureComponent {
         return (
             <select
                 name={'currencies'}
-                className={styles.action_list_item__currency}
+                className={styles.currency_select}
                 onChange={(event) => this.onCurrencyChange(event.target.value)}
                 // value={`${this.context.currency.symbol} ${this.context.currency.label}`}
             >

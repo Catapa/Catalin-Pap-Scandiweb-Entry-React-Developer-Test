@@ -8,10 +8,10 @@ import {CATEGORY_NAMES, PRODUCTS_BY_CATEGORY} from '../../Queries/queries';
 import DataContext from '../../Context/DataContext';
 
 // components
-import CartOverlay from "../CartOverlay/CartOverlay";
 import {client} from "../../index";
 import {Link} from "react-router-dom";
 import CurrencyDropdown from "../CurrencyDropdown/CurrencyDropdown";
+import Cart from "../Cart/Cart";
 
 export class Header extends PureComponent {
     static contextType = DataContext;
@@ -19,13 +19,11 @@ export class Header extends PureComponent {
         super(props);
         this.state = {
             categories: [],
-            showCartOverlay: false
         };
     }
 
     componentDidMount() {
         this.queryCategories();
-
         // TODO: find a non-hard-coded solution for this
         this.queryProducts('all');
     }
@@ -54,20 +52,6 @@ export class Header extends PureComponent {
             });
     }
 
-    toggleCartOverlay = () => {
-        if (this.state.showCartOverlay === true) {
-            this.setState({
-                showCartOverlay: false
-            })
-        }
-        else {
-            this.setState({
-                showCartOverlay: true
-            })
-        }
-    }
-
-
     render () {
         return (
             <header className={styles.header}>
@@ -95,10 +79,8 @@ export class Header extends PureComponent {
                             <CurrencyDropdown/>
                         </li>
                         {/*CART*/}
-                        <li className={styles.action_list_item} onClick={this.toggleCartOverlay}>
-                            <img src={'assets/empty_cart_black.svg'} alt={'cart'}
-                                 className={styles.action_list_item_cart}/>
-                            <CartOverlay visible={this.state.showCartOverlay}/>
+                        <li className={styles.action_list_item}>
+                            <Cart/>
                         </li>
                     </ul>
                 </nav>
