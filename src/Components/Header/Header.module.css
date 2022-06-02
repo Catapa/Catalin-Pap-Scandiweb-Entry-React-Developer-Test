@@ -57,23 +57,14 @@
     margin-left: 1em !important;
     cursor: pointer;
 }
-.action_list_item__currency {
-    /*width: 42px;*/
-    /*width: 40%;*/
-    width: 100%;
-    height: 29px;
-    border: none;
 
-    font-size: 1.125rem;
-    font-weight: var(--font-weight-medium);
-}
-.action_list_item__arrow {
-    margin-left: -0.5em;
-    transform: translateY(-400%);
+/*.action_list_item__arrow {*/
+/*    margin-left: -0.5em;*/
+/*    transform: translateY(-400%);*/
 
-    width: 6px;
-    height: 3px;
-}
+/*    width: 6px;*/
+/*    height: 3px;*/
+/*}*/
 .action_list_item_cart {
     width: 20px;
     height: 20px;

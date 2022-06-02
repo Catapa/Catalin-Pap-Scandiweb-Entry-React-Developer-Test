@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import styles from './Header.module.css';
 
 // queries
-import {CATEGORY_NAMES, CURRENCIES, PRODUCTS_BY_CATEGORY} from '../../Queries/queries';
+import {CATEGORY_NAMES, PRODUCTS_BY_CATEGORY} from '../../Queries/queries';
 
 // context
 import DataContext from '../../Context/DataContext';
@@ -11,6 +11,7 @@ import DataContext from '../../Context/DataContext';
 import CartOverlay from "../CartOverlay/CartOverlay";
 import {client} from "../../index";
 import {Link} from "react-router-dom";
+import CurrencyDropdown from "../CurrencyDropdown/CurrencyDropdown";
 
 export class Header extends PureComponent {
     static contextType = DataContext;
@@ -18,14 +19,12 @@ export class Header extends PureComponent {
         super(props);
         this.state = {
             categories: [],
-            all_currencies: [],
             showCartOverlay: false
         };
     }
 
     componentDidMount() {
         this.queryCategories();
-        this.queryCurrencies();
 
         // TODO: find a non-hard-coded solution for this
         this.queryProducts('all');
@@ -55,30 +54,6 @@ export class Header extends PureComponent {
             });
     }
 
-    queryCurrencies() {
-        client.query({query: CURRENCIES})
-            .then(result => {
-                // console.log(result.data.currencies);
-                this.setState({
-                    all_currencies: result.data.currencies
-                })
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }
-
-    onCurrencyChange(value) {
-        const [symbol, label] = value.toString().split(' ');
-        try {
-            this.context.setData({...this.context, currency: {label, symbol}});
-        }
-        catch (error) {
-            console.log(error);
-        }
-
-    }
-
     toggleCartOverlay = () => {
         if (this.state.showCartOverlay === true) {
             this.setState({
@@ -94,7 +69,6 @@ export class Header extends PureComponent {
 
 
     render () {
-        // console.log(this.context);
         return (
             <header className={styles.header}>
 
@@ -118,23 +92,7 @@ export class Header extends PureComponent {
                     {/*CURRENCIES*/}
                     <ul className={styles.action_list}>
                         <li className={styles.action_list_item}>
-                            {/*TODO: make the currency dropdown a standalone component*/}
-                            <select
-                                name={'currencies'}
-                                className={styles.action_list_item__currency}
-                                onChange={(event) => this.onCurrencyChange(event.target.value)}
-                                // value={`${this.context.currency.symbol} ${this.context.currency.label}`}
-                            >
-                                {this.state.all_currencies.map(currency => {
-                                    const obj = {label: currency.label, symbol: currency.symbol}
-                                    return (
-                                        <option key={currency.label}
-                                                data-value={obj}
-                                                // label={currency.symbol}
-                                                >{currency.symbol} {currency.label}</option>
-                                    );
-                                })}
-                            </select>
+                            <CurrencyDropdown/>
                         </li>
                         {/*CART*/}
                         <li className={styles.action_list_item} onClick={this.toggleCartOverlay}>

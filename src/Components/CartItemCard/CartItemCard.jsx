@@ -4,7 +4,7 @@ import DataContext from "../../Context/DataContext";
 
 
 // TODO: Create a 'minimize' prop so that you can choose whether to show a big or minimized version of the card (e.g. CartOverlay vs. CartPage)
-export class CartItemCard extends Component {
+class CartItemCard extends Component {
     static contextType = DataContext;
 
     constructor(props) {
