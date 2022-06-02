@@ -73,8 +73,8 @@ export class Header extends PureComponent {
                 <img src={'assets/logo.svg'} alt={'logo'} className={styles.logo}/>
 
                 <nav className={styles.navigation}>
-                    {/*CURRENCIES*/}
                     <ul className={styles.action_list}>
+                        {/*CURRENCIES*/}
                         <li className={styles.action_list_item}>
                             <CurrencyDropdown/>
                         </li>

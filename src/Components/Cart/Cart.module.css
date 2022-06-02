@@ -1,4 +1,30 @@
+.container {
+    position: relative;
+}
+
 .cart_image {
+    position: relative;
     width: 20px;
     height: 20px;
+}
+.items_counter {
+    position: absolute;
+    top: -75%;
+    left: 75%;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 60px;
+
+    background-color: var(--c-black) ;
+    color: var(--c_white);
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.875rem; /* 14px */
+    line-height: 1rem; /* 16px */
+    font-weight: var(--font-weight-bold);
 }

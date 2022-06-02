@@ -1,8 +1,10 @@
 import React, {PureComponent} from 'react';
 import styles from './Cart.module.css';
 import CartOverlay from "../CartOverlay/CartOverlay";
+import DataContext from "../../Context/DataContext";
 
 class Cart extends PureComponent {
+    static contextType = DataContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -22,13 +24,15 @@ class Cart extends PureComponent {
         }
     }
     render() {
+        const cartItemsCounter = this.context.productsInCart.length;
         return (
-            <span onClick={this.toggleCartOverlay}>
+            <span onClick={this.toggleCartOverlay} className={styles.container}>
                 <img src={'assets/empty_cart_black.svg'} alt={'cart'}
                      className={styles.cart_image}/>
+                     <span className={styles.items_counter} style={{display: (cartItemsCounter) ? "flex": "none"}}>{cartItemsCounter}</span>
                 <CartOverlay visible={this.state.showCartOverlay}/>
             </span>
-        )
+        );
     }
 }
 export default Cart;
