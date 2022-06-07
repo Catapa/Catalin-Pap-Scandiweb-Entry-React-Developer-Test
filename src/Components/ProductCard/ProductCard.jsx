@@ -19,7 +19,6 @@ export class ProductCard extends PureComponent {
         const price = this.props.details.prices.find(el => el.currency.label === this.context.currency.label);
         const {amount} = price;
         const {label, symbol} = price.currency;
-        // console.log(symbol);
         this.setState({
             price_amount: amount,
             price_label: label,
@@ -29,20 +28,33 @@ export class ProductCard extends PureComponent {
 
     addToCart = (details) => {
         try {
+            const productAlreadyInCart = this.context.productsInCart.find(({ id }) => id === details.id);
+
             const {id, brand, name, gallery, prices, attributes} = details;
-            const newProduct = {
-                id: id,
-                brand: brand,
-                name: name,
-                gallery: gallery,
-                prices: prices,
-                attributes: attributes,
-                quantity: 1
+
+            /* if product already in cart, increase its quantity */
+            if (productAlreadyInCart) {
+                const updatedCart = this.context.productsInCart.map(product => (
+                    (product.id === id) ? {...product, quantity: product.quantity++} : product
+                ));
+                this.context.setData({updatedCart});
             }
-            this.context.setData({
-                ...this.context,
-                productsInCart: [...this.context.productsInCart, newProduct]
-            });
+            else {
+                const newProduct = {
+                    id: id,
+                    brand: brand,
+                    name: name,
+                    gallery: gallery,
+                    prices: prices,
+                    attributes: attributes,
+                    quantity: 1
+                }
+                this.context.setData({
+                    ...this.context,
+                    productsInCart: [...this.context.productsInCart, newProduct]
+                });
+            }
+
             alert(`Added ${brand} ${name} to shopping cart`);
         }
         catch (error) {
@@ -69,7 +81,6 @@ export class ProductCard extends PureComponent {
                      className={styles.container}>
                 <Link to={`/product/?id=${id}`}>
                     <div className={styles.product_card}>
-                        {/*<div style={{backgroundImage: `url(${thumbnail_source})` /*backgroundColor: "orange"*!/} className={styles.product_image}/>*/}
                         <img src={thumbnail_source} alt={'asd'} className={styles.product_image}/>
 
                         <span className={styles.product_name}>{brand} {name}</span>
