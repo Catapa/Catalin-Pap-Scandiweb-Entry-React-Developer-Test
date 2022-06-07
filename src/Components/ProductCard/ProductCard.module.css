@@ -1,3 +1,6 @@
+.container {
+    position: relative;
+}
 .product_card {
     /*width: 386px;*/
     /*height: 444px;*/
@@ -5,7 +8,6 @@
     width: 100%;
     height: 100%;
 
-    /*border: 1px solid black;*/
     padding: 1em;
 
     display: flex;
@@ -41,41 +43,41 @@ a {
     font-size: 1.125rem; /* 18px */
     line-height: 160%;
 }
-.product_buy_button {
+.floating_buy_button {
+    margin: 0;
+    padding: 0;
     border-style: none;
     width: 2em;
     height: 2em;
     background-color: var(--c-primary);
     border-radius: 100%;
     color: #ffffff;
-    position: relative;
+    position: absolute;
     left: 85%;
-    bottom: 20%;
+    bottom: 12.5%;
     z-index: 1;
+    filter: drop-shadow(0px 4px 11px rgba(29, 31, 34, 0.1));
 }
-.product_buy_button:hover {
-    box-shadow: 0 10px 10px var(--c-primary);
-}
-.product_buy_button img {
+.floating_buy_button img {
     width: 55%;
     transform: translate(-5%, 15%);
 }
-.product_buy_button:hover {
+.floating_buy_button:hover {
     cursor: pointer;
-    box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+    box-shadow: 0 0 40px 11px rgba(168, 172, 176, 0.19);
 }
 
 @media screen and (min-width: 450px) {
     .product_image {
         max-height: 250px;
     }
-    .product_buy_button {
+    .floating_buy_button {
         width: 2.75em;
         height: 2.75em;
         /*bottom: 5em;*/
         /*right: 0.75em;*/
     }
-    .product_buy_button img {
+    .floating_buy_button img {
         width: 65%;
         transform: translate(-5%, 15%);
     }
@@ -89,13 +91,13 @@ a {
     .product_image {
         max-height: 400px;
     }
-    .product_buy_button {
+    .floating_buy_button {
         width: 3.25em; /* 52px */
         height: 3.25em; /* 52px */
         /*bottom: 4.9em;*/
         /*right: 1em;*/
     }
-    .product_buy_button img {
+    .floating_buy_button img {
         width: 75%;
         transform: translate(-5%, 10%);
     }
@@ -105,7 +107,7 @@ a {
     .product_image {
         max-height: 500px;
     }
-    .product_buy_button {
+    .floating_buy_button {
         width: 4.25em;
         height: 4.25em;
         /*bottom: 4.9em;*/

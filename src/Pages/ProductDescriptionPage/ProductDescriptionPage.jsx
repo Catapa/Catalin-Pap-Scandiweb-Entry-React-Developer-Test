@@ -206,8 +206,6 @@ export class ProductDescriptionPage extends Component {
                                             const swatchButtonActiveStyles = `${styles.panel__attributes_selector__button} ${styles.panel__attributes_selector__swatch} ${styles.panel__attributes_selector__swatch__active}`;
                                             const category = attributeSet.name.toString();
                                             const product = attribute.id.toString();
-                                            console.log(category, product, this.getAttributeValue(category, product))
-                                            // console.log('category product', category, product, this.getAttributeValue(category, product));
                                             return (
                                                 (attributeSet.type === 'swatch') ?
                                                     <button key={attribute.id}

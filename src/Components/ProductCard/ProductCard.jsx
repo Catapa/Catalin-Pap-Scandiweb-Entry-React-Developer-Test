@@ -10,7 +10,8 @@ export class ProductCard extends PureComponent {
         this.state = {
             price_amount: 0,
             price_label: '',
-            price_symbol: ''
+            price_symbol: '',
+            isFloatingButtonVisible: false
         }
     }
 
@@ -49,12 +50,23 @@ export class ProductCard extends PureComponent {
         }
     }
 
+    switchFloatingButtonVisibility = (value) => {
+        if (value === true) {
+            this.setState({isFloatingButtonVisible: true});
+        }
+        else {
+            this.setState({isFloatingButtonVisible: false});
+        }
+    }
+
     render () {
         const thumbnail_source = this.props.details.gallery[0];
         const {id, brand, name} = this.props.details;
         this.getPrice();
         return (
-            <article>
+            <article onMouseEnter={() => this.switchFloatingButtonVisibility(true)}
+                     onMouseLeave={() => this.switchFloatingButtonVisibility(false)}
+                     className={styles.container}>
                 <Link to={`/product/?id=${id}`}>
                     <div className={styles.product_card}>
                         {/*<div style={{backgroundImage: `url(${thumbnail_source})` /*backgroundColor: "orange"*!/} className={styles.product_image}/>*/}
@@ -64,8 +76,9 @@ export class ProductCard extends PureComponent {
                         <span className={styles.product_price}>{this.state.price_symbol}{this.state.price_amount}</span>
                     </div>
                 </Link>
-                <button className={styles.product_buy_button}
-                        onClick={() => this.addToCart(this.props.details)}>
+                <button className={styles.floating_buy_button}
+                        onClick={() => this.addToCart(this.props.details)}
+                        style={{display: (this.state.isFloatingButtonVisible) ? "block": "none"}}>
                     <img src={'assets/empty_cart_white.svg'} alt={'Add to cart'}/>
                 </button>
             </article>
