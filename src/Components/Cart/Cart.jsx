@@ -24,7 +24,12 @@ class Cart extends PureComponent {
         }
     }
     render() {
-        const cartItemsCounter = this.context.productsInCart.length;
+        const cartItemsCounter = this.context.productsInCart.reduce(
+            (accumulator, product) =>
+                accumulator +
+                product.quantity
+            , 0
+        );
         return (
             <span onClick={this.toggleCartOverlay} className={styles.container}>
                 <img src={'assets/empty_cart_black.svg'} alt={'cart'}

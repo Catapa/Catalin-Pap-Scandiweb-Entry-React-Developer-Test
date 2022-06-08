@@ -9,21 +9,17 @@ export class CartOverlay extends PureComponent {
     static contextType = DataContext;
     constructor(props) {
         super(props);
-        this.state = {
-            // cartItemsTotal: this.context.productsInCart.reduce(
-            //     (accumulator, product) =>
-            //         accumulator +
-            //         product.prices.find(price => price.currency.label === this.context.currency.label).amount *
-            //         product.quantity
-            //     , 0
-            // )
-        }
     }
 
     render() {
         const {visible} = this.props;
         const visibilityClass = visible ? styles.show : styles.hidden;
-        const cartItemsCount = this.context.productsInCart.length;
+        const cartItemsCount = this.context.productsInCart.reduce(
+            (accumulator, product) =>
+                accumulator +
+                product.quantity
+            , 0
+        );
         const cartItemsTotal = this.context.productsInCart.reduce(
             (accumulator, product) =>
                 accumulator +
@@ -31,7 +27,6 @@ export class CartOverlay extends PureComponent {
                 product.quantity
             , 0
         );
-
 
         return (
             <div className={visibilityClass}>
@@ -49,9 +44,10 @@ export class CartOverlay extends PureComponent {
                     <span className={styles.items}>
                         {
                             this.context.productsInCart.map(product => {
-                                return (
-                                    <CartItemCard key={product.id} details={product}/>
-                                )
+                                if (product.quantity > 0)
+                                    return (
+                                        <CartItemCard key={product.id} details={product}/>
+                                    );
                             })
                         }
                     </span>

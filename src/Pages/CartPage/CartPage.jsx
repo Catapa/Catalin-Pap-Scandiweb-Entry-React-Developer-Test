@@ -35,6 +35,11 @@ export class CartPage extends Component {
     //     )
     //     return cartItemsQuantity !== this.state.cartItemsQuantity;
     // }
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        console.log("kurwa");
+        return nextContext !== this.context;
+    }
+
 
     placeOrder = () => {
         alert('Order placed successfully');
@@ -59,9 +64,10 @@ export class CartPage extends Component {
                 {/* TODO: display big versions of CartItemCard */}
                 {
                     this.context.productsInCart.map(product => {
-                        return (
-                            <CartItemCard key={product.id} details={product}/>
-                        )
+                        if (product.quantity > 0)
+                            return (
+                                <CartItemCard key={product.id} details={product}/>
+                            );
                     })
                 }
                 <section>
