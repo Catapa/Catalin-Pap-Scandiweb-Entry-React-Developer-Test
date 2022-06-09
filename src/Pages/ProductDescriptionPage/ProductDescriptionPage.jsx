@@ -36,7 +36,6 @@ export class ProductDescriptionPage extends Component {
         client.query({query: PRODUCT_BY_ID, variables: {id: productId}})
             .then(result => {
                 const {brand, name, description, attributes, gallery, prices, inStock} = result.data.product;
-                // const price = this.state.prices.find(price => price.currency.label === this.context.currency.label );
                 this.setState({
                     id: productId,
                     brand: brand,
@@ -46,7 +45,6 @@ export class ProductDescriptionPage extends Component {
                     gallery: gallery,
                     prices: prices,
                     inStock: inStock,
-                    // price: prices.find(price => price.currency.label === this.context.currency.label),
                     selected_image: gallery[0],
                     attributesSelect: this.attributeValues(attributes)
                 })
@@ -66,7 +64,6 @@ export class ProductDescriptionPage extends Component {
     addToCart = () => {
         try {
             const productAlreadyInCart = this.context.productsInCart.find(({ id }) => id === this.state.id);
-
             const {id, brand, name, gallery, prices, attributes} = this.state;
 
             /* if product already in cart, increase its quantity */
@@ -91,7 +88,6 @@ export class ProductDescriptionPage extends Component {
                     productsInCart: [...this.context.productsInCart, newProduct]
                 });
             }
-
             alert(`Added ${brand} ${name} to shopping cart`);
         }
         catch (error) {
@@ -148,28 +144,14 @@ export class ProductDescriptionPage extends Component {
                 attributesSelect: originalAttributesSelect
             }
         )
-
-        this.state.attributes.map(attributeSet => {
-            const category = attributeSet.name;
-            attributeSet.items.map(attribute => {
-                const product = attribute.id;
-                // console.log(category, product, this.getAttributeValue(category, product));
-            })
-        })
-        // console.log(originalAttributesSelect)
     };
 
     getAttributeValue = (category, value) => this.state.attributesSelect.find(
         prop => prop.hasOwnProperty(category)
     )[category][value];
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        // console.log('should update', 'this', this.state.attributesSelect, 'next', nextState.attributesSelect);
-        // return this.state.attributesSelect !== nextState.attributesSelect;
-        return true;
-    }
-
     render() {
+        const price = this.state.prices.find(price => price.currency.label === this.context.currency.label );
         return (
             <main className={styles.description_page}>
                 {/*TODO: move the gallery to its own component*/}
@@ -240,7 +222,6 @@ export class ProductDescriptionPage extends Component {
                                                                 })()}
                                                             onClick={(e) => {
                                                                 this.selectAttribute(e.target.value);
-                                                                // console.log('kurwa', category, product, this.getAttributeValue(category, '1T'));
                                                             }}>
                                                         {attribute.displayValue}
                                                     </button>
@@ -256,8 +237,8 @@ export class ProductDescriptionPage extends Component {
                     <div className={styles.panel__price}>
                         <p className={styles.panel__price__label}>price:</p>
                         <p className={styles.panel__price__value}>
-                            {this.state.price && this.state.price.currency && this.state.price.currency.symbol}
-                            {this.state.price && this.state.price.amount}
+                            {price && price.currency && price.currency.symbol}
+                            {price && price.amount}
                         </p>
                     </div>
 
