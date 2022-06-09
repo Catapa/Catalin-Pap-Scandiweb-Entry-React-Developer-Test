@@ -65,20 +65,36 @@ export class ProductDescriptionPage extends Component {
 
     addToCart = () => {
         try {
-            const newProduct = {
-                id: this.state.id,
-                brand: this.state.brand,
-                name: this.state.name,
-                gallery: this.state.gallery,
-                prices: this.state.prices,
-                attributes: this.state.attributes,
-                quantity: 1
+            const productAlreadyInCart = this.context.productsInCart.find(({ id }) => id === this.state.id);
+
+            const {id, brand, name, gallery, prices, attributes} = this.state;
+
+            /* if product already in cart, increase its quantity */
+            if (productAlreadyInCart) {
+                const updatedCart = this.context.productsInCart.map(product => (
+                    (product.id === id) ? {...product, quantity: product.quantity++} : product
+                ));
+                this.context.setData({updatedCart});
             }
-            this.context.setData({
-                ...this.context,
-                productsInCart: [...this.context.productsInCart, newProduct]
-            });
-        } catch (error) {
+            else {
+                const newProduct = {
+                    id: id,
+                    brand: brand,
+                    name: name,
+                    gallery: gallery,
+                    prices: prices,
+                    attributes: attributes,
+                    quantity: 1
+                }
+                this.context.setData({
+                    ...this.context,
+                    productsInCart: [...this.context.productsInCart, newProduct]
+                });
+            }
+
+            alert(`Added ${brand} ${name} to shopping cart`);
+        }
+        catch (error) {
             console.log(error);
         }
     }
@@ -137,10 +153,10 @@ export class ProductDescriptionPage extends Component {
             const category = attributeSet.name;
             attributeSet.items.map(attribute => {
                 const product = attribute.id;
-                console.log(category, product, this.getAttributeValue(category, product));
+                // console.log(category, product, this.getAttributeValue(category, product));
             })
         })
-        console.log(originalAttributesSelect)
+        // console.log(originalAttributesSelect)
     };
 
     getAttributeValue = (category, value) => this.state.attributesSelect.find(
@@ -220,7 +236,6 @@ export class ProductDescriptionPage extends Component {
                                                             className={
                                                                 (() => {
                                                                     const styles = (this.getAttributeValue(category, product) === true) ? textButtonActiveStyles : textButtonStyles
-                                                                    console.log('render', styles)
                                                                     return styles
                                                                 })()}
                                                             onClick={(e) => {
@@ -235,17 +250,6 @@ export class ProductDescriptionPage extends Component {
                                 </div>
                             )
                         })}
-                        {/*<p className={styles.panel__attributes__label}>Size:</p>*/}
-                        {/*<div className={styles.panel__attributes_selector}>*/}
-                        {/*    <button*/}
-                        {/*        className={`${styles.panel__attributes_selector__button} ${styles.panel__attributes_selector__button__disabled}`}>XS*/}
-                        {/*    </button>*/}
-                        {/*    <button*/}
-                        {/*        className={`${styles.panel__attributes_selector__button} ${styles.panel__attributes_selector__button__active}`}>S*/}
-                        {/*    </button>*/}
-                        {/*    <button className={styles.panel__attributes_selector__button}>M</button>*/}
-                        {/*    <button className={styles.panel__attributes_selector__button}>L</button>*/}
-                        {/*</div>*/}
                     </div>
 
                     {/* Product Price */}
@@ -268,5 +272,4 @@ export class ProductDescriptionPage extends Component {
         );
     }
 }
-
 export default ProductDescriptionPage;
