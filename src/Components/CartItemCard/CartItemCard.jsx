@@ -28,24 +28,11 @@ class CartItemCard extends Component {
             ));
             this.context.setData({updatedCart});
         }
-        /* TODO: it should disappear automatically when quantity 0 (does not trigger re-render) */
         if (this.state.quantity === 0) {
             const updatedCart = this.context.productsInCart.filter(product => (product.id !== this.props.details.id));
-            console.log(updatedCart);
             this.context.setData({updatedCart});
         }
     };
-
-    // shouldComponentUpdate(nextProps, nextState, nextContext) {
-    //     const quantityFromContext = this.context.productsInCart.find(product => product.id === this.props.details.id).quantity;
-    //     if ( quantityFromContext !== this.state.quantity) {
-    //         this.setState({
-    //             quantity: quantityFromContext
-    //         });
-    //         return true;
-    //     }
-    //     else return false;
-    // }
 
     render() {
         const {brand, name, gallery, prices, attributes} = this.props.details;

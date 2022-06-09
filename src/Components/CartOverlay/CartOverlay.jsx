@@ -30,16 +30,12 @@ export class CartOverlay extends PureComponent {
 
         return (
             <div className={visibilityClass}>
-                <Backdrop/>
-
-
                 <div className={styles.container}>
                     {/*Heading*/}
                     <span className={styles.heading}>
                         <span className={styles.heading__title}>my bag</span>
                         <span className={styles.heading__items_count}>, {cartItemsCount} items</span>
                     </span>
-
                     {/*Items*/}
                     <span className={styles.items}>
                         {
@@ -56,7 +52,6 @@ export class CartOverlay extends PureComponent {
                         <span className={styles.total__label}>total</span>
                         <span className={styles.total__amount}>{this.context.currency.symbol}{cartItemsTotal.toFixed(2)}</span>
                     </span>
-
                     {/*Buttons*/}
                     <span className={styles.actions}>
                         <Link to={'/cart'} className={styles.actions__button}>view bag</Link>

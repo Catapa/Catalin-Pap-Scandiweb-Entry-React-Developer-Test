@@ -20,7 +20,6 @@ export class ProductDescriptionPage extends Component {
             prices: [],
             inStock: false,
             price: 0,
-            // selected_image: '',
             attributesSelect: []
         }
         this.updateProductInfo();
@@ -54,13 +53,6 @@ export class ProductDescriptionPage extends Component {
                 console.log(error);
             });
     };
-
-    // selectImage = (source) => {
-    //     this.setState({
-    //         ...this.state,
-    //         selected_image: source
-    //     });
-    // }
 
     addToCart = () => {
         try {
