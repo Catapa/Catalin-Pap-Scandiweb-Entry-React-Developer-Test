@@ -3,6 +3,7 @@ import styles from './ProductDescriptionPage.module.css';
 import {client} from "../../index";
 import {PRODUCT_BY_ID} from "../../Queries/queries";
 import DataContext from "../../Context/DataContext";
+import Gallery from "../../Components/Gallery/Gallery";
 
 export class ProductDescriptionPage extends Component {
     static contextType = DataContext;
@@ -19,7 +20,7 @@ export class ProductDescriptionPage extends Component {
             prices: [],
             inStock: false,
             price: 0,
-            selected_image: '',
+            // selected_image: '',
             attributesSelect: []
         }
         this.updateProductInfo();
@@ -45,7 +46,7 @@ export class ProductDescriptionPage extends Component {
                     gallery: gallery,
                     prices: prices,
                     inStock: inStock,
-                    selected_image: gallery[0],
+                    // selected_image: gallery[0],
                     attributesSelect: this.attributeValues(attributes)
                 })
             })
@@ -54,12 +55,12 @@ export class ProductDescriptionPage extends Component {
             });
     };
 
-    selectImage = (source) => {
-        this.setState({
-            ...this.state,
-            selected_image: source
-        });
-    }
+    // selectImage = (source) => {
+    //     this.setState({
+    //         ...this.state,
+    //         selected_image: source
+    //     });
+    // }
 
     addToCart = () => {
         try {
@@ -154,31 +155,8 @@ export class ProductDescriptionPage extends Component {
         const price = this.state.prices.find(price => price.currency.label === this.context.currency.label );
         return (
             <main className={styles.description_page}>
-                {/*TODO: move the gallery to its own component*/}
-                {/*TODO: fix rendering when image selected*/}
-                <div className={styles.product_view}>
-                    {/* Image Gallery */}
-                    <div className={styles.gallery}>
-                        {
-                            this.state.gallery.map(imageSource => {
-                                return (
-                                    <img key={imageSource}
-                                         src={imageSource}
-                                         alt={'asl'}
-                                         className={styles.gallery__image}
-                                         onClick={() => this.selectImage(imageSource)}
-                                    />
-                                )
-                            })
-                        }
-                    </div>
-
-                    {/* Image in focus */}
-                    <div className={styles.product_view__main}>
-                        <img src={this.state.selected_image} alt={'main image'}
-                             className={styles.product_view__main__image}/>
-                    </div>
-                </div>
+                {/* Gallery */}
+                {this.state.gallery.length && <Gallery gallery={this.state.gallery}/>}
 
                 {/* Info Panel */}
                 <div className={styles.panel}>
