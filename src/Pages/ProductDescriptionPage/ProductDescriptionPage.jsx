@@ -57,7 +57,7 @@ export class ProductDescriptionPage extends Component {
     addToCart = () => {
         try {
             const productAlreadyInCart = this.context.productsInCart.find(({ id }) => id === this.state.id);
-            const {id, brand, name, gallery, prices, attributes} = this.state;
+            const {id, brand, name, gallery, prices, attributes, attributesSelect} = this.state;
 
             /* if product already in cart, increase its quantity */
             if (productAlreadyInCart) {
@@ -74,6 +74,7 @@ export class ProductDescriptionPage extends Component {
                     gallery: gallery,
                     prices: prices,
                     attributes: attributes,
+                    attributesSelect: attributesSelect,
                     quantity: 1
                 }
                 this.context.setData({
@@ -185,11 +186,7 @@ export class ProductDescriptionPage extends Component {
                                                     :
                                                     <button key={attribute.id}
                                                             value={attribute.id}
-                                                            className={
-                                                                (() => {
-                                                                    const styles = (this.getAttributeValue(category, product) === true) ? textButtonActiveStyles : textButtonStyles
-                                                                    return styles
-                                                                })()}
+                                                            className={(this.getAttributeValue(category, product) === true) ? textButtonActiveStyles : textButtonStyles}
                                                             onClick={(e) => {
                                                                 this.selectAttribute(e.target.value);
                                                             }}>

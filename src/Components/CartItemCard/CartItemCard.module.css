@@ -25,6 +25,9 @@
 .product_info__sizes {
     align-items: flex-end;
 }
+.interactable {
+    cursor: pointer;
+}
 .button {
     border: 1px solid var(--c-black);
     font-family: 'Source Sans Pro', sans-serif;
@@ -39,25 +42,23 @@
     height: auto;
     padding: 0 0.33em;
     margin-right: 0.5em; /* 8px */
-    cursor: pointer;
+}
+.button__active {
+    color: var(--c_white);
+    background-color: var(--c-black);
 }
 .button__swatch {
     width: 1em;
     height: 1em;
 }
+.button__swatch__active {
+    border: 1px outset var(--c-primary);
+    box-shadow: 0 0 0px 1px white, 0 0 0px 3px var(--c-primary);
+}
 .button_disabled {
     border-color: var(--c_gray);
     color: var(--c_gray);
     background-color: var(--c_gray_transparent);
-}
-
-.text_attribute_active {
-    color: var(--c_white);
-    background-color: var(--c-black);
-}
-.swatch_attribute_active {
-    border: 1px outset var(--c-primary);
-    box-shadow: 0 0 0px 1px white, 0 0 0px 3px var(--c-primary);
 }
 
 .quantity_selector {

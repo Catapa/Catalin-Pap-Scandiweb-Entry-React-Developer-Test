@@ -34,10 +34,15 @@ class CartItemCard extends Component {
         }
     };
 
+    getAttributeValue = (category, value) => this.props.details.attributesSelect.find(
+        prop => prop.hasOwnProperty(category)
+    )[category][value];
+
     render() {
-        const {brand, name, gallery, prices, attributes} = this.props.details;
+        const {brand, name, gallery, prices, attributes, attributesSelect} = this.props.details;
         const price = prices.find(price => price.currency.label === this.context.currency.label);
         const quantity = this.context.productsInCart.find(product => (product.id === this.props.details.id)).quantity;
+        console.log(attributesSelect);
         return (
             <div className={styles.item_card}>
                 <div className={styles.product_info}>
@@ -51,29 +56,36 @@ class CartItemCard extends Component {
                                 <div key={attributeSet.id} className={styles.product_info__sizes}>
                                     <p key={attributeSet.id}>{attributeSet.name}:</p>
                                     {attributeSet.items.map(attribute => {
+                                        // text button styles
+                                        const textButtonStyles = styles.button;
+                                        const textButtonActiveStyles = `${styles.button} ${styles.button__active}`;
+                                        // swatch button styles
+                                        const swatchButtonStyles = `${styles.button} ${styles.button__swatch}`;
+                                        const swatchButtonActiveStyles = `${styles.button} ${styles.button__swatch} ${styles.button__swatch__active}`;
+                                        const category = attributeSet.name.toString();
+                                        const product = attribute.id.toString();
+
                                         return (
                                             (attributeSet.type === 'swatch') ?
                                                 <button key={attribute.id}
-                                                        className={`${styles.button} ${styles.button__swatch}`}
+                                                        className={(this.getAttributeValue(category, product) === true) ? swatchButtonActiveStyles : swatchButtonStyles}
                                                         style={{backgroundColor: `${attribute.displayValue}`}}/>
                                                 :
                                                 <button key={attribute.id}
-                                                        className={styles.button}>{attribute.displayValue}</button>
+                                                        className={(this.getAttributeValue(category, product) === true) ? textButtonActiveStyles : textButtonStyles}>
+                                                    {attribute.displayValue}
+                                                </button>
                                         );
                                     })}
-
-                                    {/*<button className={`${styles.button} ${styles.button_disabled}`}>M</button>*/}
                                 </div>
                             );
                         })
                     }
-
                 </div>
-
                 <div className={styles.quantity_selector}>
-                    <button className={styles.button} onClick={this.decreaseQuantity}>-</button>
+                    <button className={`${styles.button} ${styles.interactable}`} onClick={this.decreaseQuantity}>-</button>
                     <span className={styles.quantity_label}>{quantity}</span>
-                    <button className={styles.button} onClick={this.increaseQuantity}>+</button>
+                    <button className={`${styles.button} ${styles.interactable}`} onClick={this.increaseQuantity}>+</button>
                 </div>
 
                 <img src={gallery[0]} alt={'product'} className={styles.image}/>
