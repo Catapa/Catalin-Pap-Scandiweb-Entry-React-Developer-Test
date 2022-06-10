@@ -54,35 +54,58 @@ export class ProductDescriptionPage extends Component {
             });
     };
 
+    withAttributes = (attributes) => {
+        let attributesSelected = true;
+        attributes.map(attributeSet => {
+            let isAtleastOneSelected = false;
+            const category = attributeSet.name.toString();
+            attributeSet.items.map(attribute => {
+                const product = attribute.id.toString();
+                if (this.getAttributeValue(category, product))
+                    isAtleastOneSelected = true;
+            });
+            if (isAtleastOneSelected === false)
+                attributesSelected = false;
+        });
+
+        return attributesSelected;
+}
+
     addToCart = () => {
         try {
             const productAlreadyInCart = this.context.productsInCart.find(({ id }) => id === this.state.id);
             const {id, brand, name, gallery, prices, attributes, attributesSelect} = this.state;
 
-            /* if product already in cart, increase its quantity */
-            if (productAlreadyInCart) {
-                const updatedCart = this.context.productsInCart.map(product => (
-                    (product.id === id) ? {...product, quantity: product.quantity++} : product
-                ));
-                this.context.setData({updatedCart});
+            if (this.withAttributes(attributes, attributesSelect)) {
+                /* if product already in cart, increase its quantity */
+                if (productAlreadyInCart) {
+                    const updatedCart = this.context.productsInCart.map(product => (
+                        (product.id === id) ? {...product, quantity: product.quantity++} : product
+                    ));
+                    this.context.setData({updatedCart});
+                }
+                else {
+                    const newProduct = {
+                        id: id,
+                        brand: brand,
+                        name: name,
+                        gallery: gallery,
+                        prices: prices,
+                        attributes: attributes,
+                        attributesSelect: attributesSelect,
+                        quantity: 1
+                    }
+                    this.context.setData({
+                        ...this.context,
+                        productsInCart: [...this.context.productsInCart, newProduct]
+                    });
+                }
+                alert(`Added ${brand} ${name} to shopping cart`);
             }
             else {
-                const newProduct = {
-                    id: id,
-                    brand: brand,
-                    name: name,
-                    gallery: gallery,
-                    prices: prices,
-                    attributes: attributes,
-                    attributesSelect: attributesSelect,
-                    quantity: 1
-                }
-                this.context.setData({
-                    ...this.context,
-                    productsInCart: [...this.context.productsInCart, newProduct]
-                });
+                alert("Please select desired attributes");
             }
-            alert(`Added ${brand} ${name} to shopping cart`);
+
         }
         catch (error) {
             console.log(error);

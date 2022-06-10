@@ -26,36 +26,40 @@ export class ProductCard extends PureComponent {
         })
     }
 
+    /* TODO: Do not allow adding to cart products with no attributes selected (if the case) */
     addToCart = (details) => {
         try {
             const productAlreadyInCart = this.context.productsInCart.find(({ id }) => id === details.id);
-
             const {id, brand, name, gallery, prices, attributes} = details;
 
-            /* if product already in cart, increase its quantity */
-            if (productAlreadyInCart) {
-                const updatedCart = this.context.productsInCart.map(product => (
-                    (product.id === id) ? {...product, quantity: product.quantity++} : product
-                ));
-                this.context.setData({updatedCart});
+            if (!attributes.length) {
+                /* if product already in cart, increase its quantity */
+                if (productAlreadyInCart) {
+                    const updatedCart = this.context.productsInCart.map(product => (
+                        (product.id === id) ? {...product, quantity: product.quantity++} : product
+                    ));
+                    this.context.setData({updatedCart});
+                }
+                else {
+                    const newProduct = {
+                        id: id,
+                        brand: brand,
+                        name: name,
+                        gallery: gallery,
+                        prices: prices,
+                        attributes: attributes,
+                        quantity: 1
+                    }
+                    this.context.setData({
+                        ...this.context,
+                        productsInCart: [...this.context.productsInCart, newProduct]
+                    });
+                }
+                alert(`Added ${brand} ${name} to shopping cart`);
             }
             else {
-                const newProduct = {
-                    id: id,
-                    brand: brand,
-                    name: name,
-                    gallery: gallery,
-                    prices: prices,
-                    attributes: attributes,
-                    quantity: 1
-                }
-                this.context.setData({
-                    ...this.context,
-                    productsInCart: [...this.context.productsInCart, newProduct]
-                });
+                alert("Before adding product to cart please go to product page and select desired attributes");
             }
-
-            alert(`Added ${brand} ${name} to shopping cart`);
         }
         catch (error) {
             console.log(error);

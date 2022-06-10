@@ -42,7 +42,6 @@ class CartItemCard extends Component {
         const {brand, name, gallery, prices, attributes, attributesSelect} = this.props.details;
         const price = prices.find(price => price.currency.label === this.context.currency.label);
         const quantity = this.context.productsInCart.find(product => (product.id === this.props.details.id)).quantity;
-        console.log(attributesSelect);
         return (
             <div className={styles.item_card}>
                 <div className={styles.product_info}>
