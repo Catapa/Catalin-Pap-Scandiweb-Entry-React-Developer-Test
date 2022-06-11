@@ -1,6 +1,7 @@
 import React, {Component, PureComponent} from 'react';
 import styles from './CartItemCard.module.css';
 import DataContext from "../../Context/DataContext";
+import ProductAttributes from "../ProductAttributes/ProductAttributes";
 
 
 // TODO: Create a 'minimize' prop so that you can choose whether to show a big or minimized version of the card (e.g. CartOverlay vs. CartPage)
@@ -42,36 +43,50 @@ class CartItemCard extends Component {
         const {brand, name, gallery, prices, attributes, attributesSelect} = this.props.details;
         const price = prices.find(price => price.currency.label === this.context.currency.label);
         const quantity = this.context.productsInCart.find(product => (product.id === this.props.details.id)).quantity;
+
+        /* STYLES */
+        const item_card = (this.props.big_format) ? `${styles.item_card_big} ${styles.item_card}` : styles.item_card;
+        const product_info = (this.props.big_format) ? `${styles.product_info} ${styles.product_info_big}` : styles.product_info;
+        const product_info__brand = (this.props.big_format) ? `${styles.product_info__brand} ${styles.product_info__brand_big}` : styles.product_info__brand;
+        const product_info__name = (this.props.big_format) ? `${styles.product_info__name} ${styles.product_info__name_big}` : styles.product_info__name;
+        const product_info__price = (this.props.big_format) ? `${styles.product_info__price} ${styles.product_info__price_big}` : styles.product_info__price;
+        const product_info__attributes = (this.props.big_format) ? `${styles.product_info__attributes} ${styles.product_info__attributes_big}` : styles.product_info__attributes;
+        const attribute_names = (this.props.big_format) ? `${styles.attributes_name} ${styles.attributes_name_big}` : styles.attributes_name;
+        const text_attribute = (this.props.big_format) ? `${styles.button} ${styles.button_big}` : styles.button;
+        const text_attribute_active = (this.props.big_format) ? `${styles.button} ${styles.button_big} ${styles.button__active}` : `${styles.button} ${styles.button__active}`;
+        const swatch_attribute = (this.props.big_format) ? `${styles.button} ${styles.button__swatch_big}` : `${styles.button} ${styles.button__swatch}`;
+        const swatch_attribute_active = (this.props.big_format) ? `${styles.button} ${styles.button__swatch_big} ${styles.button__swatch__active}` : `${styles.button} ${styles.button__swatch} ${styles.button__swatch__active}`;
+        const quantity_interactable = (this.props.big_format) ? `${styles.button} ${styles.interactable_big}` : `${styles.button} ${styles.interactable}`;
+        const quantity_label = (this.props.big_format) ? `${styles.quantity_label} ${styles.quantity_label_big}` : styles.quantity_label;
+        const image = (this.props.big_format) ? `${styles.image} ${styles.image_big}` : styles.image;
         return (
-            <div className={styles.item_card}>
-                <div className={styles.product_info}>
+            <div className={item_card}>
+                <div className={product_info}>
                     <div>
-                        <p className={styles.product_info__name}>{brand} {name}</p>
-                        <p className={styles.product_info__price}>{price.currency && price.currency.symbol}{(price.amount * quantity).toFixed(2)}</p>
+                        <p className={product_info__brand}>{brand}</p>
+                        <p className={product_info__name}>{name}</p>
+                        <p className={product_info__price}>{price.currency && price.currency.symbol}{(price.amount * quantity).toFixed(2)}</p>
                     </div>
+
+                    {/*<ProductAttributes attributes={attributes} attributesSelect={attributesSelect} selectable={false}/>*/}
+
                     {
                         attributes.map(attributeSet => {
                             return (
-                                <div key={attributeSet.id} className={styles.product_info__sizes}>
-                                    <p key={attributeSet.id}>{attributeSet.name}:</p>
+                                <div key={attributeSet.id} className={product_info__attributes}>
+                                    <p key={attributeSet.id} className={attribute_names}>{attributeSet.name}:</p>
                                     {attributeSet.items.map(attribute => {
-                                        // text button styles
-                                        const textButtonStyles = styles.button;
-                                        const textButtonActiveStyles = `${styles.button} ${styles.button__active}`;
-                                        // swatch button styles
-                                        const swatchButtonStyles = `${styles.button} ${styles.button__swatch}`;
-                                        const swatchButtonActiveStyles = `${styles.button} ${styles.button__swatch} ${styles.button__swatch__active}`;
                                         const category = attributeSet.name.toString();
                                         const product = attribute.id.toString();
 
                                         return (
                                             (attributeSet.type === 'swatch') ?
                                                 <button key={attribute.id}
-                                                        className={(this.getAttributeValue(category, product) === true) ? swatchButtonActiveStyles : swatchButtonStyles}
+                                                        className={(this.getAttributeValue(category, product) === true) ? swatch_attribute_active : swatch_attribute}
                                                         style={{backgroundColor: `${attribute.displayValue}`}}/>
                                                 :
                                                 <button key={attribute.id}
-                                                        className={(this.getAttributeValue(category, product) === true) ? textButtonActiveStyles : textButtonStyles}>
+                                                        className={(this.getAttributeValue(category, product) === true) ? text_attribute_active : text_attribute}>
                                                     {attribute.displayValue}
                                                 </button>
                                         );
@@ -82,12 +97,12 @@ class CartItemCard extends Component {
                     }
                 </div>
                 <div className={styles.quantity_selector}>
-                    <button className={`${styles.button} ${styles.interactable}`} onClick={this.decreaseQuantity}>-</button>
-                    <span className={styles.quantity_label}>{quantity}</span>
-                    <button className={`${styles.button} ${styles.interactable}`} onClick={this.increaseQuantity}>+</button>
+                    <button className={quantity_interactable} onClick={this.decreaseQuantity}>-</button>
+                    <span className={quantity_label}>{quantity}</span>
+                    <button className={quantity_interactable} onClick={this.increaseQuantity}>+</button>
                 </div>
 
-                <img src={gallery[0]} alt={'product'} className={styles.image}/>
+                <img src={gallery[0]} alt={'product'} className={image}/>
             </div>
         );
     }

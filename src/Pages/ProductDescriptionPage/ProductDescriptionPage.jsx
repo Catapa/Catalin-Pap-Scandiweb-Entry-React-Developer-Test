@@ -4,6 +4,7 @@ import {client} from "../../index";
 import {PRODUCT_BY_ID} from "../../Queries/queries";
 import DataContext from "../../Context/DataContext";
 import Gallery from "../../Components/Gallery/Gallery";
+import ProductAttributes from "../../Components/ProductAttributes/ProductAttributes";
 
 export class ProductDescriptionPage extends Component {
     static contextType = DataContext;
@@ -183,6 +184,8 @@ export class ProductDescriptionPage extends Component {
                     </div>
 
                     {/* Product Attributes */}
+                    {/*<ProductAttributes attributes={this.state.attributes} attributesSelect={this.state.attributesSelect} selectable={true}/>*/}
+
                     <div className={styles.panel__attributes}>
                         {this.state.attributes.map(attributeSet => {
                             return (
@@ -210,9 +213,7 @@ export class ProductDescriptionPage extends Component {
                                                     <button key={attribute.id}
                                                             value={attribute.id}
                                                             className={(this.getAttributeValue(category, product) === true) ? textButtonActiveStyles : textButtonStyles}
-                                                            onClick={(e) => {
-                                                                this.selectAttribute(e.target.value);
-                                                            }}>
+                                                            onClick={(e) => this.selectAttribute(e.target.value)}>
                                                         {attribute.displayValue}
                                                     </button>
                                             )

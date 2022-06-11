@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import styles from './CartPage.module.css';
 import CartItemCard from "../../Components/CartItemCard/CartItemCard";
 import DataContext from "../../Context/DataContext";
+import Heading from "../../Components/Heading/Heading";
 
 
 export class CartPage extends Component {
@@ -61,12 +62,12 @@ export class CartPage extends Component {
         );
         return (
             <div className={styles.page}>
-                {/* TODO: display big versions of CartItemCard */}
+                <h1>Cart</h1>
                 {
                     this.context.productsInCart.map(product => {
                         if (product.quantity > 0)
                             return (
-                                <CartItemCard key={product.id} details={product}/>
+                                <CartItemCard key={product.id} details={product} big_format={true}/>
                             );
                     })
                 }
