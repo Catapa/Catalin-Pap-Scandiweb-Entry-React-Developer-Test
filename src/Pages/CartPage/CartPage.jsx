@@ -14,28 +14,6 @@ export class CartPage extends Component {
         }
     }
 
-
-    // componentDidUpdate = (prevProps, prevState, snapshot) => {
-    //     this.setState({
-    //         ...prevState,
-    //         cartItemsQuantity: this.context.productsInCart.reduce(
-    //             (accumulator, product) =>
-    //                 accumulator +
-    //                 product.quantity
-    //             , 0
-    //         )
-    //     })
-    // }
-    // shouldComponentUpdate = () => {
-    //     console.log('check');
-    //     const cartItemsQuantity = this.context.productsInCart.reduce(
-    //         (accumulator, product) =>
-    //             accumulator +
-    //             product.quantity
-    //         , 0
-    //     )
-    //     return cartItemsQuantity !== this.state.cartItemsQuantity;
-    // }
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         console.log("kurwa");
         return nextContext !== this.context;
@@ -62,7 +40,7 @@ export class CartPage extends Component {
         );
         return (
             <div className={styles.page}>
-                <h1>Cart</h1>
+                <h1 className={styles.heading}>Cart</h1>
                 {
                     this.context.productsInCart.map(product => {
                         if (product.quantity > 0)
