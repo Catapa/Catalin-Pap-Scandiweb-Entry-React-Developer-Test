@@ -75,8 +75,12 @@ export class ProductDescriptionPage extends Component {
     addToCart = () => {
         try {
             const productAlreadyInCart = this.context.productsInCart.find(({ id }) => id === this.state.id);
-            const {id, brand, name, gallery, prices, attributes, attributesSelect} = this.state;
+            const {id, brand, name, gallery, prices, attributes, attributesSelect, inStock} = this.state;
 
+            if (!inStock) {
+                alert('Product is out of stock');
+                return;
+            }
             if (this.withAttributes(attributes, attributesSelect)) {
                 /* if product already in cart, increase its quantity */
                 if (productAlreadyInCart) {
