@@ -1,10 +1,7 @@
-import React, {Component, PureComponent} from 'react';
+import React, {Component} from 'react';
 import styles from './CartItemCard.module.css';
 import DataContext from "../../Context/DataContext";
-import ProductAttributes from "../ProductAttributes/ProductAttributes";
 
-
-// TODO: Create a 'minimize' prop so that you can choose whether to show a big or minimized version of the card (e.g. CartOverlay vs. CartPage)
 class CartItemCard extends Component {
     static contextType = DataContext;
     constructor(props) {
