@@ -211,13 +211,15 @@ export class ProductDescriptionPage extends Component {
                                                             value={attribute.id}
                                                             className={(this.getAttributeValue(category, product) === true) ? swatchButtonActiveStyles : swatchButtonStyles}
                                                             style={{backgroundColor: `${attribute.displayValue}`}}
-                                                            onClick={(e) => this.selectAttribute(e.target.value)}>
+                                                            onClick={(e) => this.selectAttribute(e.target.value)}
+                                                            disabled={!this.state.inStock}>
                                                     </button>
                                                     :
                                                     <button key={attribute.id}
                                                             value={attribute.id}
                                                             className={(this.getAttributeValue(category, product) === true) ? textButtonActiveStyles : textButtonStyles}
-                                                            onClick={(e) => this.selectAttribute(e.target.value)}>
+                                                            onClick={(e) => this.selectAttribute(e.target.value)}
+                                                            disabled={!this.state.inStock}>
                                                         {attribute.displayValue}
                                                     </button>
                                             )
@@ -237,8 +239,9 @@ export class ProductDescriptionPage extends Component {
                         </p>
                     </div>
 
+                    {!this.state.inStock && <p className={styles.warning}>Out of stock</p>}
                     {/* Add to cart button */}
-                    <button className={styles.panel__add_to_cart_button} onClick={this.addToCart}>add to cart</button>
+                    <button className={styles.panel__add_to_cart_button} onClick={this.addToCart} disabled={!this.state.inStock}>add to cart</button>
 
                     {/* Description */}
                     <article className={styles.panel__description}

@@ -71,7 +71,7 @@
     color: var(--c_white);
     background-color: var(--c-black);
 }
-.panel__attributes_selector__button__disabled {
+.panel__attributes_selector__button:disabled {
     color: var(--c_gray);
     border-color: var(--c_gray);
 }
@@ -119,9 +119,17 @@
     /* Cursor */
     cursor: pointer;
 }
+.panel__add_to_cart_button:disabled {
+    background-color: var(--c_gray);
+}
 .panel__description {
     font-family: 'Roboto', sans-serif;
     font-size: 1rem; /* 16px */
     font-weight: var(--font-weight-regular);
     line-height: 159.96%; /* 26px */
+}
+.warning {
+    font-size: 1.5rem;
+    color: rgba(255, 64, 64, 1);
+    font-weight: var(--font-weight-semibold);
 }
