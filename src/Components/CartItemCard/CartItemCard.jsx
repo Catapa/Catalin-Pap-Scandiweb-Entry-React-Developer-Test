@@ -80,8 +80,10 @@ class CartItemCard extends Component {
                 <div className={product_info}>
                     <div>
                         <Link to={`/product/?id=${id}`}>
-                            <p className={product_info__brand}>{brand}</p>
-                            <p className={product_info__name}>{name}</p>
+                            <div className={styles.product_link}>
+                                <p className={product_info__brand}>{brand}</p>
+                                <p className={product_info__name}>{name}</p>
+                            </div>
                         </Link>
                         <p className={product_info__price}>{price.currency && price.currency.symbol}{(price.amount * quantity).toFixed(2)}</p>
                     </div>
