@@ -158,5 +158,6 @@
     margin: 0 0.125em; /* 0 2px */
 }
 .image_big {
-    max-width: 17.5% !important;
+    max-width: 12.5rem !important;
+    margin-left: 1.5rem /* 24px */ !important;
 }
