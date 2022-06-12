@@ -75,6 +75,9 @@
     color: var(--c_gray);
     border-color: var(--c_gray);
 }
+.panel__attributes_selector__button:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
 .panel__attributes_selector__swatch {
     width: 2em;
     height: 2em;
@@ -121,6 +124,12 @@
 }
 .panel__add_to_cart_button:disabled {
     background-color: var(--c_gray);
+}
+.panel__add_to_cart_button:hover {
+    background-color: rgba(94, 225, 123, 1);
+}
+.panel__add_to_cart_button:active {
+    box-shadow: 0 4px 24px rgba(94, 200, 123, 0.5);
 }
 .panel__description {
     font-family: 'Roboto', sans-serif;
