@@ -10,7 +10,9 @@ class CartItemCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            quantity: this.props.details.quantity
+            quantity: this.props.details.quantity,
+            imageIndex: 0,
+            totalImageCount: this.props.details.gallery.length
         }
     };
 
@@ -38,6 +40,22 @@ class CartItemCard extends Component {
     getAttributeValue = (category, value) => this.props.details.attributesSelect.find(
         prop => prop.hasOwnProperty(category)
     )[category][value];
+
+    gallery_next = () => {
+        if (this.state.imageIndex < this.state.totalImageCount - 1) {
+            this.setState({
+                imageIndex: this.state.imageIndex + 1
+            });
+        }
+
+    }
+    gallery_previous = () => {
+        if (this.state.imageIndex > 0) {
+            this.setState({
+                imageIndex: this.state.imageIndex - 1
+            });
+        }
+    }
 
     render() {
         const {brand, name, gallery, prices, attributes, attributesSelect} = this.props.details;
@@ -102,7 +120,18 @@ class CartItemCard extends Component {
                     <button className={quantity_interactable} onClick={this.increaseQuantity}>+</button>
                 </div>
 
-                <img src={gallery[0]} alt={'product'} className={image}/>
+                <section className={styles.image_container}>
+                    <img src={gallery[this.state.imageIndex]} alt={'product'} className={image}/>
+                    {this.props.big_format &&
+                    <section className={styles.image_selector}>
+                        <button className={styles.image_selector_button} onClick={this.gallery_previous} disabled={this.state.imageIndex === 0}>
+                            <img src={'assets/chevron_left.svg'} alt={'previous'}/>
+                        </button>
+                        <button className={styles.image_selector_button} onClick={this.gallery_next} disabled={this.state.imageIndex === this.state.totalImageCount - 1}>
+                            <img src={'assets/chevron_right.svg'} alt={'next'}/>
+                        </button>
+                    </section>}
+                </section>
             </div>
         );
     }
