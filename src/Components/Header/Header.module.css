@@ -10,10 +10,9 @@
     font-size: 1rem; /* 16px */
     line-height: 120%;
     font-weight: var(--font-weight-regular);
-    position: sticky;
+    position: relative;
     z-index: 5;
 }
-
 .navigation {
     text-decoration: none;
     flex: 1;
@@ -25,7 +24,6 @@
 .navigation:first-of-type {
     margin-right: auto;
 }
-
 .category_list, .action_list {
     display: flex;
     list-style: none;
