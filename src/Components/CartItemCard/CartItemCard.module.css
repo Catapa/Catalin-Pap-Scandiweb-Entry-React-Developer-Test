@@ -200,3 +200,6 @@
     max-width: 12.5rem !important;
     margin-left: 1.5rem /* 24px */ !important;
 }
+a:hover {
+    text-decoration: underline;
+}

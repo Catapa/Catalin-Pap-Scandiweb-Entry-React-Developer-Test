@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import styles from './CartItemCard.module.css';
 import DataContext from "../../Context/DataContext";
+import {Link} from "react-router-dom";
 
 class CartItemCard extends Component {
     static contextType = DataContext;
@@ -55,7 +56,7 @@ class CartItemCard extends Component {
     }
 
     render() {
-        const {brand, name, gallery, prices, attributes, attributesSelect} = this.props.details;
+        const {id, brand, name, gallery, prices, attributes, attributesSelect} = this.props.details;
         const price = prices.find(price => price.currency.label === this.context.currency.label);
         const quantity = this.context.productsInCart.find(product => (product.id === this.props.details.id)).quantity;
 
@@ -78,8 +79,10 @@ class CartItemCard extends Component {
             <div className={item_card}>
                 <div className={product_info}>
                     <div>
-                        <p className={product_info__brand}>{brand}</p>
-                        <p className={product_info__name}>{name}</p>
+                        <Link to={`/product/?id=${id}`}>
+                            <p className={product_info__brand}>{brand}</p>
+                            <p className={product_info__name}>{name}</p>
+                        </Link>
                         <p className={product_info__price}>{price.currency && price.currency.symbol}{(price.amount * quantity).toFixed(2)}</p>
                     </div>
 
