@@ -73,8 +73,9 @@ export class ProductDescriptionPage extends Component {
 }
 
     addToCart = () => {
+        const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
         try {
-            const productAlreadyInCart = this.context.productsInCart.find(({ id }) => id === this.state.id);
+            const productAlreadyInCart = productsInCart.find(({ id }) => id === this.state.id);
             const {id, brand, name, gallery, prices, attributes, attributesSelect, inStock} = this.state;
 
             if (!inStock) {
@@ -84,10 +85,11 @@ export class ProductDescriptionPage extends Component {
             if (this.withAttributes(attributes, attributesSelect)) {
                 /* if product already in cart, increase its quantity */
                 if (productAlreadyInCart) {
-                    const updatedCart = this.context.productsInCart.map(product => (
+                    const updatedCart = productsInCart.map(product => (
                         (product.id === id) ? {...product, quantity: product.quantity++} : product
                     ));
                     this.context.setData({updatedCart});
+                    window.sessionStorage.setItem('productsInCart', JSON.stringify(productsInCart));
                 }
                 else {
                     const newProduct = {
@@ -102,8 +104,11 @@ export class ProductDescriptionPage extends Component {
                     }
                     this.context.setData({
                         ...this.context,
-                        productsInCart: [...this.context.productsInCart, newProduct]
+                        productsInCart: [...productsInCart, newProduct]
                     });
+                    sessionStorage.setItem('productsInCart', JSON.stringify(
+                        [...productsInCart, newProduct]
+                    ));
                 }
                 alert(`Added ${brand} ${name} to shopping cart`);
             }

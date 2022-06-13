@@ -16,6 +16,8 @@ class App extends PureComponent {
     static contextType = DataContext;
     constructor(props) {
         super(props);
+        if (!JSON.parse(window.sessionStorage.getItem("productsInCart")))
+            window.sessionStorage.setItem('productsInCart', JSON.stringify([]));
     }
     render () {
         return (

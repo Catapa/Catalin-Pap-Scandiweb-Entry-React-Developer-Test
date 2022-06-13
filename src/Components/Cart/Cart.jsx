@@ -25,7 +25,8 @@ class Cart extends PureComponent {
         }
     }
     render() {
-        const cartItemsCounter = this.context.productsInCart.reduce(
+        const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
+        const cartItemsCounter = productsInCart.reduce(
             (accumulator, product) =>
                 accumulator +
                 product.quantity

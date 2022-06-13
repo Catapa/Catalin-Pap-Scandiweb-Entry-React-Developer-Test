@@ -9,7 +9,6 @@ export class DataProvider extends PureComponent {
     setData = (data) => {
         this.setState((prevState) => (data));
     }
-
     state = {
         currency: {
             label: 'USD',
@@ -19,6 +18,9 @@ export class DataProvider extends PureComponent {
         setData: this.setData,
         productsInCart: []
     };
+    componentDidMount() {
+
+    }
 
     render() {
         const {children} = this.props;

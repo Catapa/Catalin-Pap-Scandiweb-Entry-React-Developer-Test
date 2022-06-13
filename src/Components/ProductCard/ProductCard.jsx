@@ -27,19 +27,20 @@ export class ProductCard extends PureComponent {
         })
     }
 
-    /* TODO: Do not allow adding to cart products with no attributes selected (if the case) */
     addToCart = (details) => {
         try {
-            const productAlreadyInCart = this.context.productsInCart.find(({ id }) => id === details.id);
+            const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
+            const productAlreadyInCart = productsInCart.find(({ id }) => id === details.id);
             const {id, brand, name, gallery, prices, attributes} = details;
 
             if (!attributes.length) {
                 /* if product already in cart, increase its quantity */
                 if (productAlreadyInCart) {
-                    const updatedCart = this.context.productsInCart.map(product => (
+                    const updatedCart = productsInCart.map(product => (
                         (product.id === id) ? {...product, quantity: product.quantity++} : product
                     ));
                     this.context.setData({updatedCart});
+                    window.sessionStorage.setItem('productsInCart', JSON.stringify(productsInCart));
                 }
                 else {
                     const newProduct = {
@@ -53,8 +54,11 @@ export class ProductCard extends PureComponent {
                     }
                     this.context.setData({
                         ...this.context,
-                        productsInCart: [...this.context.productsInCart, newProduct]
+                        productsInCart: [...productsInCart, newProduct]
                     });
+                    sessionStorage.setItem('productsInCart', JSON.stringify(
+                       [...productsInCart, newProduct]
+                    ));
                 }
                 alert(`Added ${brand} ${name} to shopping cart`);
             }
@@ -101,5 +105,4 @@ export class ProductCard extends PureComponent {
         );
     }
 }
-
 export default ProductCard;

@@ -15,24 +15,23 @@ export class CartPage extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        console.log("kurwa");
         return nextContext !== this.context;
     }
-
 
     placeOrder = () => {
         alert('Order placed successfully');
     }
     // TODO: fix re-render problems on context change
     render () {
-        const cartItemsTotal = this.context.productsInCart.reduce(
+        const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
+        const cartItemsTotal = productsInCart.reduce(
             (accumulator, product) =>
                 accumulator +
                 product.prices.find(price => price.currency.label === this.context.currency.label).amount *
                 product.quantity
             , 0
         );
-        const cartItemsQuantity = this.context.productsInCart.reduce(
+        const cartItemsQuantity = productsInCart.reduce(
             (accumulator, product) =>
                 accumulator +
                 product.quantity
@@ -42,7 +41,7 @@ export class CartPage extends Component {
             <div className={styles.page}>
                 <h1 className={styles.heading}>Cart</h1>
                 {
-                    this.context.productsInCart.map(product => {
+                    productsInCart.map(product => {
                         if (product.quantity > 0)
                             return (
                                 <CartItemCard key={product.id} details={product} big_format={true}/>

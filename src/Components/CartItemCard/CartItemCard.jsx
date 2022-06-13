@@ -15,23 +15,29 @@ class CartItemCard extends Component {
     };
 
     increaseQuantity = () => {
-        const updatedCart = this.context.productsInCart.map(product => (
+        const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
+        const updatedCart = productsInCart.map(product => (
             (product.id === this.props.details.id) ? {...product, quantity: product.quantity++} : product
         ));
         this.context.setData({updatedCart});
+        // console.log(updatedCart);
+        window.sessionStorage.setItem("productsInCart", JSON.stringify(productsInCart));
     };
 
     decreaseQuantity = () => {
+        const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
         /* if quantity bigger than 0, decrease it, else remove product from cart */
         if (this.state.quantity > 0) {
-            const updatedCart = this.context.productsInCart.map(product => (
+            const updatedCart = productsInCart.map(product => (
                 (product.id === this.props.details.id) ? {...product, quantity: product.quantity--} : product
             ));
             this.context.setData({updatedCart});
+            window.sessionStorage.setItem('productsInCart', JSON.stringify(productsInCart));
         }
         if (this.state.quantity === 0) {
-            const updatedCart = this.context.productsInCart.filter(product => (product.id !== this.props.details.id));
+            const updatedCart = productsInCart.filter(product => (product.id !== this.props.details.id));
             this.context.setData({updatedCart});
+            window.sessionStorage.setItem('productsInCart', JSON.stringify(productsInCart));
         }
     };
 
@@ -54,11 +60,17 @@ class CartItemCard extends Component {
             });
         }
     }
+    componentDidMount() {
+        const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
+        this.context.setData({productsInCart: productsInCart});
+    }
 
     render() {
+        const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
+
         const {id, brand, name, gallery, prices, attributes, attributesSelect} = this.props.details;
         const price = prices.find(price => price.currency.label === this.context.currency.label);
-        const quantity = this.context.productsInCart.find(product => (product.id === this.props.details.id)).quantity;
+        const quantity = productsInCart.find(product => (product.id === this.props.details.id)).quantity;
 
         /* STYLES */
         const item_card = (this.props.big_format) ? `${styles.item_card_big} ${styles.item_card}` : styles.item_card;

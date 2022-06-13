@@ -12,15 +12,16 @@ export class CartOverlay extends PureComponent {
     }
 
     render() {
+        const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
         const {visible} = this.props;
         const visibilityClass = visible ? styles.show : styles.hidden;
-        const cartItemsCount = this.context.productsInCart.reduce(
+        const cartItemsCount = productsInCart.reduce(
             (accumulator, product) =>
                 accumulator +
                 product.quantity
             , 0
         );
-        const cartItemsTotal = this.context.productsInCart.reduce(
+        const cartItemsTotal = productsInCart.reduce(
             (accumulator, product) =>
                 accumulator +
                 product.prices.find(price => price.currency.label === this.context.currency.label).amount *
@@ -39,7 +40,7 @@ export class CartOverlay extends PureComponent {
                     {/*Items*/}
                     <span className={styles.items}>
                         {
-                            this.context.productsInCart.map(product => {
+                            productsInCart.map(product => {
                                 if (product.quantity > 0)
                                     return (
                                         <CartItemCard key={product.id} details={product}/>
