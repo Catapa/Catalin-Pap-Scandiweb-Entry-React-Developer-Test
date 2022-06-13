@@ -17,7 +17,7 @@ export class ProductCard extends PureComponent {
     }
 
     getPrice = () => {
-        const price = this.props.details.prices.find(el => el.currency.label === this.context.currency.label);
+        const price = this.props.details.prices.find(el => el.currency.symbol === this.context.currency.symbol);
         const {amount} = price;
         const {label, symbol} = price.currency;
         this.setState({

@@ -9,10 +9,11 @@ class CurrencyDropdown extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            all_currencies: []
+            all_currencies: [],
+            isDropdownOpen: false
         }
     }
-    queryCurrencies() {
+    queryCurrencies = () => {
         client.query({query: CURRENCIES})
             .then(result => {
                 this.setState({
@@ -23,38 +24,50 @@ class CurrencyDropdown extends PureComponent {
                 console.log(error);
             })
     }
-    onCurrencyChange(value) {
-        const [symbol, label] = value.toString().split(' ');
+    changeCurrency = (currency) => {
+        const {symbol, label} = currency;
         try {
             this.context.setData({...this.context, currency: {label, symbol}});
         }
         catch (error) {
             console.log(error);
         }
-
     }
     componentDidMount = () => {
         this.queryCurrencies();
     }
-
+    toggleDropdown = () => {
+        if (this.state.isDropdownOpen) {
+            this.setState({isDropdownOpen: false});
+        }
+        else {
+            this.setState({isDropdownOpen: true});
+        }
+    }
+    closeDropdown = () => {
+        this.setState({isDropdownOpen: false});
+    }
     render () {
         return (
-            <select
-                name={'currencies'}
-                className={styles.currency_select}
-                onChange={(event) => this.onCurrencyChange(event.target.value)}
-                // value={`${this.context.currency.symbol} ${this.context.currency.label}`}
-            >
-                {this.state.all_currencies.map(currency => {
-                    const obj = {label: currency.label, symbol: currency.symbol}
-                    return (
-                        <option key={currency.label}
-                                data-value={obj}
-                            // label={currency.symbol}
-                        >{currency.symbol} {currency.label}</option>
-                    );
-                })}
-            </select>
+            <div className={styles.container}>
+                <button className={styles.currency_select} onClick={this.toggleDropdown}>
+                    <span>{this.context.currency.symbol}</span>
+                    <img src={this.state.isDropdownOpen ? 'assets/arrow_up.svg' : 'assets/arrow_down.svg'} alt={'arrow'}/>
+                </button>
+                {this.state.isDropdownOpen &&
+                    <div className={styles.dropdown}>
+                    {this.state.all_currencies.map(currency => {
+                        return (
+                            <p key={currency.label}
+                               className={styles.dropdown_option}
+                               onClick={() => {
+                                this.changeCurrency(currency);
+                                this.closeDropdown();
+                            }}>{currency.symbol} {currency.label}</p>
+                        )
+                    })}
+                </div>}
+            </div>
         )
     }
 }
