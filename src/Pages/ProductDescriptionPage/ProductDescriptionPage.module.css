@@ -1,7 +1,7 @@
 .description_page {
     display: flex;
-    flex-direction: row;
-    padding: 1rem 8rem;
+    flex-direction: column;
+    padding: 1rem 1rem;
     height: 100%;
 }
 
@@ -9,7 +9,7 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    margin: 0 6.25em; /* 0px 100px */
+    /*margin: 0 6.25em; !* 0px 100px *!*/
     width: 100%;
 }
 .panel__name {
@@ -141,4 +141,18 @@
     font-size: 1.5rem;
     color: rgba(255, 64, 64, 1);
     font-weight: var(--font-weight-semibold);
+}
+@media only screen and (min-width: 768px) {
+    .description_page {
+        padding: 1rem 4rem;
+    }
+}
+@media only screen and (min-width: 1080px) {
+    .description_page {
+        flex-direction: row;
+        padding: 1rem 8rem;
+    }
+    .panel {
+        margin: 0 6.25em; /* 0px 100px */
+    }
 }
