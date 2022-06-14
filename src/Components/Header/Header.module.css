@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    /*padding: 1.75em 7.3em; !*28px 117px*!*/
+    padding: 0 1rem;
 
     text-align: center;
     text-transform: uppercase;
@@ -70,9 +70,18 @@
     height: 1.78em; /* 28.62px */
     width: 1.94em; /* 31.18px */
 }
-
+@media only screen and (min-width: 768px) {
+    .header {
+        padding: 1.75rem 4rem; /*28px 117px*/
+    }
+}
 @media only screen and (min-width: 1080px) {
     .header {
-        padding: 1.75em 7.3em; /*28px 117px*/
+        padding: 1.75rem 7.3rem; /*28px 117px*/
+    }
+}
+@media only screen and (min-width: 1920px) {
+    .header {
+        padding: 1.75rem 12rem; /*28px 117px*/
     }
 }

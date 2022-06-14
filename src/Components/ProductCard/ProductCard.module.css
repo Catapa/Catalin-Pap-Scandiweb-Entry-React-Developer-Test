@@ -1,14 +1,13 @@
 .container {
     position: relative;
+    /*width: 100%;*/
 }
 .product_card {
     /*width: 386px;*/
     /*height: 444px;*/
     width: 100%;
     height: 100%;
-
-    padding: 1em;
-
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -29,7 +28,6 @@ a {
     font-weight: var(--font-weight-light);
     font-size: 1.125rem; /* 18px */
     line-height: 160%;
-
 }
 .product_price {
     font-weight: var(--font-weight-medium);
@@ -59,7 +57,6 @@ a {
     cursor: pointer;
     box-shadow: 0 0 40px 11px rgba(168, 172, 176, 0.19);
 }
-
 @media screen and (min-width: 450px) {
     .product_image {
         max-height: 250px;
@@ -75,11 +72,9 @@ a {
         transform: translate(-5%, 15%);
     }
 }
-
 @media screen and (min-width: 768px) {
 
 }
-
 @media screen and (min-width: 1080px) {
     .floating_buy_button {
         width: 3.25em; /* 52px */
@@ -92,7 +87,6 @@ a {
         transform: translate(-5%, 10%);
     }
 }
-
 @media screen and (min-width: 2560px) {
     .floating_buy_button {
         width: 4.25em;
