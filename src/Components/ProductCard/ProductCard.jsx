@@ -3,6 +3,7 @@ import styles from './ProductCard.module.css';
 import {Link} from "react-router-dom";
 import DataContext from "../../Context/DataContext";
 import ProductImage from "./ProductImage/ProductImage";
+import empty_cart_white from '../../Graphics/empty_cart_white.svg';
 
 export class ProductCard extends PureComponent {
     static contextType = DataContext;
@@ -99,7 +100,7 @@ export class ProductCard extends PureComponent {
                 <button className={styles.floating_buy_button}
                         onClick={() => this.addToCart(this.props.details)}
                         style={{display: (this.state.isFloatingButtonVisible) ? "block": "none"}}>
-                    <img src={'assets/empty_cart_white.svg'} alt={'Add to cart'}/>
+                    <img src={empty_cart_white} alt={'Add to cart'}/>
                 </button>
             </article>
         );

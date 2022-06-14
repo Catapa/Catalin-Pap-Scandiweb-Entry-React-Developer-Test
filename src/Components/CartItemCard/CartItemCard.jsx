@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import styles from './CartItemCard.module.css';
 import DataContext from "../../Context/DataContext";
 import {Link} from "react-router-dom";
+import chevron_right from '../../Graphics/chevron_right.svg';
+import chevron_left from '../../Graphics/chevron_left.svg';
 
 class CartItemCard extends Component {
     static contextType = DataContext;
@@ -139,10 +141,10 @@ class CartItemCard extends Component {
                     {this.props.big_format &&
                     <section className={styles.image_selector}>
                         <button className={styles.image_selector_button} onClick={this.gallery_previous} disabled={this.state.imageIndex === 0}>
-                            <img src={'assets/chevron_left.svg'} alt={'previous'}/>
+                            <img src={chevron_left} alt={'previous'}/>
                         </button>
                         <button className={styles.image_selector_button} onClick={this.gallery_next} disabled={this.state.imageIndex === this.state.totalImageCount - 1}>
-                            <img src={'assets/chevron_right.svg'} alt={'next'}/>
+                            <img src={chevron_right} alt={'next'}/>
                         </button>
                     </section>}
                 </section>

@@ -1,8 +1,10 @@
-import React, {PureComponent} from "react";
-import styles from "./CurrencyDropdown.module.css";
-import {client} from "../../index";
-import {CURRENCIES} from "../../Queries/queries";
-import DataContext from "../../Context/DataContext";
+import React, {PureComponent} from 'react';
+import styles from './CurrencyDropdown.module.css';
+import {client} from '../../index';
+import {CURRENCIES} from '../../Queries/queries';
+import DataContext from '../../Context/DataContext';
+import arrow_down from '../../Graphics/arrow_down.svg';
+import arrow_up from '../../Graphics/arrow_up.svg';
 
 class CurrencyDropdown extends PureComponent {
     static contextType = DataContext;
@@ -52,7 +54,7 @@ class CurrencyDropdown extends PureComponent {
             <div className={styles.container}>
                 <button className={styles.currency_select} onClick={this.toggleDropdown}>
                     <span>{this.context.currency.symbol}</span>
-                    <img src={this.state.isDropdownOpen ? 'assets/arrow_up.svg' : 'assets/arrow_down.svg'} alt={'arrow'}/>
+                    <img src={this.state.isDropdownOpen ? arrow_up : arrow_down} alt={'arrow'}/>
                 </button>
                 {this.state.isDropdownOpen &&
                     <div className={styles.dropdown}>

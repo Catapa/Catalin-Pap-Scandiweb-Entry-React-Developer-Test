@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import styles from './Header.module.css';
+import logo from '../../Graphics/logo.svg';
 
 // queries
 import {CATEGORY_NAMES, PRODUCTS_BY_CATEGORY} from '../../Queries/queries';
@@ -70,7 +71,7 @@ export class Header extends PureComponent {
                 </nav>
 
                 {/*LOGO*/}
-                <img src={'assets/logo.svg'} alt={'logo'} className={styles.logo}/>
+                <img src={logo} alt={'logo'} className={styles.logo}/>
 
                 <nav className={styles.navigation}>
                     <ul className={styles.action_list}>
