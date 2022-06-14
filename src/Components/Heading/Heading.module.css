@@ -6,9 +6,18 @@
     text-transform: uppercase;
     padding:  0 1rem;
 }
-
+@media only screen and (min-width: 768px) {
+    .category_name {
+        padding:  1rem 4rem;
+    }
+}
 @media only screen and (min-width: 1080px) {
     .category_name {
-        padding:  1rem 3rem;
+        padding:  1rem 8rem;
+    }
+}
+@media only screen and (min-width: 1920px) {
+    .category_name {
+        padding:  1rem 12rem;
     }
 }
