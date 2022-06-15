@@ -42,7 +42,7 @@ class Cart extends PureComponent {
                          <span className={styles.items_counter}
                                style={{display: (cartItemsCounter) ? "flex" : "none"}}>{cartItemsCounter}</span>
                 </span>
-                <CartOverlay visible={this.state.showCartOverlay}/>
+                <CartOverlay visible={this.state.showCartOverlay} toggleCartOverlay={this.toggleCartOverlay}/>
             </span>
         );
     }

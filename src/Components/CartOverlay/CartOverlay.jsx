@@ -10,11 +10,13 @@ export class CartOverlay extends PureComponent {
     constructor(props) {
         super(props);
     }
-
+    checkOut = () => {
+        alert("Successfully checked out");
+        this.props.toggleCartOverlay();
+    }
     render() {
         const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
-        const {visible} = this.props;
-        const visibilityClass = visible ? styles.show : styles.hidden;
+        let {visible} = this.props;
         const cartItemsCount = productsInCart.reduce(
             (accumulator, product) =>
                 accumulator +
@@ -28,9 +30,8 @@ export class CartOverlay extends PureComponent {
                 product.quantity
             , 0
         );
-
         return (
-            <div className={visibilityClass}>
+            visible && <div>
                 <div className={styles.container}>
                     {/*Heading*/}
                     <span className={styles.heading}>
@@ -55,8 +56,8 @@ export class CartOverlay extends PureComponent {
                     </span>
                     {/*Buttons*/}
                     <span className={styles.actions}>
-                        <Link to={'/cart'} className={styles.actions__button}>view bag</Link>
-                        <button className={`${styles.actions__button} ${styles.contrast}`}>check out</button>
+                        <Link to={'/cart'} className={styles.actions__button} onClick={this.props.toggleCartOverlay}>view bag</Link>
+                        <button className={`${styles.actions__button} ${styles.contrast}`} onClick={this.checkOut}>check out</button>
                     </span>
 
                 </div>
