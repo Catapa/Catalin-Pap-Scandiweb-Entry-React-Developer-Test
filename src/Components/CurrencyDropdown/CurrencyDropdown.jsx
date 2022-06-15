@@ -12,7 +12,8 @@ class CurrencyDropdown extends PureComponent {
         super(props);
         this.state = {
             all_currencies: [],
-            isDropdownOpen: false
+            isDropdownOpen: false,
+            isDropdownClicked: true
         }
     }
     queryCurrencies = () => {
@@ -49,9 +50,14 @@ class CurrencyDropdown extends PureComponent {
     closeDropdown = () => {
         this.setState({isDropdownOpen: false});
     }
+    closeOnBlur = (event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+            this.setState({isDropdownOpen: false});
+        }
+    }
     render () {
         return (
-            <div className={styles.container}>
+            <div className={styles.container} tabIndex={3} onBlur={(e) => this.closeOnBlur(e)}>
                 <button className={styles.currency_select} onClick={this.toggleDropdown}>
                     <span>{this.context.currency.symbol}</span>
                     <img src={this.state.isDropdownOpen ? arrow_up : arrow_down} alt={'arrow'}/>
@@ -63,9 +69,10 @@ class CurrencyDropdown extends PureComponent {
                             <p key={currency.label}
                                className={styles.dropdown_option}
                                onClick={() => {
-                                this.changeCurrency(currency);
-                                this.closeDropdown();
-                            }}>{currency.symbol} {currency.label}</p>
+                                   this.changeCurrency(currency);
+                                   this.closeDropdown();}}>
+                                {currency.symbol} {currency.label}
+                            </p>
                         )
                     })}
                 </div>}
