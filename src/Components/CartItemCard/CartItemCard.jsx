@@ -138,7 +138,7 @@ class CartItemCard extends Component {
 
                 <section className={styles.image_container}>
                     <img src={gallery[this.state.imageIndex]} alt={'product'} className={image}/>
-                    {this.props.big_format &&
+                    {this.props.big_format && this.state.totalImageCount>1 &&
                     <section className={styles.image_selector}>
                         <button className={styles.image_selector_button} onClick={this.gallery_previous} disabled={this.state.imageIndex === 0}>
                             <img src={chevron_left} alt={'previous'}/>
