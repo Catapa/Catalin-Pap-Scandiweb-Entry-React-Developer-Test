@@ -24,8 +24,7 @@
     left: -25%;
     right: -85%;
     box-shadow : 0 4px 35px rgba(168, 172, 176, 0.19);
-    background-color: var(--c_white);
-    /*padding: 1.25rem 0; !* 20px 0px*!*/
+    background-color: var(--c-white);
 }
 .dropdown_option {
     font-size: 1.125rem; /* 18px */

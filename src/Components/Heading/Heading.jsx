@@ -12,5 +12,4 @@ export class Heading extends PureComponent {
         )
     }
 }
-
 export default Heading;

@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
-import Heading from "../../Components/Heading/Heading";
-import ProductGrid from "../../Components/ProductGrid/ProductGrid";
-import DataContext from "../../Context/DataContext";
+import Heading from '../../Components/Heading/Heading';
+import ProductGrid from '../../Components/ProductGrid/ProductGrid';
+import DataContext from '../../Context/DataContext';
 
 export class ProductListingPage extends PureComponent {
     static contextType = DataContext;
@@ -14,5 +14,4 @@ export class ProductListingPage extends PureComponent {
         )
     }
 }
-
 export default ProductListingPage;

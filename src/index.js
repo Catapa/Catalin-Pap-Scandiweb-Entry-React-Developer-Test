@@ -7,11 +7,11 @@ import {
     InMemoryCache,
     ApolloProvider,
 } from '@apollo/client';
-import {BrowserRouter} from "react-router-dom";
-import {Route, Routes} from "react-router";
-import ProductListingPage from "./Pages/ProductListingPage/ProductListingPage";
-import ProductDescriptionPage from "./Pages/ProductDescriptionPage/ProductDescriptionPage";
-import CartPage from "./Pages/CartPage/CartPage";
+import {BrowserRouter} from 'react-router-dom';
+import {Route, Routes} from 'react-router';
+import ProductListingPage from './Pages/ProductListingPage/ProductListingPage';
+import ProductDescriptionPage from './Pages/ProductDescriptionPage/ProductDescriptionPage';
+import CartPage from './Pages/CartPage/CartPage';
 
 export const client = new ApolloClient({
     uri: 'http://localhost:4000/', // endpoint running on port 4000

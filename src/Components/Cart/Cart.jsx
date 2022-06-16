@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import styles from './Cart.module.css';
-import CartOverlay from '../CartOverlay/CartOverlay';
 import DataContext from '../../Context/DataContext';
+import CartOverlay from '../CartOverlay/CartOverlay';
 import Backdrop from '../Backdrop/Backdrop';
 import empty_cart_black from '../../Graphics/empty_cart_black.svg';
 

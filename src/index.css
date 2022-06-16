@@ -28,16 +28,15 @@
   scrollbar-width: none; /* Firefox */
 }
 
-/* TODO: rename c_white, c_gray, c_gray_transparent to c-white, c-gray, c-gray-transparent project-wide */
 /* Global Variables */
 :root {
   /* Colors */
   --c-primary: rgba(94, 206, 123, 1);
   --c-text: rgba(29, 31, 34, 1);
   --c-black: rgba(29, 31, 34, 1);
-  --c_white: rgba(255, 255, 255, 1);
-  --c_gray: rgba(166, 166, 166, 1);
-  --c_gray_transparent: rgba(166, 166, 166, 0.2);
+  --c-white: rgba(255, 255, 255, 1);
+  --c-gray: rgba(166, 166, 166, 1);
+  --c-gray-transparent: rgba(166, 166, 166, 0.2);
 
   /* Font weights */
   --font-weight-light: 300;

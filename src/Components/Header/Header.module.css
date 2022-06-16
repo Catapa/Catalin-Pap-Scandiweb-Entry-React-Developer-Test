@@ -1,4 +1,3 @@
-/*TODO: (Optional) refactor CSS for mobile*/
 .header {
     display: flex;
     flex-direction: row;
@@ -16,7 +15,7 @@
 .navigation {
     text-decoration: none;
     flex: 1;
-    padding-right: 0.75em;
+    padding-right: 0.75rem;
 }
 .navigation:last-of-type {
     right: 0;
@@ -37,7 +36,7 @@
     justify-content: flex-start;
 }
 .category_list_item {
-    padding: 1.5em 0.75em;
+    padding: 1.5rem 0.75rem;
 }
 .category_list_item:hover {
     color: var(--c-primary);
@@ -59,8 +58,8 @@
 .logo {
     position: static;
     margin: auto;
-    height: 1.78em; /* 28.62px */
-    width: 1.94em; /* 31.18px */
+    height: 1.78rem; /* 28.62px */
+    width: 1.94rem; /* 31.18px */
 }
 @media only screen and (min-width: 768px) {
     .header {

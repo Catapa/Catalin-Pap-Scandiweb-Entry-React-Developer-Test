@@ -42,7 +42,6 @@ export class Header extends PureComponent {
     }
 
     queryProducts(category) {
-        // console.log('clicked', category);
         client.query({query: PRODUCTS_BY_CATEGORY, variables: {title: category}})
             .then(result => {
                 const {name, products} = result.data.category;
@@ -89,5 +88,4 @@ export class Header extends PureComponent {
         );
     }
 }
-
 export default Header;

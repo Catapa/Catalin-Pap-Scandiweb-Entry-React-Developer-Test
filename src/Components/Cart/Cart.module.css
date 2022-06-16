@@ -1,11 +1,10 @@
 .container {
     position: relative;
 }
-
 .cart_image {
     position: relative;
-    width: 20px;
-    height: 20px;
+    width: 1.25rem; /* 20px */
+    height: 1.25rem; /* 20px */
 }
 .items_counter {
     position: absolute;
@@ -22,7 +21,7 @@
     border-radius: 60px;
 
     background-color: var(--c-black) ;
-    color: var(--c_white);
+    color: var(--c-white);
     font-family: 'Roboto', sans-serif;
     font-size: 0.875rem; /* 14px */
     line-height: 1rem; /* 16px */

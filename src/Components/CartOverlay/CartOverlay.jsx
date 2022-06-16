@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
 import styles from './CartOverlay.module.css';
-import Backdrop from "../Backdrop/Backdrop";
 import CartItemCard from "../CartItemCard/CartItemCard";
 import DataContext from "../../Context/DataContext";
 import {Link} from "react-router-dom";
@@ -42,7 +41,6 @@ export class CartOverlay extends PureComponent {
                     <span className={styles.items}>
                         {
                             productsInCart.map(product => {
-                                // if (product.quantity > 0)
                                     return  (
                                         <CartItemCard key={`${product.id} ${JSON.stringify(product.attributesSelect)}`} details={product}/>
                                     );

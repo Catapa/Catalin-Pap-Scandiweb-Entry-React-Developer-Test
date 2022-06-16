@@ -60,7 +60,6 @@ class CurrencyDropdown extends PureComponent {
         return (
             <div className={styles.container} tabIndex={3} onBlur={(e) => this.closeOnBlur(e)}>
                 <button className={styles.currency_select} onClick={this.toggleDropdown}>
-                    {/*<span>{this.context.currency.symbol}</span>*/}
                     <span>{JSON.parse(window.sessionStorage.getItem('currency')).symbol}</span>
                     <img src={this.state.isDropdownOpen ? arrow_up : arrow_down} alt={'arrow'}/>
                 </button>

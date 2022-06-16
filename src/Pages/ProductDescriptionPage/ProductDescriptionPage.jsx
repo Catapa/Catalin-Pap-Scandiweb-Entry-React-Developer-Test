@@ -1,4 +1,4 @@
-import React, {Component, PureComponent} from 'react';
+import React, {Component} from 'react';
 import styles from './ProductDescriptionPage.module.css';
 import {client} from "../../index";
 import {PRODUCT_BY_ID} from "../../Queries/queries";
@@ -176,7 +176,6 @@ export class ProductDescriptionPage extends Component {
     )[category][value];
 
     render() {
-        // const price = this.state.prices.find(price => price.currency.label === this.context.currency.label );
         const price = this.state.prices.find(price => price.currency.label === JSON.parse(window.sessionStorage.getItem('currency')).label );
         return (
             <main className={styles.description_page}>

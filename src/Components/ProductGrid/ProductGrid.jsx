@@ -5,11 +5,6 @@ import DataContext from '../../Context/DataContext';
 
 export class ProductGrid extends PureComponent {
     static contextType = DataContext;
-
-    componentDidMount() {
-
-    }
-
     render () {
         return (
             <div className={styles.product_grid}>
@@ -22,5 +17,4 @@ export class ProductGrid extends PureComponent {
         )
     }
 }
-
 export default ProductGrid;
