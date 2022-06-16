@@ -44,7 +44,7 @@ export class CartOverlay extends PureComponent {
                             productsInCart.map(product => {
                                 // if (product.quantity > 0)
                                     return  (
-                                        <CartItemCard key={product.id} details={product}/>
+                                        <CartItemCard key={`${product.id} ${JSON.stringify(product.attributesSelect)}`} details={product}/>
                                     );
                             })
                         }

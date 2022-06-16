@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import styles from './CartPage.module.css';
 import CartItemCard from "../../Components/CartItemCard/CartItemCard";
 import DataContext from "../../Context/DataContext";
-import Heading from "../../Components/Heading/Heading";
-
 
 export class CartPage extends Component {
     static contextType = DataContext;
@@ -13,7 +11,6 @@ export class CartPage extends Component {
             cartItemsQuantity: 0
         }
     }
-
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         return nextContext !== this.context;
     }
@@ -21,7 +18,6 @@ export class CartPage extends Component {
     placeOrder = () => {
         alert('Order placed successfully');
     }
-    // TODO: fix re-render problems on context change
     render () {
         const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
         const cartItemsTotal = productsInCart.reduce(
@@ -44,7 +40,7 @@ export class CartPage extends Component {
                     productsInCart.map(product => {
                         // if (product.quantity > 0)
                             return (
-                                <CartItemCard key={product.id} details={product} big_format={true}/>
+                                <CartItemCard key={`${product.id} ${JSON.stringify(product.attributesSelect)}`} details={product} big_format={true}/>
                             );
                     })
                 }
@@ -67,5 +63,4 @@ export class CartPage extends Component {
         )
     }
 }
-
 export default CartPage;
