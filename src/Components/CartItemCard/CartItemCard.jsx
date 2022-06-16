@@ -15,6 +15,7 @@ class CartItemCard extends Component {
         }
     };
 
+    // increase quantity of a product in cart
     increaseQuantity = () => {
         try {
             const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
@@ -30,6 +31,7 @@ class CartItemCard extends Component {
         }
     };
 
+    // decrease quantity of a product in cart
     decreaseQuantity = () => {
         try {
             const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
@@ -53,10 +55,12 @@ class CartItemCard extends Component {
         }
     };
 
+    // get the the value (true or false) of a certain attribute in attributesSelect field
     getAttributeValue = (category, value) => this.props.details.attributesSelect.find(
         prop => prop.hasOwnProperty(category)
     )[category][value];
 
+    // switch to next image in gallery
     gallery_next = () => {
         try {
             if (this.state.imageIndex < this.state.totalImageCount - 1) {
@@ -70,6 +74,8 @@ class CartItemCard extends Component {
         }
 
     }
+
+    // switch to previous image in gallery
     gallery_previous = () => {
         try {
             if (this.state.imageIndex > 0) {

@@ -25,6 +25,7 @@ export class ProductDescriptionPage extends Component {
         this.updateProductInfo();
     }
 
+    //Get product's info from the search params of the URL
     querySearchParam = (paramName) => {
         const params = new URLSearchParams(window.location.search);
         const productId = params.get(paramName);
@@ -32,27 +33,33 @@ export class ProductDescriptionPage extends Component {
     }
 
     updateProductInfo = () => {
-        const productId = this.querySearchParam('id');
-        client.query({query: PRODUCT_BY_ID, variables: {id: productId}})
-            .then(result => {
-                const {brand, name, description, attributes, gallery, prices, inStock} = result.data.product;
-                this.setState({
-                    id: productId,
-                    brand: brand,
-                    name: name,
-                    description: description,
-                    attributes: attributes,
-                    gallery: gallery,
-                    prices: prices,
-                    inStock: inStock,
-                    attributesSelect: this.attributeValues(attributes)
+        try {
+            const productId = this.querySearchParam('id');
+            client.query({query: PRODUCT_BY_ID, variables: {id: productId}})
+                .then(result => {
+                    const {brand, name, description, attributes, gallery, prices, inStock} = result.data.product;
+                    this.setState({
+                        id: productId,
+                        brand: brand,
+                        name: name,
+                        description: description,
+                        attributes: attributes,
+                        gallery: gallery,
+                        prices: prices,
+                        inStock: inStock,
+                        attributesSelect: this.attributeValues(attributes)
+                    })
                 })
-            })
-            .catch(error => {
-                console.log(error);
-            });
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+        catch (error) {
+            console.log('Error on updateProductInfo', error);
+        }
     };
 
+    // Make sure at least one attribute from each category is selected
     withAttributes = (attributes) => {
         let attributesSelected = true;
         attributes.map(attributeSet => {
@@ -66,9 +73,8 @@ export class ProductDescriptionPage extends Component {
             if (isAtleastOneSelected === false)
                 attributesSelected = false;
         });
-
         return attributesSelected;
-}
+    }
 
     addToCart = () => {
         const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
@@ -118,6 +124,8 @@ export class ProductDescriptionPage extends Component {
             console.log(error);
         }
     }
+
+    // Generates attributesSelect field based on the attributes property of the product
     attributeValues = (attributes) => {
         const attributeSelector = [];
         attributes.map(attributeSet => {
@@ -131,6 +139,8 @@ export class ProductDescriptionPage extends Component {
         })
         return attributeSelector
     };
+
+
     selectAttribute = (value) => {
         value = value.split(',');
         const category = value[0];
@@ -171,6 +181,7 @@ export class ProductDescriptionPage extends Component {
         )
     };
 
+    // get the the value (true or false) of a certain attribute in attributesSelect field
     getAttributeValue = (category, value) => this.state.attributesSelect.find(
         prop => prop.hasOwnProperty(category)
     )[category][value];

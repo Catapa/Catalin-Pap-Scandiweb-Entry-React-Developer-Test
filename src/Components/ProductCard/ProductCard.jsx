@@ -53,19 +53,22 @@ export class ProductCard extends PureComponent {
             }
         }
         catch (error) {
-            console.log(error);
+            console.log('Error on addToCart', error);
         }
     }
-
     switchFloatingButtonVisibility = (value) => {
-        if (value === true && this.props.details.inStock) {
-            this.setState({isFloatingButtonVisible: true});
+        try {
+            if (value === true && this.props.details.inStock) {
+                this.setState({isFloatingButtonVisible: true});
+            }
+            else {
+                this.setState({isFloatingButtonVisible: false});
+            }
         }
-        else {
-            this.setState({isFloatingButtonVisible: false});
+        catch (error) {
+            console.log('Error on switchFloatingButtonVisibility', error);
         }
     }
-
     render () {
         const thumbnail_source = this.props.details.gallery[0];
         const {id, brand, name, inStock} = this.props.details;
@@ -77,7 +80,6 @@ export class ProductCard extends PureComponent {
                 <Link to={`/product/?id=${id}`}>
                     <div className={styles.product_card}>
                         <ProductImage src={thumbnail_source} inStock={inStock}/>
-
                         <span className={styles.product_name}>{brand} {name}</span>
                         <span className={styles.product_price}>{price.currency.symbol}{price.amount}</span>
                     </div>

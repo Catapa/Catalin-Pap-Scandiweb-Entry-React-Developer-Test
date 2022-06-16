@@ -22,36 +22,42 @@ export class Header extends PureComponent {
             categories: [],
         };
     }
-
     componentDidMount() {
         this.queryCategories();
-        // TODO: find a non-hard-coded solution for this
+        // TODO: find a non-hard-coded solution for this (optional)
         this.queryProducts('all');
     }
-
     queryCategories() {
-        client.query({query: CATEGORY_NAMES})
-            .then(result => {
-                this.setState({
-                    categories: result.data.categories.map(category => category.name)
+        try {
+            client.query({query: CATEGORY_NAMES})
+                .then(result => {
+                    this.setState({
+                        categories: result.data.categories.map(category => category.name)
+                    })
                 })
-            })
-            .catch(error => {
-                console.log(error);
-            })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+        catch (error) {
+            console.log('Error on queryCategories', error);
+        }
     }
-
     queryProducts(category) {
-        client.query({query: PRODUCTS_BY_CATEGORY, variables: {title: category}})
-            .then(result => {
-                const {name, products} = result.data.category;
-                this.context.setData({category: category, products: products});
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        try {
+            client.query({query: PRODUCTS_BY_CATEGORY, variables: {title: category}})
+                .then(result => {
+                    const {name, products} = result.data.category;
+                    this.context.setData({category: category, products: products});
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+        catch (error) {
+            console.log('Error on queryProducts', error);
+        }
     }
-
     render () {
         return (
             <header className={styles.header}>

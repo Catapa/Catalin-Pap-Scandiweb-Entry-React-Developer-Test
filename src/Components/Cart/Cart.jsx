@@ -57,7 +57,6 @@ class Cart extends PureComponent {
             console.log(error);
         }
     }
-
     render() {
         const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
         const cartItemsCounter = productsInCart.reduce(

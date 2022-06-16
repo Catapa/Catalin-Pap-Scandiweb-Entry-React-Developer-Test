@@ -14,7 +14,6 @@ export class CartPage extends Component {
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         return nextContext !== this.context;
     }
-
     placeOrder = () => {
         alert('Order placed successfully');
     }

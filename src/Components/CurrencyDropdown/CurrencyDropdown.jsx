@@ -17,24 +17,29 @@ class CurrencyDropdown extends PureComponent {
         }
     }
     queryCurrencies = () => {
-        client.query({query: CURRENCIES})
-            .then(result => {
-                this.setState({
-                    all_currencies: result.data.currencies
+        try {
+            client.query({query: CURRENCIES})
+                .then(result => {
+                    this.setState({
+                        all_currencies: result.data.currencies
+                    })
                 })
-            })
-            .catch(error => {
-                console.log(error);
-            })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
+        catch (error) {
+            console.log('Error on queryCurrencies', error);
+        }
     }
     changeCurrency = (currency) => {
-        const {symbol, label} = currency;
         try {
+            const {symbol, label} = currency;
             this.context.setData({...this.context, currency: {label, symbol}});
             window.sessionStorage.setItem('currency', JSON.stringify(currency));
         }
         catch (error) {
-            console.log(error);
+            console.log('Error on changeCurrency', error);
         }
     }
     componentDidMount = () => {
@@ -52,8 +57,13 @@ class CurrencyDropdown extends PureComponent {
         this.setState({isDropdownOpen: false});
     }
     closeOnBlur = (event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) {
-            this.setState({isDropdownOpen: false});
+        try {
+            if (!event.currentTarget.contains(event.relatedTarget)) {
+                this.setState({isDropdownOpen: false});
+            }
+        }
+        catch (error) {
+            console.log(error);
         }
     }
     render () {

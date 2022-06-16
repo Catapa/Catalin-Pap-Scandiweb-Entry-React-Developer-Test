@@ -8,13 +8,11 @@ class Gallery extends PureComponent {
             selected_image: props.gallery[0],
         }
     }
-
     selectImage = (source) => {
         this.setState({
             selected_image: source
         });
     }
-
     render () {
         const {gallery} = this.props;
         return (
