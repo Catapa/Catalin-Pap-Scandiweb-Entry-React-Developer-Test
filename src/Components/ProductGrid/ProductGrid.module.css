@@ -1,8 +1,6 @@
-/* TODO: fix the styling for the grid */
 .product_grid {
     border-collapse: separate;
     display: grid;
-    /*grid-template-columns: 31.5% 31.5% 31.5%;*/
     grid-template-columns: 1fr;
     justify-items: center;
     column-gap: 20px;

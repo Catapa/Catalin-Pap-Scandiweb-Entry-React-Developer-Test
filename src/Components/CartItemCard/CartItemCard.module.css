@@ -109,8 +109,6 @@
     text-align: center;
     background-color: var(--c-white);
     line-height: 160%;
-    /*width: 1.5em; !* 24px; *!*/
-    /*height: 1.5em; !* 24px; *!*/
     width: auto;
     height: auto;
     padding: 0 0.33em;
@@ -139,11 +137,6 @@
     border: 1px outset var(--c-primary);
     box-shadow: 0 0 0px 1px white, 0 0 0px 3px var(--c-primary);
 }
-/*.button_disabled {*/
-/*    border-color: var(--c_gray);*/
-/*    color: var(--c_gray);*/
-/*    background-color: var(--c_gray_transparent);*/
-/*}*/
 
 .quantity_selector {
     display: flex;
