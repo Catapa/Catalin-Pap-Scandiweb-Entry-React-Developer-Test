@@ -134,12 +134,15 @@ export class ProductDescriptionPage extends Component {
         return attributeSelector
     };
 
-    selectAttribute = (id) => {
+    selectAttribute = (value) => {
+        value = value.split(',');
+        const category = value[0];
+        const id = value[1];
         const attributeSelector = [];
         this.state.attributes.map(attributeSet => {
             const values = {};
             attributeSet.items.map(attribute => {
-                values[attribute.id] = (attribute.id === id) ? true : false;
+                values[attribute.id] = (attribute.id === id && attributeSet.name === category) ? true : false;
             })
             const item = {};
             item[attributeSet.name] = values;
@@ -202,12 +205,13 @@ export class ProductDescriptionPage extends Component {
                                             // swatch button styles
                                             const swatchButtonStyles = `${styles.panel__attributes_selector__button} ${styles.panel__attributes_selector__swatch}`;
                                             const swatchButtonActiveStyles = `${styles.panel__attributes_selector__button} ${styles.panel__attributes_selector__swatch} ${styles.panel__attributes_selector__swatch__active}`;
-                                            const category = attributeSet.name.toString();
-                                            const product = attribute.id.toString();
+                                            const category = attributeSet.name;
+                                            const product = attribute.id;
+                                            const id = [category, product];
                                             return (
                                                 (attributeSet.type === 'swatch') ?
                                                     <button key={attribute.id}
-                                                            value={attribute.id}
+                                                            value={id}
                                                             className={(this.getAttributeValue(category, product) === true) ? swatchButtonActiveStyles : swatchButtonStyles}
                                                             style={{backgroundColor: `${attribute.displayValue}`}}
                                                             onClick={(e) => this.selectAttribute(e.target.value)}
@@ -215,7 +219,7 @@ export class ProductDescriptionPage extends Component {
                                                     </button>
                                                     :
                                                     <button key={attribute.id}
-                                                            value={attribute.id}
+                                                            value={id}
                                                             className={(this.getAttributeValue(category, product) === true) ? textButtonActiveStyles : textButtonStyles}
                                                             onClick={(e) => this.selectAttribute(e.target.value)}
                                                             disabled={!this.state.inStock}>
