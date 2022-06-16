@@ -7,10 +7,8 @@ export class Backdrop extends PureComponent {
     }
     render () {
         const {visible} = this.props;
-        const visibilityClass = visible ? styles.show : styles.hidden;
-
         return (
-            <div className={`${styles.backdrop} ${visibilityClass}`} onClick={this.props.onClick}>
+            visible && <div className={styles.backdrop} onClick={this.props.onClick}>
             </div>
         )
     }

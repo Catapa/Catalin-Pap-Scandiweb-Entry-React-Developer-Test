@@ -25,6 +25,13 @@ class Cart extends PureComponent {
             })
         }
     }
+    closeCartOverlayOnBlur = (event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+            this.setState({
+                showCartOverlay: false
+            })
+        }
+    }
     componentDidMount() {
         try {
             const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
@@ -43,7 +50,7 @@ class Cart extends PureComponent {
             , 0
         );
         return (
-            <span>
+            <span tabIndex={4} onBlur={(e) => this.closeCartOverlayOnBlur(e)}>
                 <Backdrop visible={this.state.showCartOverlay} onClick={this.toggleCartOverlay}/>
                 <span onClick={this.toggleCartOverlay} className={styles.container}>
                     <img src={empty_cart_black} alt={'cart'}

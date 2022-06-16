@@ -6,7 +6,7 @@
     z-index: 2;
     position: absolute;
     right: 0;
-    transform: translateX(-10%);
+    transform: translate(-5%, 2%);
 
     display: flex;
     flex-direction: column;
@@ -94,17 +94,17 @@
 }
 @media only screen and (min-width: 768px) {
     .container {
-        transform: translateX(-22%);
+        transform: translate(-22%, 1.5%);
     }
 }
 @media only screen and (min-width: 1080px) {
     .container {
-        transform: translateX(-40%);
+        transform: translate(-37.5%, 1.5%);
     }
 }
 @media only screen and (min-width: 1920px) {
     .container {
-        transform: translateX(-63%);
+        transform: translate(-63%, 1.5%);
     }
 }
 
