@@ -10,36 +10,46 @@ class CartItemCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            quantity: this.props.details.quantity,
             imageIndex: 0,
             totalImageCount: this.props.details.gallery.length
         }
     };
 
     increaseQuantity = () => {
-        const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
-        const updatedCart = productsInCart.map(product => (
-            (product.id === this.props.details.id) ? {...product, quantity: product.quantity++} : product
-        ));
-        this.context.setData({updatedCart});
-        // console.log(updatedCart);
-        window.sessionStorage.setItem("productsInCart", JSON.stringify(productsInCart));
+        try {
+            const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
+            const updatedCart = productsInCart.map(product => (
+                (product.id === this.props.details.id &&
+                    JSON.stringify(product.attributesSelect) === JSON.stringify(this.props.details.attributesSelect)) ? {...product, quantity: product.quantity++} : product
+            ));
+            this.context.setData({updatedCart});
+            window.sessionStorage.setItem("productsInCart", JSON.stringify(productsInCart));
+        }
+        catch (error) {
+            console.log(error);
+        }
     };
 
     decreaseQuantity = () => {
-        const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
-        /* if quantity bigger than 0, decrease it, else remove product from cart */
-        if (this.state.quantity > 0) {
-            const updatedCart = productsInCart.map(product => (
-                (product.id === this.props.details.id) ? {...product, quantity: product.quantity--} : product
-            ));
-            this.context.setData({updatedCart});
-            window.sessionStorage.setItem('productsInCart', JSON.stringify(productsInCart));
+        try {
+            const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
+            const quantity = this.props.details.quantity;
+            /* if quantity bigger than 0, decrease it, else remove product from cart */
+            if (quantity > 1) {
+                const updatedCart = productsInCart.map(product => (
+                    (product.id === this.props.details.id && JSON.stringify(product.attributesSelect) === JSON.stringify(this.props.details.attributesSelect)) ? {...product, quantity: product.quantity--} : product
+                ));
+                this.context.setData({updatedCart});
+                window.sessionStorage.setItem('productsInCart', JSON.stringify(productsInCart));
+            }
+            if (quantity <= 1) {
+                const updatedCart = productsInCart.filter(product => (product.id !== this.props.details.id || JSON.stringify(product.attributesSelect) !== JSON.stringify(this.props.details.attributesSelect)));
+                this.context.setData({updatedCart});
+                window.sessionStorage.setItem('productsInCart', JSON.stringify(updatedCart));
+            }
         }
-        if (this.state.quantity === 0) {
-            const updatedCart = productsInCart.filter(product => (product.id !== this.props.details.id));
-            this.context.setData({updatedCart});
-            window.sessionStorage.setItem('productsInCart', JSON.stringify(productsInCart));
+        catch (error) {
+            console.log(error);
         }
     };
 
@@ -48,32 +58,35 @@ class CartItemCard extends Component {
     )[category][value];
 
     gallery_next = () => {
-        if (this.state.imageIndex < this.state.totalImageCount - 1) {
-            this.setState({
-                imageIndex: this.state.imageIndex + 1
-            });
+        try {
+            if (this.state.imageIndex < this.state.totalImageCount - 1) {
+                this.setState({
+                    imageIndex: this.state.imageIndex + 1
+                });
+            }
+        }
+        catch (error) {
+            console.log(error);
         }
 
     }
     gallery_previous = () => {
-        if (this.state.imageIndex > 0) {
-            this.setState({
-                imageIndex: this.state.imageIndex - 1
-            });
+        try {
+            if (this.state.imageIndex > 0) {
+                this.setState({
+                    imageIndex: this.state.imageIndex - 1
+                });
+            }
+        }
+        catch (error) {
+            console.log(error);
         }
     }
-    componentDidMount() {
-        const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
-        this.context.setData({productsInCart: productsInCart});
-    }
-
     render() {
         const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
-
         const {id, brand, name, gallery, prices, attributes, attributesSelect} = this.props.details;
         const price = prices.find(price => price.currency.label === this.context.currency.label);
-        const quantity = productsInCart.find(product => (product.id === this.props.details.id)).quantity;
-
+        const quantity = productsInCart.find(product => (product.id === this.props.details.id && JSON.stringify(product.attributesSelect) === JSON.stringify(this.props.details.attributesSelect))).quantity;
         /* STYLES */
         const item_card = (this.props.big_format) ? `${styles.item_card_big} ${styles.item_card}` : styles.item_card;
         const product_info = (this.props.big_format) ? `${styles.product_info} ${styles.product_info_big}` : styles.product_info;
@@ -89,7 +102,9 @@ class CartItemCard extends Component {
         const quantity_interactable = (this.props.big_format) ? `${styles.button} ${styles.interactable_big}` : `${styles.button} ${styles.interactable}`;
         const quantity_label = (this.props.big_format) ? `${styles.quantity_label} ${styles.quantity_label_big}` : styles.quantity_label;
         const image = (this.props.big_format) ? `${styles.image} ${styles.image_big}` : styles.image;
+
         return (
+            // (id === this.props.details.id && JSON.stringify(attributesSelect) === JSON.stringify(this.props.details.attributesSelect)) &&
             <div className={item_card}>
                 <div className={product_info}>
                     <div>
@@ -101,9 +116,6 @@ class CartItemCard extends Component {
                         </Link>
                         <p className={product_info__price}>{price.currency && price.currency.symbol}{(price.amount * quantity).toFixed(2)}</p>
                     </div>
-
-                    {/*<ProductAttributes attributes={attributes} attributesSelect={attributesSelect} selectable={false}/>*/}
-
                     {
                         attributes.map(attributeSet => {
                             return (
@@ -135,7 +147,6 @@ class CartItemCard extends Component {
                     <span className={quantity_label}>{quantity}</span>
                     <button className={quantity_interactable} onClick={this.increaseQuantity}>+</button>
                 </div>
-
                 <section className={styles.image_container}>
                     <img src={gallery[this.state.imageIndex]} alt={'product'} className={image}/>
                     {this.props.big_format && this.state.totalImageCount>1 &&
@@ -152,5 +163,4 @@ class CartItemCard extends Component {
         );
     }
 }
-
 export default CartItemCard;

@@ -42,7 +42,7 @@ export class CartPage extends Component {
                 <h1 className={styles.heading}>Cart</h1>
                 {
                     productsInCart.map(product => {
-                        if (product.quantity > 0)
+                        // if (product.quantity > 0)
                             return (
                                 <CartItemCard key={product.id} details={product} big_format={true}/>
                             );

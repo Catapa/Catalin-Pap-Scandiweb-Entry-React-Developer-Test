@@ -25,6 +25,15 @@ class Cart extends PureComponent {
             })
         }
     }
+    componentDidMount() {
+        try {
+            const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
+            this.context.setData({productsInCart: productsInCart});
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
     render() {
         const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
         const cartItemsCounter = productsInCart.reduce(

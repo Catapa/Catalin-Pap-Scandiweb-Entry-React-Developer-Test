@@ -42,8 +42,8 @@ export class CartOverlay extends PureComponent {
                     <span className={styles.items}>
                         {
                             productsInCart.map(product => {
-                                if (product.quantity > 0)
-                                    return (
+                                // if (product.quantity > 0)
+                                    return  (
                                         <CartItemCard key={product.id} details={product}/>
                                     );
                             })

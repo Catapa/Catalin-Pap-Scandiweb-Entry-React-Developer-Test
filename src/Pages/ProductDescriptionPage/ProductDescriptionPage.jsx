@@ -4,7 +4,6 @@ import {client} from "../../index";
 import {PRODUCT_BY_ID} from "../../Queries/queries";
 import DataContext from "../../Context/DataContext";
 import Gallery from "../../Components/Gallery/Gallery";
-import ProductAttributes from "../../Components/ProductAttributes/ProductAttributes";
 
 export class ProductDescriptionPage extends Component {
     static contextType = DataContext;
@@ -12,10 +11,10 @@ export class ProductDescriptionPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: '',
-            brand: 'Guccci',
-            name: 'ala bun',
-            description: 'nu bate nu troncane',
+            id: 'default id',
+            brand: 'default brand',
+            name: 'default name',
+            description: 'default description',
             attributes: [],
             gallery: [],
             prices: [],
@@ -75,9 +74,8 @@ export class ProductDescriptionPage extends Component {
     addToCart = () => {
         const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
         try {
-            const productAlreadyInCart = productsInCart.find(({ id }) => id === this.state.id);
+            const productAlreadyInCart = productsInCart.find(({ id, attributesSelect }) => (id === this.state.id && JSON.stringify(attributesSelect) === JSON.stringify(this.state.attributesSelect)));
             const {id, brand, name, gallery, prices, attributes, attributesSelect, inStock} = this.state;
-
             if (!inStock) {
                 alert('Product is out of stock');
                 return;
@@ -86,7 +84,7 @@ export class ProductDescriptionPage extends Component {
                 /* if product already in cart, increase its quantity */
                 if (productAlreadyInCart) {
                     const updatedCart = productsInCart.map(product => (
-                        (product.id === id) ? {...product, quantity: product.quantity++} : product
+                        (product.id === id && JSON.stringify(product.attributesSelect) === JSON.stringify(attributesSelect)) ? {...product, quantity: product.quantity++} : product
                     ));
                     this.context.setData({updatedCart});
                     window.sessionStorage.setItem('productsInCart', JSON.stringify(productsInCart));
@@ -191,10 +189,6 @@ export class ProductDescriptionPage extends Component {
                         <h2 className={styles.panel__name__brand}>{this.state.brand}</h2>
                         <h3 className={styles.panel__name__product}>{this.state.name}</h3>
                     </div>
-
-                    {/* Product Attributes */}
-                    {/*<ProductAttributes attributes={this.state.attributes} attributesSelect={this.state.attributesSelect} selectable={true}/>*/}
-
                     <div className={styles.panel__attributes}>
                         {this.state.attributes.map(attributeSet => {
                             return (
