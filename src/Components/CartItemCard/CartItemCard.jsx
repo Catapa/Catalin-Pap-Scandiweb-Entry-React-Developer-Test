@@ -85,7 +85,7 @@ class CartItemCard extends Component {
     render() {
         const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
         const {id, brand, name, gallery, prices, attributes, attributesSelect} = this.props.details;
-        const price = prices.find(price => price.currency.label === this.context.currency.label);
+        const price = prices.find(price => price.currency.label === JSON.parse(window.sessionStorage.getItem('currency')).label);
         const quantity = productsInCart.find(product => (product.id === this.props.details.id && JSON.stringify(product.attributesSelect) === JSON.stringify(this.props.details.attributesSelect))).quantity;
         /* STYLES */
         const item_card = (this.props.big_format) ? `${styles.item_card_big} ${styles.item_card}` : styles.item_card;

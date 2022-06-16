@@ -23,7 +23,7 @@ export class CartPage extends Component {
         const cartItemsTotal = productsInCart.reduce(
             (accumulator, product) =>
                 accumulator +
-                product.prices.find(price => price.currency.label === this.context.currency.label).amount *
+                product.prices.find(price => price.currency.label === JSON.parse(window.sessionStorage.getItem('currency')).label).amount *
                 product.quantity
             , 0
         );
@@ -47,7 +47,7 @@ export class CartPage extends Component {
                 <section className={styles.summary}>
                     <p className={styles.summary_line}>
                         <span className={styles.label}>Tax 21%: </span>
-                        <span className={styles.value}>{this.context.currency.symbol}{((21 * cartItemsTotal)/100).toFixed(2)}</span>
+                        <span className={styles.value}>{JSON.parse(window.sessionStorage.getItem('currency')).symbol}{((21 * cartItemsTotal)/100).toFixed(2)}</span>
                     </p>
                     <p className={styles.summary_line}>
                         <span className={styles.label}>Quantity: </span>
@@ -55,7 +55,7 @@ export class CartPage extends Component {
                     </p>
                     <p className={styles.summary_line}>
                         <span className={styles.total_label}>Total: </span>
-                        <span className={styles.total_value}>{this.context.currency.symbol}{cartItemsTotal.toFixed(2)}</span>
+                        <span className={styles.total_value}>{JSON.parse(window.sessionStorage.getItem('currency')).symbol}{cartItemsTotal.toFixed(2)}</span>
                     </p>
                     <button className={`${styles.button} ${styles.contrast}`} onClick={this.placeOrder}>order</button>
                 </section>

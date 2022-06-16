@@ -45,7 +45,6 @@ export class ProductDescriptionPage extends Component {
                     gallery: gallery,
                     prices: prices,
                     inStock: inStock,
-                    // selected_image: gallery[0],
                     attributesSelect: this.attributeValues(attributes)
                 })
             })
@@ -119,7 +118,6 @@ export class ProductDescriptionPage extends Component {
             console.log(error);
         }
     }
-
     attributeValues = (attributes) => {
         const attributeSelector = [];
         attributes.map(attributeSet => {
@@ -133,7 +131,6 @@ export class ProductDescriptionPage extends Component {
         })
         return attributeSelector
     };
-
     selectAttribute = (value) => {
         value = value.split(',');
         const category = value[0];
@@ -179,7 +176,8 @@ export class ProductDescriptionPage extends Component {
     )[category][value];
 
     render() {
-        const price = this.state.prices.find(price => price.currency.label === this.context.currency.label );
+        // const price = this.state.prices.find(price => price.currency.label === this.context.currency.label );
+        const price = this.state.prices.find(price => price.currency.label === JSON.parse(window.sessionStorage.getItem('currency')).label );
         return (
             <main className={styles.description_page}>
                 {/* Gallery */}

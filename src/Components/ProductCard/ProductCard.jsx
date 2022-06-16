@@ -10,28 +10,13 @@ export class ProductCard extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            price_amount: 0,
-            price_label: '',
-            price_symbol: '',
             isFloatingButtonVisible: false
         }
     }
-
-    getPrice = () => {
-        const price = this.props.details.prices.find(el => el.currency.symbol === this.context.currency.symbol);
-        const {amount} = price;
-        const {label, symbol} = price.currency;
-        this.setState({
-            price_amount: amount,
-            price_label: label,
-            price_symbol: symbol
-        })
-    }
-
     addToCart = (details) => {
         try {
             const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
-            const productAlreadyInCart = productsInCart.find(({ id }) => id === details.id);
+            const productAlreadyInCart = productsInCart.find(({ id, attributesSelect }) => id === details.id && attributesSelect === details.attributesSelect);
             const {id, brand, name, gallery, prices, attributes} = details;
 
             if (!attributes.length) {
@@ -84,7 +69,7 @@ export class ProductCard extends PureComponent {
     render () {
         const thumbnail_source = this.props.details.gallery[0];
         const {id, brand, name, inStock} = this.props.details;
-        this.getPrice();
+        const price = this.props.details.prices.find(el => el.currency.label === JSON.parse(window.sessionStorage.getItem('currency')).label);
         return (
             <article onMouseEnter={() => this.switchFloatingButtonVisibility(true)}
                      onMouseLeave={() => this.switchFloatingButtonVisibility(false)}
@@ -94,7 +79,7 @@ export class ProductCard extends PureComponent {
                         <ProductImage src={thumbnail_source} inStock={inStock}/>
 
                         <span className={styles.product_name}>{brand} {name}</span>
-                        <span className={styles.product_price}>{this.state.price_symbol}{this.state.price_amount}</span>
+                        <span className={styles.product_price}>{price.currency.symbol}{price.amount}</span>
                     </div>
                 </Link>
                 <button className={styles.floating_buy_button}

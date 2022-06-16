@@ -26,7 +26,7 @@ export class CartOverlay extends PureComponent {
         const cartItemsTotal = productsInCart.reduce(
             (accumulator, product) =>
                 accumulator +
-                product.prices.find(price => price.currency.label === this.context.currency.label).amount *
+                product.prices.find(price => price.currency.label === JSON.parse(window.sessionStorage.getItem('currency')).label).amount *
                 product.quantity
             , 0
         );
@@ -52,7 +52,7 @@ export class CartOverlay extends PureComponent {
                     {/*Total*/}
                     <span className={styles.total}>
                         <span className={styles.total__label}>total</span>
-                        <span className={styles.total__amount}>{this.context.currency.symbol}{cartItemsTotal.toFixed(2)}</span>
+                        <span className={styles.total__amount}>{JSON.parse(window.sessionStorage.getItem('currency')).symbol}{cartItemsTotal.toFixed(2)}</span>
                     </span>
                     {/*Buttons*/}
                     <span className={styles.actions}>

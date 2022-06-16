@@ -16,8 +16,10 @@ class App extends PureComponent {
     static contextType = DataContext;
     constructor(props) {
         super(props);
-        if (!JSON.parse(window.sessionStorage.getItem("productsInCart")))
+        if (!JSON.parse(window.sessionStorage.getItem('productsInCart')))
             window.sessionStorage.setItem('productsInCart', JSON.stringify([]));
+        if (!JSON.parse(window.sessionStorage.getItem('currency')))
+            window.sessionStorage.setItem('currency', JSON.stringify({symbol: '$', label: 'USD'}));
     }
     render () {
         return (
