@@ -1,0 +1,171 @@
+.description_page {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1rem;
+    height: 100%;
+}
+.panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+}
+.panel__name {
+    margin-bottom: 2.6875rem; /* 43px */
+}
+.panel__name__brand {
+    text-transform: capitalize;
+    font-size: 1.875rem; /* 30px */
+    font-weight: var(--font-weight-semibold);
+    line-height: 90%;
+    margin-bottom: 1rem; /* 16px */
+}
+.panel__name__product {
+    text-transform: capitalize;
+    font-size: 1.875rem; /* 30px */
+    font-weight: var(--font-weight-regular);
+    line-height: 90%;
+}
+.panel__attributes {
+    width: 100%;
+}
+.panel__attributes__label {
+    text-transform: uppercase;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1.125rem; /* 18px*/
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 0.5rem; /* 8px */
+}
+.panel__attributes_selector {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 2.5em; /* 40px */
+}
+.panel__attributes_selector__button {
+    padding: 0.5rem 1rem;
+    /* Font */
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: var(--font-weight-regular);
+    font-size: 1rem; /* 16px */
+    line-height: 112%;
+    letter-spacing: 0.05em;
+    color: rgba(41, 41, 41, 1);
+    text-align: center;
+    text-transform: uppercase;
+
+    /* Border */
+    border: 1px solid var(--c-black);
+
+    /* Background */
+    background-color: var(--c-white);
+
+    /* Cursor */
+    cursor: pointer;
+}
+.panel__attributes_selector__button + .panel__attributes_selector__button {
+    margin-left: 0.75em; /* 12px */
+}
+.panel__attributes_selector__button__active {
+    color: var(--c-white);
+    background-color: var(--c-black);
+}
+.panel__attributes_selector__button:disabled {
+    color: var(--c-gray);
+    border-color: var(--c-gray);
+    cursor: default;
+}
+.panel__attributes_selector__button:disabled:hover {
+    box-shadow: none;
+}
+.panel__attributes_selector__button:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+.panel__attributes_selector__swatch {
+    width: 2rem;
+    height: 2rem;
+}
+.panel__attributes_selector__swatch__active {
+    border: 1px outset var(--c-primary);
+    box-shadow: 0 0 0px 1px white, 0 0 0px 3px var(--c-primary);
+}
+.panel__price {
+
+}
+.panel__price__label {
+    text-transform: uppercase;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: var(--font-weight-bold);
+    font-size: 1.125rem; /* 18px */
+    line-height: 100%;
+    margin-bottom: 0.625rem; /* 10px */
+}
+.panel__price__value {
+    font-weight: var(--font-weight-bold);
+    font-size: 1.5rem; /* 24px */
+    line-height: 75%;
+    margin-bottom: 1.25rem; /* 20px */
+}
+.panel__add_to_cart_button {
+    margin-bottom: 2.5rem; /* 40px */
+
+    /* Background */
+    background-color: var(--c-primary);
+    padding: 1rem 2rem; /* 16px 32px */
+    border: none;
+
+    /* Font */
+    font-size: 1rem; /* 16px */
+    font-weight: var(--font-weight-semibold);
+    line-height: 120%;
+    color: var(--c-white);
+    text-transform: uppercase;
+
+    /* Cursor */
+    cursor: pointer;
+}
+.panel__add_to_cart_button:disabled {
+    background-color: var(--c-gray);
+}
+.panel__add_to_cart_button:disabled:hover {
+    background-color: var(--c-gray);
+    cursor: default;
+}
+.panel__add_to_cart_button:disabled:active {
+    box-shadow: none;
+}
+.panel__add_to_cart_button:hover {
+    background-color: rgba(94, 225, 123, 1);
+}
+.panel__add_to_cart_button:active {
+    box-shadow: 0 4px 24px rgba(94, 200, 123, 0.5);
+}
+.panel__description {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem; /* 16px */
+    font-weight: var(--font-weight-regular);
+    line-height: 159.96%; /* 26px */
+}
+.warning {
+    font-size: 1.5rem;
+    color: rgba(255, 64, 64, 1);
+    font-weight: var(--font-weight-semibold);
+}
+@media only screen and (min-width: 768px) {
+    .description_page {
+        padding: 1rem 4rem;
+    }
+}
+@media only screen and (min-width: 1080px) {
+    .description_page {
+        flex-direction: row;
+        padding: 1rem 8rem;
+    }
+    .panel {
+        margin: 0 6.25rem; /* 0px 100px */
+    }
+}
+@media only screen and (min-width: 1920px) {
+    .description_page {
+        padding: 1rem 12rem;
+    }
+}
