@@ -7,7 +7,7 @@ import {
     InMemoryCache,
     ApolloProvider,
 } from '@apollo/client';
-import {BrowserRouter} from 'react-router-dom';
+import {BrowserRouter, Navigate} from 'react-router-dom';
 import {Route, Routes} from 'react-router';
 import ProductListingPage from './Pages/ProductListingPage/ProductListingPage';
 import ProductDescriptionPage from './Pages/ProductDescriptionPage/ProductDescriptionPage';
@@ -23,10 +23,11 @@ ReactDOM.render(
         <ApolloProvider client={client}>
             <BrowserRouter>
                 <Routes>
-                    <Route path={'/'} element={<App/>}>
-                        <Route path={'/'} element={<ProductListingPage/>}/>
-                        <Route path={`product/*`} element={<ProductDescriptionPage/>}/>
-                        <Route path={'cart'} element={<CartPage/>}/>
+                    <Route path={'/*'} element={<App/>}>
+                        <Route exact path={'products/*'} element={<ProductListingPage/>}/>
+                        <Route exact path={`product/*`} element={<ProductDescriptionPage/>}/>
+                        <Route exact path={'cart'} element={<CartPage/>}/>
+                        <Route path={'*'} element={<Navigate to={'products/?category=all'}/>}/> {/* TODO: find a non-hard-coded solution for this (optional) */}
                     </Route>
                 </Routes>
             </BrowserRouter>

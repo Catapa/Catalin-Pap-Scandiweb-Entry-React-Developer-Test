@@ -67,9 +67,9 @@ export class Header extends PureComponent {
                     <ul className={styles.category_list}>
                         {this.state.categories.map(category => {
                             return (
-                                <Link to={'/'} key={category}
-                                    className={styles.category_list_item}
-                                    onClick={() => this.queryProducts(category)}>{category}</Link>
+                                <Link to={`products/?category=${category}`} key={category}
+                                      className={styles.category_list_item}
+                                      onClick={() => this.queryProducts(category)}>{category}</Link>
                             )
                         })}
                     </ul>

@@ -30,8 +30,8 @@ export class ProductDescriptionPage extends Component {
     //Get product's info from the search params of the URL
     querySearchParam = (paramName) => {
         const params = new URLSearchParams(window.location.search);
-        const productId = params.get(paramName);
-        return productId;
+        const paramValue = params.get(paramName);
+        return paramValue;
     }
 
     updateProductInfo = () => {
