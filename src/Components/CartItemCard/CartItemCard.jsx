@@ -120,7 +120,7 @@ class CartItemCard extends Component {
                                 <p className={product_info__name}>{name}</p>
                             </div>
                         </Link>
-                        <p className={product_info__price}>{price.currency && price.currency.symbol}{(price.amount * quantity).toFixed(2)}</p>
+                        <p className={product_info__price}>{price.currency && price.currency.symbol}{(price.amount).toFixed(2)}</p>
                     </div>
                     {
                         attributes.map(attributeSet => {
