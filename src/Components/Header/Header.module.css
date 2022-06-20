@@ -66,7 +66,7 @@
         padding: 1.75rem 4rem 0; /*28px 117px*/
     }
 }
-@media only screen and (min-width: 1080px) {
+@media only screen and (min-width: 1440px) {
     .header {
         padding: 1.75rem 7.3rem 0; /*28px 117px*/
     }

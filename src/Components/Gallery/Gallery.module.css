@@ -40,7 +40,7 @@
         height: 511px;
     }
 }
-@media only screen and (min-width: 1080px) {
+@media only screen and (min-width: 1024px) {
     .gallery {
         justify-content: flex-start;
     }
