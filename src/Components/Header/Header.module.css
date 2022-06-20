@@ -28,7 +28,6 @@
     list-style: none;
     align-items: center;
 }
-
 .category_list {
     flex-direction: row;
     height: 100%;
@@ -44,7 +43,6 @@
     border-bottom: 1px solid var(--c-primary);
     font-weight: var(--font-weight-semibold);
 }
-
 .action_list {
     position: static;
     height: 100%;
@@ -54,7 +52,6 @@
     margin-left: 1em !important;
     cursor: pointer;
 }
-
 .logo {
     position: static;
     margin: auto;

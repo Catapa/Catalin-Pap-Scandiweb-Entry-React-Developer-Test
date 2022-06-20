@@ -13,14 +13,31 @@ export class ProductCard extends PureComponent {
             isFloatingButtonVisible: false
         }
     }
+    // Generates attributesSelect field based on the attributes property of the product, first attribute from each category being selected by default
+    attributeValues = (attributes) => {
+        const attributeSelector = [];
+        attributes.map(attributeSet => {
+            const values = {};
+            attributeSet.items.map((attribute, index) => {
+                values[attribute.id] = (index === 0) ? true : false;
+            })
+            const item = {};
+            item[attributeSet.name] = values;
+            attributeSelector.push(item);
+        })
+        return attributeSelector
+    };
+    equals = (a, b) => {
+        return JSON.stringify(a) === JSON.stringify(b);
+    }
     addToCart = (details) => {
         try {
             const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
-            const productAlreadyInCart = productsInCart.find(({ id, attributesSelect }) => id === details.id && attributesSelect === details.attributesSelect);
             const {id, brand, name, gallery, prices, attributes} = details;
-
+            /* if product doesn't have any attributes */
             if (!attributes.length) {
                 /* if product already in cart, increase its quantity */
+                const productAlreadyInCart = productsInCart.find(({ id }) => id === details.id);
                 if (productAlreadyInCart) {
                     const updatedCart = productsInCart.map(product => (
                         (product.id === id) ? {...product, quantity: product.quantity++} : product
@@ -48,8 +65,40 @@ export class ProductCard extends PureComponent {
                 }
                 alert(`Added ${brand} ${name} to shopping cart`);
             }
+            /* if product has attributes, generate the attributesSelect field with the default values and add it to cart */
             else {
-                alert("Before adding product to cart please go to product page and select desired attributes");
+                const attributesSelect = this.attributeValues(attributes);
+                const attributesSelectClone = [...attributesSelect];
+                const productAlreadyInCart = productsInCart.find(({id, attributesSelect}) => id === details.id && this.equals(attributesSelect, attributesSelectClone));
+
+                /* if product already in cart, increase its quantity */
+                if (productAlreadyInCart) {
+                    const updatedCart = productsInCart.map(product => (
+                        (product.id === id && this.equals(product.attributesSelect, attributesSelect)) ? {...product, attributesSelect: attributesSelect, quantity: product.quantity++} : {...product, attributesSelect: attributesSelect}
+                    ));
+                    this.context.setData({updatedCart});
+                    window.sessionStorage.setItem('productsInCart', JSON.stringify(productsInCart));
+                }
+                else {
+                    const newProduct = {
+                        id: id,
+                        brand: brand,
+                        name: name,
+                        gallery: gallery,
+                        prices: prices,
+                        attributes: attributes,
+                        attributesSelect: attributesSelect,
+                        quantity: 1
+                    }
+                    this.context.setData({
+                        ...this.context,
+                        productsInCart: [...productsInCart, newProduct]
+                    });
+                    sessionStorage.setItem('productsInCart', JSON.stringify(
+                        [...productsInCart, newProduct]
+                    ));
+                }
+                alert(`Added ${brand} ${name} to shopping cart`);
             }
         }
         catch (error) {

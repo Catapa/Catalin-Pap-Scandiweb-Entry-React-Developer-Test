@@ -125,13 +125,13 @@ export class ProductDescriptionPage extends Component {
         }
     }
 
-    // Generates attributesSelect field based on the attributes property of the product
+    // Generates attributesSelect field based on the attributes property of the product, first attribute from each category being selected by default
     attributeValues = (attributes) => {
         const attributeSelector = [];
         attributes.map(attributeSet => {
             const values = {};
-            attributeSet.items.map(attribute => {
-                values[attribute.id] = false;
+            attributeSet.items.map((attribute, index) => {
+                values[attribute.id] = (index === 0) ? true : false;
             })
             const item = {};
             item[attributeSet.name] = values;
