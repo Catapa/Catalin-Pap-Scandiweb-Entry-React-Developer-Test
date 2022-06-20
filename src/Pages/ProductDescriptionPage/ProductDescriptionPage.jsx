@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import DOMPurify from 'dompurify';
+import parse from 'html-react-parser';
 import styles from './ProductDescriptionPage.module.css';
 import {client} from "../../index";
 import {PRODUCT_BY_ID} from "../../Queries/queries";
@@ -188,6 +190,7 @@ export class ProductDescriptionPage extends Component {
 
     render() {
         const price = this.state.prices.find(price => price.currency.label === JSON.parse(window.sessionStorage.getItem('currency')).label );
+        const description_safeHTML = DOMPurify.sanitize(this.state.description, { USE_PROFILES: { html: true } });
         return (
             <main className={styles.description_page}>
                 {/* Gallery */}
@@ -255,8 +258,7 @@ export class ProductDescriptionPage extends Component {
                     <button className={styles.panel__add_to_cart_button} onClick={this.addToCart} disabled={!this.state.inStock}>add to cart</button>
 
                     {/* Description */}
-                    <article className={styles.panel__description}
-                             dangerouslySetInnerHTML={{__html: this.state.description}}/>
+                    <article className={styles.panel__description}>{parse(description_safeHTML)}</article>
                 </div>
             </main>
         );
