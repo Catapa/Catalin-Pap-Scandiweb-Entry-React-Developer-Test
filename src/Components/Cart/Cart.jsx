@@ -73,8 +73,7 @@ class Cart extends PureComponent {
                 <span onClick={this.toggleCartOverlay} className={styles.container}>
                     <img src={empty_cart_black} alt={'cart'}
                          className={styles.cart_image}/>
-                         <span className={styles.items_counter}
-                               style={{display: (cartItemsCounter) ? "flex" : "none"}}>{cartItemsCounter}</span>
+                    {cartItemsCounter>0 && <span className={styles.items_counter}>{cartItemsCounter}</span>}
                 </span>
                 {/* Cart Overlay */}
                 <CartOverlay visible={this.state.showCartOverlay} toggleCartOverlay={this.toggleCartOverlay}/>

@@ -133,11 +133,10 @@ export class ProductCard extends PureComponent {
                         <span className={styles.product_price}>{price.currency.symbol}{price.amount}</span>
                     </div>
                 </Link>
-                <button className={styles.floating_buy_button}
-                        onClick={() => this.addToCart(this.props.details)}
-                        style={{display: (this.state.isFloatingButtonVisible) ? "block": "none"}}>
+                {this.state.isFloatingButtonVisible && <button className={styles.floating_buy_button}
+                         onClick={() => this.addToCart(this.props.details)}>
                     <img src={empty_cart_white} alt={'Add to cart'}/>
-                </button>
+                </button>}
             </article>
         );
     }
