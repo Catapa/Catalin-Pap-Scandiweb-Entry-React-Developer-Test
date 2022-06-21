@@ -39,9 +39,9 @@
     margin: 0.5rem 1rem; /* 8px 16px */
     display: flex;
     justify-content: space-between;
-    width: auto;
-    width: -webkit-fill-available;
-    width: -moz-available;
+    /*width: auto;*/
+    /*width: -webkit-fill-available;*/
+    /*width: -moz-available;*/
 }
 .actions__button {
     /* font */

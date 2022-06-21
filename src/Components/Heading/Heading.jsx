@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import styles from './Heading.module.css';
 
 export class Heading extends PureComponent {
@@ -13,3 +14,7 @@ export class Heading extends PureComponent {
     }
 }
 export default Heading;
+
+Heading.propTypes = {
+    text: PropTypes.string.isRequired
+}

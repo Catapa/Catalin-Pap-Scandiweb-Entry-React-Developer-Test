@@ -6,6 +6,7 @@ import {client} from "../../index";
 import {PRODUCT_BY_ID} from "../../Queries/queries";
 import DataContext from "../../Context/DataContext";
 import Gallery from "../../Components/Gallery/Gallery";
+import {handleError} from '../../Service/service';
 
 export class ProductDescriptionPage extends Component {
     static contextType = DataContext;
@@ -30,8 +31,7 @@ export class ProductDescriptionPage extends Component {
     //Get product's info from the search params of the URL
     querySearchParam = (paramName) => {
         const params = new URLSearchParams(window.location.search);
-        const paramValue = params.get(paramName);
-        return paramValue;
+        return params.get(paramName);
     }
 
     updateProductInfo = () => {
@@ -53,11 +53,11 @@ export class ProductDescriptionPage extends Component {
                     })
                 })
                 .catch(error => {
-                    console.log(error);
+                    handleError(error);
                 });
         }
         catch (error) {
-            console.log('Error on updateProductInfo', error);
+            handleError(`Error on updateProductInfo ${error}`);
         }
     };
 
@@ -65,14 +65,14 @@ export class ProductDescriptionPage extends Component {
     withAttributes = (attributes) => {
         let attributesSelected = true;
         attributes.map(attributeSet => {
-            let isAtleastOneSelected = false;
+            let isAtLeastOneSelected = false;
             const category = attributeSet.name.toString();
             attributeSet.items.map(attribute => {
                 const product = attribute.id.toString();
                 if (this.getAttributeValue(category, product))
-                    isAtleastOneSelected = true;
+                    isAtLeastOneSelected = true;
             });
-            if (isAtleastOneSelected === false)
+            if (isAtLeastOneSelected === false)
                 attributesSelected = false;
         });
         return attributesSelected;
@@ -123,7 +123,7 @@ export class ProductDescriptionPage extends Component {
 
         }
         catch (error) {
-            console.log(error);
+            handleError(error);
         }
     }
 
@@ -133,7 +133,7 @@ export class ProductDescriptionPage extends Component {
         attributes.map(attributeSet => {
             const values = {};
             attributeSet.items.map((attribute, index) => {
-                values[attribute.id] = (index === 0) ? true : false;
+                values[attribute.id] = (index === 0);
             })
             const item = {};
             item[attributeSet.name] = values;
@@ -151,7 +151,7 @@ export class ProductDescriptionPage extends Component {
         this.state.attributes.map(attributeSet => {
             const values = {};
             attributeSet.items.map(attribute => {
-                values[attribute.id] = (attribute.id === id && attributeSet.name === category) ? true : false;
+                values[attribute.id] = (attribute.id === id && attributeSet.name === category);
             })
             const item = {};
             item[attributeSet.name] = values;

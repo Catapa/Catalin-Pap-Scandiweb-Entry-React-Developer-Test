@@ -4,6 +4,7 @@ import DataContext from '../../Context/DataContext';
 import CartOverlay from '../CartOverlay/CartOverlay';
 import Backdrop from '../Backdrop/Backdrop';
 import empty_cart_black from '../../Graphics/empty_cart_black.svg';
+import {handleError} from '../../Service/service';
 
 class Cart extends PureComponent {
     static contextType = DataContext;
@@ -36,7 +37,7 @@ class Cart extends PureComponent {
             }
         }
         catch (error) {
-            console.log(error);
+            handleError(error);
         }
     }
     componentDidMount() {
@@ -46,7 +47,7 @@ class Cart extends PureComponent {
             this.context.setData({productsInCart: productsInCart});
         }
         catch (error) {
-            console.log(error);
+            handleError(error);
         }
     }
     componentWillUnmount() {
@@ -54,7 +55,7 @@ class Cart extends PureComponent {
             document.removeEventListener('mousedown', this.closeCartOverlay, true);
         }
         catch (error) {
-            console.log(error);
+            handleError(error);
         }
     }
     render() {

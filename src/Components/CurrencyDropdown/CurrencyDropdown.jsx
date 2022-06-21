@@ -5,6 +5,7 @@ import {CURRENCIES} from '../../Queries/queries';
 import DataContext from '../../Context/DataContext';
 import arrow_down from '../../Graphics/arrow_down.svg';
 import arrow_up from '../../Graphics/arrow_up.svg';
+import {handleError} from '../../Service/service';
 
 class CurrencyDropdown extends PureComponent {
     static contextType = DataContext;
@@ -25,11 +26,11 @@ class CurrencyDropdown extends PureComponent {
                     })
                 })
                 .catch(error => {
-                    console.log(error);
+                    handleError(error);
                 })
         }
         catch (error) {
-            console.log('Error on queryCurrencies', error);
+            handleError(`Error on queryCurrencies ${error}`);
         }
     }
     changeCurrency = (currency) => {
@@ -39,7 +40,7 @@ class CurrencyDropdown extends PureComponent {
             window.sessionStorage.setItem('currency', JSON.stringify(currency));
         }
         catch (error) {
-            console.log('Error on changeCurrency', error);
+            handleError(`Error on changeCurrency ${error}`);
         }
     }
     componentDidMount = () => {
@@ -63,7 +64,7 @@ class CurrencyDropdown extends PureComponent {
             }
         }
         catch (error) {
-            console.log(error);
+            handleError(error);
         }
     }
     render () {

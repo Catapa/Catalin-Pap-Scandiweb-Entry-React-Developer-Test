@@ -13,6 +13,7 @@ import {client} from "../../index";
 import {Link} from "react-router-dom";
 import CurrencyDropdown from "../CurrencyDropdown/CurrencyDropdown";
 import Cart from "../Cart/Cart";
+import {handleError} from '../../Service/service';
 
 export class Header extends PureComponent {
     static contextType = DataContext;
@@ -36,26 +37,26 @@ export class Header extends PureComponent {
                     })
                 })
                 .catch(error => {
-                    console.log(error);
+                    handleError(error);
                 });
         }
         catch (error) {
-            console.log('Error on queryCategories', error);
+            handleError(`Error on queryCategories ${error}`);
         }
     }
     queryProducts(category) {
         try {
             client.query({query: PRODUCTS_BY_CATEGORY, variables: {title: category}})
                 .then(result => {
-                    const {name, products} = result.data.category;
+                    const { products } = result.data.category;
                     this.context.setData({category: category, products: products});
                 })
                 .catch(error => {
-                    console.log(error);
+                    handleError(error);
                 });
         }
         catch (error) {
-            console.log('Error on queryProducts', error);
+            handleError(`Error on queryProducts ${error}`);
         }
     }
     render () {

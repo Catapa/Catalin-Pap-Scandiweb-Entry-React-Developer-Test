@@ -86,7 +86,7 @@
 }
 .panel__attributes_selector__swatch__active {
     border: 1px outset var(--c-primary);
-    box-shadow: 0 0 0px 1px white, 0 0 0px 3px var(--c-primary);
+    box-shadow: 0 0 0 1px white, 0 0 0 3px var(--c-primary);
 }
 .panel__price {
 

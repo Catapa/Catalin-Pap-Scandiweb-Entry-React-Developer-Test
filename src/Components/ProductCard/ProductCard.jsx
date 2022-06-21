@@ -1,9 +1,11 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import styles from './ProductCard.module.css';
 import {Link} from "react-router-dom";
 import DataContext from "../../Context/DataContext";
 import ProductImage from "./ProductImage/ProductImage";
 import empty_cart_white from '../../Graphics/empty_cart_white.svg';
+import {handleError} from '../../Service/service';
 
 export class ProductCard extends PureComponent {
     static contextType = DataContext;
@@ -19,7 +21,7 @@ export class ProductCard extends PureComponent {
         attributes.map(attributeSet => {
             const values = {};
             attributeSet.items.map((attribute, index) => {
-                values[attribute.id] = (index === 0) ? true : false;
+                values[attribute.id] = (index === 0);
             })
             const item = {};
             item[attributeSet.name] = values;
@@ -102,7 +104,7 @@ export class ProductCard extends PureComponent {
             }
         }
         catch (error) {
-            console.log('Error on addToCart', error);
+            handleError(`Error on addToCart ${error}`);
         }
     }
     switchFloatingButtonVisibility = (value) => {
@@ -115,7 +117,7 @@ export class ProductCard extends PureComponent {
             }
         }
         catch (error) {
-            console.log('Error on switchFloatingButtonVisibility', error);
+            handleError(`Error on switchFloatingButtonVisibility ${error}`);
         }
     }
     render () {
@@ -142,3 +144,7 @@ export class ProductCard extends PureComponent {
     }
 }
 export default ProductCard;
+
+ProductCard.propTypes = {
+    details: PropTypes.object.isRequired
+}

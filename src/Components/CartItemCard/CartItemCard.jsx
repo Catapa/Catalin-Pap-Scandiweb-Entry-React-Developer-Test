@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import styles from './CartItemCard.module.css';
 import DataContext from "../../Context/DataContext";
 import {Link} from "react-router-dom";
 import chevron_right from '../../Graphics/chevron_right.svg';
 import chevron_left from '../../Graphics/chevron_left.svg';
+import {handleError} from '../../Service/service';
 
 class CartItemCard extends Component {
     static contextType = DataContext;
@@ -13,7 +15,7 @@ class CartItemCard extends Component {
             imageIndex: 0,
             totalImageCount: this.props.details.gallery.length
         }
-    };
+    }
 
     // increase quantity of a product in cart
     increaseQuantity = () => {
@@ -27,7 +29,7 @@ class CartItemCard extends Component {
             window.sessionStorage.setItem("productsInCart", JSON.stringify(productsInCart));
         }
         catch (error) {
-            console.log(error);
+            handleError(error);
         }
     };
 
@@ -51,7 +53,7 @@ class CartItemCard extends Component {
             }
         }
         catch (error) {
-            console.log(error);
+            handleError(error);
         }
     };
 
@@ -70,7 +72,7 @@ class CartItemCard extends Component {
             }
         }
         catch (error) {
-            console.log(error);
+            handleError(error);
         }
 
     }
@@ -85,12 +87,12 @@ class CartItemCard extends Component {
             }
         }
         catch (error) {
-            console.log(error);
+            handleError(error);
         }
     }
     render() {
         const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
-        const {id, brand, name, gallery, prices, attributes, attributesSelect} = this.props.details;
+        const {id, brand, name, gallery, prices, attributes} = this.props.details;
         const price = prices.find(price => price.currency.label === JSON.parse(window.sessionStorage.getItem('currency')).label);
         const quantity = productsInCart.find(product => (product.id === this.props.details.id && JSON.stringify(product.attributesSelect) === JSON.stringify(this.props.details.attributesSelect))).quantity;
         /* STYLES */
@@ -170,3 +172,8 @@ class CartItemCard extends Component {
     }
 }
 export default CartItemCard;
+
+CartItemCard.propTypes = {
+    details: PropTypes.object.isRequired,
+    big_format: PropTypes.bool.isRequired
+}

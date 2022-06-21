@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import styles from './CartOverlay.module.css';
 import CartItemCard from "../CartItemCard/CartItemCard";
 import DataContext from "../../Context/DataContext";
@@ -42,7 +43,7 @@ export class CartOverlay extends PureComponent {
                         {
                             productsInCart.map(product => {
                                     return  (
-                                        <CartItemCard key={`${product.id} ${JSON.stringify(product.attributesSelect)}`} details={product}/>
+                                        <CartItemCard key={`${product.id} ${JSON.stringify(product.attributesSelect)}`} details={product} big_format={false}/>
                                     );
                             })
                         }
@@ -63,5 +64,8 @@ export class CartOverlay extends PureComponent {
         )
     }
 }
-
 export default CartOverlay;
+
+CartOverlay.propTypes = {
+    visible: PropTypes.bool.isRequired
+}

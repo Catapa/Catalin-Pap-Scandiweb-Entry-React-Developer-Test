@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import styles from './Gallery.module.css';
 
 class Gallery extends PureComponent {
@@ -43,3 +44,7 @@ class Gallery extends PureComponent {
     }
 }
 export default Gallery;
+
+Gallery.propTypes = {
+    gallery: PropTypes.array.isRequired
+}
