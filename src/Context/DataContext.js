@@ -1,11 +1,15 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 
-const DataContext = React.createContext( true);
+export const DataContext = React.createContext( true);
 
 // export const DataProvider = DataContext.Provider;
 // export const DataConsumer = DataContext.Consumer;
 
 export class DataProvider extends PureComponent {
+    constructor(props) {
+        super(props);
+    }
     setData = (data) => {
         this.setState(() => (data));
     }
@@ -18,10 +22,6 @@ export class DataProvider extends PureComponent {
         setData: this.setData,
         productsInCart: []
     };
-    componentDidMount() {
-
-    }
-
     render() {
         const {children} = this.props;
         return (
@@ -32,5 +32,8 @@ export class DataProvider extends PureComponent {
 
     }
 }
-
 export default DataContext;
+
+DataProvider.propTypes = {
+    children: PropTypes.node.isRequired
+}

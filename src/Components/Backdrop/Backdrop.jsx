@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import styles from './Backdrop.module.css';
 
 export class Backdrop extends PureComponent {
@@ -14,3 +15,8 @@ export class Backdrop extends PureComponent {
     }
 }
 export default Backdrop;
+
+Backdrop.propTypes = {
+    visible: PropTypes.bool.isRequired,
+    onClick: PropTypes.func
+}

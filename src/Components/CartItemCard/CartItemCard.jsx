@@ -59,7 +59,7 @@ class CartItemCard extends Component {
 
     // get the the value (true or false) of a certain attribute in attributesSelect field
     getAttributeValue = (category, value) => this.props.details.attributesSelect.find(
-        prop => prop.hasOwnProperty(category)
+        attribute => Object.prototype.hasOwnProperty.call(attribute, category)
     )[category][value];
 
     // switch to next image in gallery

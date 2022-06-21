@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 import parse from 'html-react-parser';
 import styles from './ProductDescriptionPage.module.css';
-import {client} from "../../index";
-import {PRODUCT_BY_ID} from "../../Queries/queries";
-import DataContext from "../../Context/DataContext";
-import Gallery from "../../Components/Gallery/Gallery";
+import {client} from '../../index';
+import {PRODUCT_BY_ID} from '../../Queries/queries';
+import DataContext from '../../Context/DataContext';
+import Gallery from '../../Components/Gallery/Gallery';
 import {handleError} from '../../Service/service';
 
 export class ProductDescriptionPage extends Component {
@@ -169,7 +170,7 @@ export class ProductDescriptionPage extends Component {
 
             if (isChanged) {
                 originalAttributesSelect.forEach(attribute => {
-                    if (attribute.hasOwnProperty(propertyName)) {
+                    if (Object.prototype.hasOwnProperty.call(attribute, propertyName)) {
                         attribute[propertyName] = property
                     }
                 })
@@ -184,8 +185,8 @@ export class ProductDescriptionPage extends Component {
     };
 
     // get the the value (true or false) of a certain attribute in attributesSelect field
-    getAttributeValue = (category, value) => this.state.attributesSelect.find(
-        prop => prop.hasOwnProperty(category)
+    getAttributeValue = (category, value) => this.props.details.attributesSelect.find(
+        attribute => Object.prototype.hasOwnProperty.call(attribute, category)
     )[category][value];
 
     render() {
@@ -265,3 +266,7 @@ export class ProductDescriptionPage extends Component {
     }
 }
 export default ProductDescriptionPage;
+
+ProductDescriptionPage.propTypes = {
+    details: PropTypes.object
+}

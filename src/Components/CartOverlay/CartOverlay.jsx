@@ -67,5 +67,6 @@ export class CartOverlay extends PureComponent {
 export default CartOverlay;
 
 CartOverlay.propTypes = {
-    visible: PropTypes.bool.isRequired
+    visible: PropTypes.bool.isRequired,
+    toggleCartOverlay: PropTypes.func.isRequired
 }
