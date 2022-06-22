@@ -84,7 +84,7 @@ class CurrencyDropdown extends PureComponent {
     /**
      * Handler used to close the dropdown when an onBlur event occurs
      * @function
-     * @param event {EventListenerOrEventListenerObject}
+     * @param event
      */
     closeOnBlur = (event) => {
         try {

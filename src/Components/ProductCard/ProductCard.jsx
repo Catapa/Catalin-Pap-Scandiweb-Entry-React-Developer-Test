@@ -26,7 +26,7 @@ export class ProductCard extends PureComponent {
     /**
      * Adds the product to cart
      * @function
-     * @param {Object} details - the product to be added
+     * @param details - the product to be added
      */
     addToCart = (details) => {
         try {
