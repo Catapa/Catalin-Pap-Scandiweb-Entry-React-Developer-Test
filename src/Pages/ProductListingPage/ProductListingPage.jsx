@@ -4,17 +4,12 @@ import ProductGrid from '../../Components/ProductGrid/ProductGrid';
 import DataContext from '../../Context/DataContext';
 import {client} from "../../index";
 import {PRODUCTS_BY_CATEGORY} from "../../Queries/queries";
-import {handleError} from '../../Service/service';
+import {handleError, querySearchParam} from '../../utils/utils';
 
 export class ProductListingPage extends PureComponent {
     static contextType = DataContext;
     constructor(props) {
         super(props);
-    }
-    //Get product's info from the search params of the URL
-    querySearchParam = (paramName) => {
-        const params = new URLSearchParams(window.location.search);
-        return params.get(paramName);
     }
     queryProducts(category) {
         try {
@@ -33,7 +28,7 @@ export class ProductListingPage extends PureComponent {
         }
     }
     render () {
-        const categoryName = this.querySearchParam('category');
+        const categoryName = querySearchParam('category');
         this.queryProducts(categoryName);
         return (
             <>

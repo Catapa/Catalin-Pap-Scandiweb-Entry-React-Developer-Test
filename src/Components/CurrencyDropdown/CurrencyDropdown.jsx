@@ -5,7 +5,7 @@ import {CURRENCIES} from '../../Queries/queries';
 import DataContext from '../../Context/DataContext';
 import arrow_down from '../../Graphics/arrow_down.svg';
 import arrow_up from '../../Graphics/arrow_up.svg';
-import {handleError} from '../../Service/service';
+import {handleError} from '../../utils/utils';
 
 class CurrencyDropdown extends PureComponent {
     static contextType = DataContext;

@@ -13,7 +13,7 @@ import {client} from "../../index";
 import {Link} from "react-router-dom";
 import CurrencyDropdown from "../CurrencyDropdown/CurrencyDropdown";
 import Cart from "../Cart/Cart";
-import {handleError} from '../../Service/service';
+import {handleError} from '../../utils/utils';
 
 export class Header extends PureComponent {
     static contextType = DataContext;

@@ -6,7 +6,7 @@ import {client} from '../../index';
 import {PRODUCT_BY_ID} from '../../Queries/queries';
 import DataContext from '../../Context/DataContext';
 import Gallery from '../../Components/Gallery/Gallery';
-import {handleError} from '../../Service/service';
+import {handleError, attributeValues, getAttributeValue, querySearchParam} from '../../utils/utils';
 
 export class ProductDescriptionPage extends Component {
     static contextType = DataContext;
@@ -31,15 +31,10 @@ export class ProductDescriptionPage extends Component {
         this.updateProductInfo();
     }
 
-    //Get product's info from the search params of the URL
-    querySearchParam = (paramName) => {
-        const params = new URLSearchParams(window.location.search);
-        return params.get(paramName);
-    }
 
     updateProductInfo = () => {
         try {
-            const productId = this.querySearchParam('id');
+            const productId = querySearchParam('id');
             client.query({query: PRODUCT_BY_ID, variables: {id: productId}})
                 .then(result => {
                     const {brand, name, description, attributes, gallery, prices, inStock} = result.data.product;
@@ -52,7 +47,7 @@ export class ProductDescriptionPage extends Component {
                         gallery: gallery,
                         prices: prices,
                         inStock: inStock,
-                        attributesSelect: this.attributeValues(attributes)
+                        attributesSelect: attributeValues(attributes)
                     })
                 })
                 .catch(error => {
@@ -72,7 +67,7 @@ export class ProductDescriptionPage extends Component {
             const category = attributeSet.name.toString();
             attributeSet.items.map(attribute => {
                 const product = attribute.id.toString();
-                if (this.getAttributeValue(category, product))
+                if (getAttributeValue(category, product, this.state.attributesSelect))
                     isAtLeastOneSelected = true;
             });
             if (isAtLeastOneSelected === false)
@@ -130,22 +125,6 @@ export class ProductDescriptionPage extends Component {
         }
     }
 
-    // Generates attributesSelect field based on the attributes property of the product, first attribute from each category being selected by default
-    attributeValues = (attributes) => {
-        const attributeSelector = [];
-        attributes.map(attributeSet => {
-            const values = {};
-            attributeSet.items.map((attribute, index) => {
-                values[attribute.id] = (index === 0);
-            })
-            const item = {};
-            item[attributeSet.name] = values;
-            attributeSelector.push(item);
-        })
-        return attributeSelector
-    };
-
-
     selectAttribute = (value) => {
         value = value.split(',');
         const category = value[0];
@@ -185,12 +164,6 @@ export class ProductDescriptionPage extends Component {
             }
         )
     };
-
-    // get the the value (true or false) of a certain attribute in attributesSelect field
-    getAttributeValue = (category, value) => this.state.attributesSelect.find(
-        attribute => Object.prototype.hasOwnProperty.call(attribute, category)
-    )[category][value];
-
     render() {
         const price = this.state.prices.find(price => price.currency.label === JSON.parse(window.sessionStorage.getItem('currency')).label );
         const description_safeHTML = DOMPurify.sanitize(this.state.description, { USE_PROFILES: { html: true } });
@@ -226,7 +199,7 @@ export class ProductDescriptionPage extends Component {
                                                 (attributeSet.type === 'swatch') ?
                                                     <button key={attribute.id}
                                                             value={id}
-                                                            className={(this.getAttributeValue(category, product) === true && this.state.inStock) ? swatchButtonActiveStyles : swatchButtonStyles}
+                                                            className={(getAttributeValue(category, product, this.state.attributesSelect) === true && this.state.inStock) ? swatchButtonActiveStyles : swatchButtonStyles}
                                                             style={{backgroundColor: `${attribute.displayValue}`}}
                                                             onClick={(e) => this.selectAttribute(e.target.value)}
                                                             disabled={!this.state.inStock}>
@@ -234,7 +207,7 @@ export class ProductDescriptionPage extends Component {
                                                     :
                                                     <button key={attribute.id}
                                                             value={id}
-                                                            className={(this.getAttributeValue(category, product) === true  && this.state.inStock) ? textButtonActiveStyles : textButtonStyles}
+                                                            className={(getAttributeValue(category, product, this.state.attributesSelect) === true  && this.state.inStock) ? textButtonActiveStyles : textButtonStyles}
                                                             onClick={(e) => this.selectAttribute(e.target.value)}
                                                             disabled={!this.state.inStock}>
                                                         {attribute.displayValue}

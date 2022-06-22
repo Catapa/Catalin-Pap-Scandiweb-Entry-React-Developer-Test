@@ -4,7 +4,7 @@ import DataContext from '../../Context/DataContext';
 import CartOverlay from '../CartOverlay/CartOverlay';
 import Backdrop from '../Backdrop/Backdrop';
 import empty_cart_black from '../../Graphics/empty_cart_black.svg';
-import {handleError} from '../../Service/service';
+import {handleError} from '../../utils/utils';
 
 class Cart extends PureComponent {
     static contextType = DataContext;

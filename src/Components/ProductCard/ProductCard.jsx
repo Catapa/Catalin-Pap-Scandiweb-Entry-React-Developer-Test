@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import DataContext from "../../Context/DataContext";
 import ProductImage from "./ProductImage/ProductImage";
 import empty_cart_white from '../../Graphics/empty_cart_white.svg';
-import {handleError} from '../../Service/service';
+import {handleError, attributeValues} from '../../utils/utils';
 
 export class ProductCard extends PureComponent {
     static contextType = DataContext;
@@ -15,20 +15,6 @@ export class ProductCard extends PureComponent {
             isFloatingButtonVisible: false
         }
     }
-    // Generates attributesSelect field based on the attributes property of the product, first attribute from each category being selected by default
-    attributeValues = (attributes) => {
-        const attributeSelector = [];
-        attributes.map(attributeSet => {
-            const values = {};
-            attributeSet.items.map((attribute, index) => {
-                values[attribute.id] = (index === 0);
-            })
-            const item = {};
-            item[attributeSet.name] = values;
-            attributeSelector.push(item);
-        })
-        return attributeSelector
-    };
     equals = (a, b) => {
         return JSON.stringify(a) === JSON.stringify(b);
     }
@@ -69,7 +55,7 @@ export class ProductCard extends PureComponent {
             }
             /* if product has attributes, generate the attributesSelect field with the default values and add it to cart */
             else {
-                const attributesSelect = this.attributeValues(attributes);
+                const attributesSelect = attributeValues(attributes);
                 const attributesSelectClone = [...attributesSelect];
                 const productAlreadyInCart = productsInCart.find(({id, attributesSelect}) => id === details.id && this.equals(attributesSelect, attributesSelectClone));
 

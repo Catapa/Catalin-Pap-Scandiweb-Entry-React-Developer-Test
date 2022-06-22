@@ -5,7 +5,7 @@ import DataContext from "../../Context/DataContext";
 import {Link} from "react-router-dom";
 import chevron_right from '../../Graphics/chevron_right.svg';
 import chevron_left from '../../Graphics/chevron_left.svg';
-import {handleError} from '../../Service/service';
+import {getAttributeValue, handleError} from '../../utils/utils';
 
 class CartItemCard extends Component {
     static contextType = DataContext;
@@ -57,11 +57,6 @@ class CartItemCard extends Component {
         }
     };
 
-    // get the the value (true or false) of a certain attribute in attributesSelect field
-    getAttributeValue = (category, value) => this.props.details.attributesSelect.find(
-        attribute => Object.prototype.hasOwnProperty.call(attribute, category)
-    )[category][value];
-
     // switch to next image in gallery
     gallery_next = () => {
         try {
@@ -112,7 +107,6 @@ class CartItemCard extends Component {
         const image = (this.props.big_format) ? `${styles.image} ${styles.image_big}` : styles.image;
 
         return (
-            // (id === this.props.details.id && JSON.stringify(attributesSelect) === JSON.stringify(this.props.details.attributesSelect)) &&
             <div className={item_card}>
                 <div className={product_info}>
                     <div>
@@ -135,11 +129,11 @@ class CartItemCard extends Component {
                                         return (
                                             (attributeSet.type === 'swatch') ?
                                                 <button key={`${category} ${product}`}
-                                                        className={(this.getAttributeValue(category, product) === true) ? swatch_attribute_active : swatch_attribute}
+                                                        className={(getAttributeValue(category, product, this.props.details.attributesSelect) === true) ? swatch_attribute_active : swatch_attribute}
                                                         style={{backgroundColor: `${attribute.displayValue}`}}/>
                                                 :
                                                 <button key={`${category} ${product}`}
-                                                        className={(this.getAttributeValue(category, product) === true) ? text_attribute_active : text_attribute}>
+                                                        className={(getAttributeValue(category, product, this.props.details.attributesSelect) === true) ? text_attribute_active : text_attribute}>
                                                     {attribute.displayValue}
                                                 </button>
                                         );
