@@ -127,19 +127,18 @@ class CartItemCard extends Component {
                     {
                         attributes.map(attributeSet => {
                             return (
-                                <div key={attributeSet.id} className={product_info__attributes}>
-                                    <p key={attributeSet.id} className={attribute_names}>{attributeSet.name}:</p>
+                                <div key={attributeSet.name} className={product_info__attributes}>
+                                    <p className={attribute_names}>{attributeSet.name}:</p>
                                     {attributeSet.items.map(attribute => {
                                         const category = attributeSet.name.toString();
                                         const product = attribute.id.toString();
-
                                         return (
                                             (attributeSet.type === 'swatch') ?
-                                                <button key={attribute.id}
+                                                <button key={`${category} ${product}`}
                                                         className={(this.getAttributeValue(category, product) === true) ? swatch_attribute_active : swatch_attribute}
                                                         style={{backgroundColor: `${attribute.displayValue}`}}/>
                                                 :
-                                                <button key={attribute.id}
+                                                <button key={`${category} ${product}`}
                                                         className={(this.getAttributeValue(category, product) === true) ? text_attribute_active : text_attribute}>
                                                     {attribute.displayValue}
                                                 </button>

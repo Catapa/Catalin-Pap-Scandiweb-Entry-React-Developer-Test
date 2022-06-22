@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 import parse from 'html-react-parser';
 import styles from './ProductDescriptionPage.module.css';
@@ -26,6 +25,9 @@ export class ProductDescriptionPage extends Component {
             price: 0,
             attributesSelect: []
         }
+
+    }
+    componentDidMount = () => {
         this.updateProductInfo();
     }
 
@@ -185,7 +187,7 @@ export class ProductDescriptionPage extends Component {
     };
 
     // get the the value (true or false) of a certain attribute in attributesSelect field
-    getAttributeValue = (category, value) => this.props.details.attributesSelect.find(
+    getAttributeValue = (category, value) => this.state.attributesSelect.find(
         attribute => Object.prototype.hasOwnProperty.call(attribute, category)
     )[category][value];
 
@@ -266,7 +268,3 @@ export class ProductDescriptionPage extends Component {
     }
 }
 export default ProductDescriptionPage;
-
-ProductDescriptionPage.propTypes = {
-    details: PropTypes.object
-}
