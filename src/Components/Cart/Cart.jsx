@@ -4,9 +4,17 @@ import DataContext from '../../Context/DataContext';
 import CartOverlay from '../CartOverlay/CartOverlay';
 import Backdrop from '../Backdrop/Backdrop';
 import empty_cart_black from '../../Graphics/empty_cart_black.svg';
+import {handleError} from '../../utils/utils';
 
+/**
+ * Component representing the cart section in the header
+ */
 class Cart extends PureComponent {
     static contextType = DataContext;
+    /**
+     * @constructor
+     * @param {any} props
+     **/
     constructor(props) {
         super(props);
         this.state = {
@@ -15,6 +23,9 @@ class Cart extends PureComponent {
         this.containerRef = React.createRef();
         this.closeCartOverlay = this.closeCartOverlay.bind(this);
     }
+    /** Change visibility to the CartOverlay component
+     * @function
+     */
     toggleCartOverlay = () => {
         if (this.state.showCartOverlay === true) {
             this.setState({
@@ -27,6 +38,10 @@ class Cart extends PureComponent {
             })
         }
     }
+    /** Change visibility to the CartOverlay component
+     * @function
+     * @param {Event} event
+     */
     closeCartOverlay = (event) => {
         try {
             if (this.containerRef && !this.containerRef.current.contains(event.target)) {
@@ -36,7 +51,7 @@ class Cart extends PureComponent {
             }
         }
         catch (error) {
-            console.log(error);
+            handleError(error);
         }
     }
     componentDidMount() {
@@ -46,7 +61,7 @@ class Cart extends PureComponent {
             this.context.setData({productsInCart: productsInCart});
         }
         catch (error) {
-            console.log(error);
+            handleError(error);
         }
     }
     componentWillUnmount() {
@@ -54,7 +69,7 @@ class Cart extends PureComponent {
             document.removeEventListener('mousedown', this.closeCartOverlay, true);
         }
         catch (error) {
-            console.log(error);
+            handleError(error);
         }
     }
     render() {
@@ -73,8 +88,7 @@ class Cart extends PureComponent {
                 <span onClick={this.toggleCartOverlay} className={styles.container}>
                     <img src={empty_cart_black} alt={'cart'}
                          className={styles.cart_image}/>
-                         <span className={styles.items_counter}
-                               style={{display: (cartItemsCounter) ? "flex" : "none"}}>{cartItemsCounter}</span>
+                    {cartItemsCounter>0 && <span className={styles.items_counter}>{cartItemsCounter}</span>}
                 </span>
                 {/* Cart Overlay */}
                 <CartOverlay visible={this.state.showCartOverlay} toggleCartOverlay={this.toggleCartOverlay}/>

@@ -1,5 +1,8 @@
 import { gql } from '@apollo/client';
 
+/**
+ * Query all the category names
+ */
 export const CATEGORY_NAMES = gql`
     {
         categories {
@@ -8,6 +11,9 @@ export const CATEGORY_NAMES = gql`
     }
 `;
 
+/**
+ * Query all the products from a certain category (passed as parameter)
+ */
 export const PRODUCTS_BY_CATEGORY = gql`
     query category($title: String!) {
         category(input: {title: $title}) {
@@ -41,6 +47,9 @@ export const PRODUCTS_BY_CATEGORY = gql`
     }
 `;
 
+/**
+ * Query all the currencies
+ */
 export const CURRENCIES = gql`
     {
         currencies {
@@ -50,6 +59,9 @@ export const CURRENCIES = gql`
     }
 `;
 
+/**
+ * Query a certain product based on its ID (passed as parameter)
+ */
 export const PRODUCT_BY_ID = gql`
         query product($id: String!) {
             product(id: $id) {

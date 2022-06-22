@@ -1,13 +1,22 @@
 import React, {Component} from 'react';
+import DOMPurify from 'dompurify';
+import parse from 'html-react-parser';
 import styles from './ProductDescriptionPage.module.css';
-import {client} from "../../index";
-import {PRODUCT_BY_ID} from "../../Queries/queries";
-import DataContext from "../../Context/DataContext";
-import Gallery from "../../Components/Gallery/Gallery";
+import {client} from '../../index';
+import {PRODUCT_BY_ID} from '../../Queries/queries';
+import DataContext from '../../Context/DataContext';
+import Gallery from '../../Components/Gallery/Gallery';
+import {handleError, attributeValues, getAttributeValue, querySearchParam} from '../../utils/utils';
 
+/**
+ * Page displaying and handling product related info
+ */
 export class ProductDescriptionPage extends Component {
     static contextType = DataContext;
-
+    /**
+     * @constructor
+     * @param {any} props
+     **/
     constructor(props) {
         super(props);
         this.state = {
@@ -22,19 +31,19 @@ export class ProductDescriptionPage extends Component {
             price: 0,
             attributesSelect: []
         }
+
+    }
+    componentDidMount = () => {
         this.updateProductInfo();
     }
 
-    //Get product's info from the search params of the URL
-    querySearchParam = (paramName) => {
-        const params = new URLSearchParams(window.location.search);
-        const productId = params.get(paramName);
-        return productId;
-    }
-
+    /**
+     * Populates product's info based on the data received from the endpoint
+     * @function
+     */
     updateProductInfo = () => {
         try {
-            const productId = this.querySearchParam('id');
+            const productId = querySearchParam('id');
             client.query({query: PRODUCT_BY_ID, variables: {id: productId}})
                 .then(result => {
                     const {brand, name, description, attributes, gallery, prices, inStock} = result.data.product;
@@ -47,35 +56,44 @@ export class ProductDescriptionPage extends Component {
                         gallery: gallery,
                         prices: prices,
                         inStock: inStock,
-                        attributesSelect: this.attributeValues(attributes)
+                        attributesSelect: attributeValues(attributes)
                     })
                 })
                 .catch(error => {
-                    console.log(error);
+                    handleError(error);
                 });
         }
         catch (error) {
-            console.log('Error on updateProductInfo', error);
+            handleError(`Error on updateProductInfo ${error}`);
         }
     };
 
-    // Make sure at least one attribute from each category is selected
-    withAttributes = (attributes) => {
+    /**
+     * Make sure at least one attribute from each category is selected
+     * @function
+     * @param {Array} attributes - the list of product's attributes
+     * @return {boolean} 'true' if attributes are selected properly, 'false' otherwise
+     */
+    withAttributesValidator = (attributes) => {
         let attributesSelected = true;
         attributes.map(attributeSet => {
-            let isAtleastOneSelected = false;
+            let isAtLeastOneSelected = false;
             const category = attributeSet.name.toString();
             attributeSet.items.map(attribute => {
                 const product = attribute.id.toString();
-                if (this.getAttributeValue(category, product))
-                    isAtleastOneSelected = true;
+                if (getAttributeValue(category, product, this.state.attributesSelect))
+                    isAtLeastOneSelected = true;
             });
-            if (isAtleastOneSelected === false)
+            if (isAtLeastOneSelected === false)
                 attributesSelected = false;
         });
         return attributesSelected;
     }
 
+    /**
+     * Add the product to the cart
+     * @function
+     */
     addToCart = () => {
         const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
         try {
@@ -85,7 +103,7 @@ export class ProductDescriptionPage extends Component {
                 alert('Product is out of stock');
                 return;
             }
-            if (this.withAttributes(attributes, attributesSelect)) {
+            if (this.withAttributesValidator(attributes)) {
                 /* if product already in cart, increase its quantity */
                 if (productAlreadyInCart) {
                     const updatedCart = productsInCart.map(product => (
@@ -121,26 +139,15 @@ export class ProductDescriptionPage extends Component {
 
         }
         catch (error) {
-            console.log(error);
+            handleError(error);
         }
     }
 
-    // Generates attributesSelect field based on the attributes property of the product
-    attributeValues = (attributes) => {
-        const attributeSelector = [];
-        attributes.map(attributeSet => {
-            const values = {};
-            attributeSet.items.map(attribute => {
-                values[attribute.id] = false;
-            })
-            const item = {};
-            item[attributeSet.name] = values;
-            attributeSelector.push(item);
-        })
-        return attributeSelector
-    };
-
-
+    /**
+     * Select an attribute of the product
+     * @function
+     * @param value - a string of the form 'category id' where 'category' is the category in which the attribute belongs and 'id' is the 'id' of this specific attribute
+     */
     selectAttribute = (value) => {
         value = value.split(',');
         const category = value[0];
@@ -149,7 +156,7 @@ export class ProductDescriptionPage extends Component {
         this.state.attributes.map(attributeSet => {
             const values = {};
             attributeSet.items.map(attribute => {
-                values[attribute.id] = (attribute.id === id && attributeSet.name === category) ? true : false;
+                values[attribute.id] = (attribute.id === id && attributeSet.name === category);
             })
             const item = {};
             item[attributeSet.name] = values;
@@ -167,7 +174,7 @@ export class ProductDescriptionPage extends Component {
 
             if (isChanged) {
                 originalAttributesSelect.forEach(attribute => {
-                    if (attribute.hasOwnProperty(propertyName)) {
+                    if (Object.prototype.hasOwnProperty.call(attribute, propertyName)) {
                         attribute[propertyName] = property
                     }
                 })
@@ -180,14 +187,9 @@ export class ProductDescriptionPage extends Component {
             }
         )
     };
-
-    // get the the value (true or false) of a certain attribute in attributesSelect field
-    getAttributeValue = (category, value) => this.state.attributesSelect.find(
-        prop => prop.hasOwnProperty(category)
-    )[category][value];
-
     render() {
         const price = this.state.prices.find(price => price.currency.label === JSON.parse(window.sessionStorage.getItem('currency')).label );
+        const description_safeHTML = DOMPurify.sanitize(this.state.description, { USE_PROFILES: { html: true } });
         return (
             <main className={styles.description_page}>
                 {/* Gallery */}
@@ -220,7 +222,7 @@ export class ProductDescriptionPage extends Component {
                                                 (attributeSet.type === 'swatch') ?
                                                     <button key={attribute.id}
                                                             value={id}
-                                                            className={(this.getAttributeValue(category, product) === true) ? swatchButtonActiveStyles : swatchButtonStyles}
+                                                            className={(getAttributeValue(category, product, this.state.attributesSelect) === true && this.state.inStock) ? swatchButtonActiveStyles : swatchButtonStyles}
                                                             style={{backgroundColor: `${attribute.displayValue}`}}
                                                             onClick={(e) => this.selectAttribute(e.target.value)}
                                                             disabled={!this.state.inStock}>
@@ -228,7 +230,7 @@ export class ProductDescriptionPage extends Component {
                                                     :
                                                     <button key={attribute.id}
                                                             value={id}
-                                                            className={(this.getAttributeValue(category, product) === true) ? textButtonActiveStyles : textButtonStyles}
+                                                            className={(getAttributeValue(category, product, this.state.attributesSelect) === true  && this.state.inStock) ? textButtonActiveStyles : textButtonStyles}
                                                             onClick={(e) => this.selectAttribute(e.target.value)}
                                                             disabled={!this.state.inStock}>
                                                         {attribute.displayValue}
@@ -255,8 +257,7 @@ export class ProductDescriptionPage extends Component {
                     <button className={styles.panel__add_to_cart_button} onClick={this.addToCart} disabled={!this.state.inStock}>add to cart</button>
 
                     {/* Description */}
-                    <article className={styles.panel__description}
-                             dangerouslySetInnerHTML={{__html: this.state.description}}/>
+                    <article className={styles.panel__description}>{parse(description_safeHTML)}</article>
                 </div>
             </main>
         );

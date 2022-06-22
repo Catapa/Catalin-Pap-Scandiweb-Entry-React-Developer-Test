@@ -28,7 +28,6 @@
     list-style: none;
     align-items: center;
 }
-
 .category_list {
     flex-direction: row;
     height: 100%;
@@ -44,7 +43,6 @@
     border-bottom: 1px solid var(--c-primary);
     font-weight: var(--font-weight-semibold);
 }
-
 .action_list {
     position: static;
     height: 100%;
@@ -54,7 +52,6 @@
     margin-left: 1em !important;
     cursor: pointer;
 }
-
 .logo {
     position: static;
     margin: auto;
@@ -66,7 +63,7 @@
         padding: 1.75rem 4rem 0; /*28px 117px*/
     }
 }
-@media only screen and (min-width: 1080px) {
+@media only screen and (min-width: 1440px) {
     .header {
         padding: 1.75rem 7.3rem 0; /*28px 117px*/
     }

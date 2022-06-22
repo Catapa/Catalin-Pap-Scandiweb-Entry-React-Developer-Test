@@ -11,7 +11,7 @@
         padding:  1rem 4rem;
     }
 }
-@media only screen and (min-width: 1080px) {
+@media only screen and (min-width: 1440px) {
     .category_name {
         padding:  1rem 8rem;
     }

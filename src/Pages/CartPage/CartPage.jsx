@@ -3,8 +3,15 @@ import styles from './CartPage.module.css';
 import CartItemCard from "../../Components/CartItemCard/CartItemCard";
 import DataContext from "../../Context/DataContext";
 
+/**
+ * Page displaying the cart
+ */
 export class CartPage extends Component {
     static contextType = DataContext;
+    /**
+     * @constructor
+     * @param {any} props
+     **/
     constructor(props) {
         super(props);
         this.state = {
@@ -14,6 +21,11 @@ export class CartPage extends Component {
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         return nextContext !== this.context;
     }
+
+    /**
+     * Handle the expected behaviour when placing an order
+     * @function
+     */
     placeOrder = () => {
         alert('Order placed successfully');
     }

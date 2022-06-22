@@ -13,9 +13,17 @@ import {client} from "../../index";
 import {Link} from "react-router-dom";
 import CurrencyDropdown from "../CurrencyDropdown/CurrencyDropdown";
 import Cart from "../Cart/Cart";
+import {handleError} from '../../utils/utils';
 
+/**
+ * Component that represents the header of the website
+ */
 export class Header extends PureComponent {
     static contextType = DataContext;
+    /**
+     * @constructor
+     * @param {any} props
+     **/
     constructor(props) {
         super(props);
         this.state = {
@@ -27,6 +35,10 @@ export class Header extends PureComponent {
         // TODO: find a non-hard-coded solution for this (optional)
         this.queryProducts('all');
     }
+    /**
+     * Queries the list of all available categories from the endpoint
+     * @function
+     */
     queryCategories() {
         try {
             client.query({query: CATEGORY_NAMES})
@@ -36,26 +48,31 @@ export class Header extends PureComponent {
                     })
                 })
                 .catch(error => {
-                    console.log(error);
+                    handleError(error);
                 });
         }
         catch (error) {
-            console.log('Error on queryCategories', error);
+            handleError(`Error on queryCategories ${error}`);
         }
     }
+    /**
+     * Queries the list of all available products from the endpoint, that belong to a certain category
+     * @function
+     * @param {string} category - the category name that is queried
+     */
     queryProducts(category) {
         try {
             client.query({query: PRODUCTS_BY_CATEGORY, variables: {title: category}})
                 .then(result => {
-                    const {name, products} = result.data.category;
+                    const { products } = result.data.category;
                     this.context.setData({category: category, products: products});
                 })
                 .catch(error => {
-                    console.log(error);
+                    handleError(error);
                 });
         }
         catch (error) {
-            console.log('Error on queryProducts', error);
+            handleError(`Error on queryProducts ${error}`);
         }
     }
     render () {
@@ -67,9 +84,9 @@ export class Header extends PureComponent {
                     <ul className={styles.category_list}>
                         {this.state.categories.map(category => {
                             return (
-                                <Link to={'/'} key={category}
-                                    className={styles.category_list_item}
-                                    onClick={() => this.queryProducts(category)}>{category}</Link>
+                                <Link to={`products/?category=${category}`} key={category}
+                                      className={styles.category_list_item}
+                                      onClick={() => this.queryProducts(category)}>{category}</Link>
                             )
                         })}
                     </ul>

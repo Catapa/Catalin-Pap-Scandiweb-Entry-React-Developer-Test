@@ -1,7 +1,15 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import styles from './Backdrop.module.css';
 
+/**
+ * Component representing a transparent backdrop
+ */
 export class Backdrop extends PureComponent {
+    /**
+     * @constructor
+     * @param {any} props
+     **/
     constructor(props) {
         super(props);
     }
@@ -14,3 +22,10 @@ export class Backdrop extends PureComponent {
     }
 }
 export default Backdrop;
+
+Backdrop.propTypes = {
+    /** Specify whether the component should be visible or not */
+    visible: PropTypes.bool.isRequired,
+    /** Reference to the onClick handler */
+    onClick: PropTypes.func
+}

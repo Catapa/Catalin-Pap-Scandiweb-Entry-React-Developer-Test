@@ -1,21 +1,30 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import styles from './CartItemCard.module.css';
 import DataContext from "../../Context/DataContext";
 import {Link} from "react-router-dom";
 import chevron_right from '../../Graphics/chevron_right.svg';
 import chevron_left from '../../Graphics/chevron_left.svg';
+import {getAttributeValue, handleError} from '../../utils/utils';
 
+/**
+ * Component that displays a product's info in a card format inside the cart
+ */
 class CartItemCard extends Component {
     static contextType = DataContext;
+    /**
+     * @constructor
+     * @param {any} props
+     **/
     constructor(props) {
         super(props);
         this.state = {
             imageIndex: 0,
             totalImageCount: this.props.details.gallery.length
         }
-    };
+    }
 
-    // increase quantity of a product in cart
+    /** Increase quantity of a product in cart */
     increaseQuantity = () => {
         try {
             const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
@@ -27,11 +36,11 @@ class CartItemCard extends Component {
             window.sessionStorage.setItem("productsInCart", JSON.stringify(productsInCart));
         }
         catch (error) {
-            console.log(error);
+            handleError(error);
         }
     };
 
-    // decrease quantity of a product in cart
+    /** Decrease quantity of a product in cart */
     decreaseQuantity = () => {
         try {
             const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
@@ -51,16 +60,11 @@ class CartItemCard extends Component {
             }
         }
         catch (error) {
-            console.log(error);
+            handleError(error);
         }
     };
 
-    // get the the value (true or false) of a certain attribute in attributesSelect field
-    getAttributeValue = (category, value) => this.props.details.attributesSelect.find(
-        prop => prop.hasOwnProperty(category)
-    )[category][value];
-
-    // switch to next image in gallery
+    /** Switch to next image in gallery */
     gallery_next = () => {
         try {
             if (this.state.imageIndex < this.state.totalImageCount - 1) {
@@ -70,12 +74,12 @@ class CartItemCard extends Component {
             }
         }
         catch (error) {
-            console.log(error);
+            handleError(error);
         }
 
     }
 
-    // switch to previous image in gallery
+    /** Switch to previous image in gallery */
     gallery_previous = () => {
         try {
             if (this.state.imageIndex > 0) {
@@ -85,12 +89,12 @@ class CartItemCard extends Component {
             }
         }
         catch (error) {
-            console.log(error);
+            handleError(error);
         }
     }
     render() {
         const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
-        const {id, brand, name, gallery, prices, attributes, attributesSelect} = this.props.details;
+        const {id, brand, name, gallery, prices, attributes} = this.props.details;
         const price = prices.find(price => price.currency.label === JSON.parse(window.sessionStorage.getItem('currency')).label);
         const quantity = productsInCart.find(product => (product.id === this.props.details.id && JSON.stringify(product.attributesSelect) === JSON.stringify(this.props.details.attributesSelect))).quantity;
         /* STYLES */
@@ -110,7 +114,6 @@ class CartItemCard extends Component {
         const image = (this.props.big_format) ? `${styles.image} ${styles.image_big}` : styles.image;
 
         return (
-            // (id === this.props.details.id && JSON.stringify(attributesSelect) === JSON.stringify(this.props.details.attributesSelect)) &&
             <div className={item_card}>
                 <div className={product_info}>
                     <div>
@@ -120,25 +123,24 @@ class CartItemCard extends Component {
                                 <p className={product_info__name}>{name}</p>
                             </div>
                         </Link>
-                        <p className={product_info__price}>{price.currency && price.currency.symbol}{(price.amount * quantity).toFixed(2)}</p>
+                        <p className={product_info__price}>{price.currency && price.currency.symbol}{(price.amount).toFixed(2)}</p>
                     </div>
                     {
                         attributes.map(attributeSet => {
                             return (
-                                <div key={attributeSet.id} className={product_info__attributes}>
-                                    <p key={attributeSet.id} className={attribute_names}>{attributeSet.name}:</p>
+                                <div key={attributeSet.name} className={product_info__attributes}>
+                                    <p className={attribute_names}>{attributeSet.name}:</p>
                                     {attributeSet.items.map(attribute => {
                                         const category = attributeSet.name.toString();
                                         const product = attribute.id.toString();
-
                                         return (
                                             (attributeSet.type === 'swatch') ?
-                                                <button key={attribute.id}
-                                                        className={(this.getAttributeValue(category, product) === true) ? swatch_attribute_active : swatch_attribute}
+                                                <button key={`${category} ${product}`}
+                                                        className={(getAttributeValue(category, product, this.props.details.attributesSelect) === true) ? swatch_attribute_active : swatch_attribute}
                                                         style={{backgroundColor: `${attribute.displayValue}`}}/>
                                                 :
-                                                <button key={attribute.id}
-                                                        className={(this.getAttributeValue(category, product) === true) ? text_attribute_active : text_attribute}>
+                                                <button key={`${category} ${product}`}
+                                                        className={(getAttributeValue(category, product, this.props.details.attributesSelect) === true) ? text_attribute_active : text_attribute}>
                                                     {attribute.displayValue}
                                                 </button>
                                         );
@@ -170,3 +172,10 @@ class CartItemCard extends Component {
     }
 }
 export default CartItemCard;
+
+CartItemCard.propTypes = {
+    /** An Object consisting of the product's info */
+    details: PropTypes.object.isRequired,
+    /** Determines whether the component should be rendered in a big_format styling or not */
+    big_format: PropTypes.bool.isRequired
+}
