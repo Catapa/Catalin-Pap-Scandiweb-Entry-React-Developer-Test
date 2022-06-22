@@ -7,8 +7,15 @@ import arrow_down from '../../Graphics/arrow_down.svg';
 import arrow_up from '../../Graphics/arrow_up.svg';
 import {handleError} from '../../utils/utils';
 
+/**
+ * Custom dropdown component for displaying and selecting currencies
+ * */
 class CurrencyDropdown extends PureComponent {
     static contextType = DataContext;
+    /**
+     * @constructor
+     * @param {any} props
+     **/
     constructor(props) {
         super(props);
         this.state = {
@@ -17,6 +24,10 @@ class CurrencyDropdown extends PureComponent {
             isDropdownClicked: true
         }
     }
+    /**
+     * Queries the list of all available currencies from the endpoint
+     * @function
+     */
     queryCurrencies = () => {
         try {
             client.query({query: CURRENCIES})
@@ -33,6 +44,11 @@ class CurrencyDropdown extends PureComponent {
             handleError(`Error on queryCurrencies ${error}`);
         }
     }
+    /**
+     * Change the current currency used throughout the website
+     * @function
+     * @param {Object} currency - the new currency that should be set
+     */
     changeCurrency = (currency) => {
         try {
             const {symbol, label} = currency;
@@ -46,6 +62,10 @@ class CurrencyDropdown extends PureComponent {
     componentDidMount = () => {
         this.queryCurrencies();
     }
+    /**
+     * Toggle the dropdown between open and closed
+     * @function
+     */
     toggleDropdown = () => {
         if (this.state.isDropdownOpen) {
             this.setState({isDropdownOpen: false});
@@ -54,9 +74,18 @@ class CurrencyDropdown extends PureComponent {
             this.setState({isDropdownOpen: true});
         }
     }
+    /**
+     * Close the dropdown
+     * @function
+     */
     closeDropdown = () => {
         this.setState({isDropdownOpen: false});
     }
+    /**
+     * Handler used to close the dropdown when an onBlur event occurs
+     * @function
+     * @param event {EventListenerOrEventListenerObject}
+     */
     closeOnBlur = (event) => {
         try {
             if (!event.currentTarget.contains(event.relatedTarget)) {

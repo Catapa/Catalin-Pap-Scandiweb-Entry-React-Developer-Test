@@ -8,9 +8,15 @@ import DataContext from '../../Context/DataContext';
 import Gallery from '../../Components/Gallery/Gallery';
 import {handleError, attributeValues, getAttributeValue, querySearchParam} from '../../utils/utils';
 
+/**
+ * Page displaying and handling product related info
+ */
 export class ProductDescriptionPage extends Component {
     static contextType = DataContext;
-
+    /**
+     * @constructor
+     * @param {any} props
+     **/
     constructor(props) {
         super(props);
         this.state = {
@@ -31,7 +37,10 @@ export class ProductDescriptionPage extends Component {
         this.updateProductInfo();
     }
 
-
+    /**
+     * Populates product's info based on the data received from the endpoint
+     * @function
+     */
     updateProductInfo = () => {
         try {
             const productId = querySearchParam('id');
@@ -59,8 +68,13 @@ export class ProductDescriptionPage extends Component {
         }
     };
 
-    // Make sure at least one attribute from each category is selected
-    withAttributes = (attributes) => {
+    /**
+     * Make sure at least one attribute from each category is selected
+     * @function
+     * @param {Array} attributes - the list of product's attributes
+     * @return {boolean} 'true' if attributes are selected properly, 'false' otherwise
+     */
+    withAttributesValidator = (attributes) => {
         let attributesSelected = true;
         attributes.map(attributeSet => {
             let isAtLeastOneSelected = false;
@@ -76,6 +90,10 @@ export class ProductDescriptionPage extends Component {
         return attributesSelected;
     }
 
+    /**
+     * Add the product to the cart
+     * @function
+     */
     addToCart = () => {
         const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
         try {
@@ -85,7 +103,7 @@ export class ProductDescriptionPage extends Component {
                 alert('Product is out of stock');
                 return;
             }
-            if (this.withAttributes(attributes, attributesSelect)) {
+            if (this.withAttributesValidator(attributes)) {
                 /* if product already in cart, increase its quantity */
                 if (productAlreadyInCart) {
                     const updatedCart = productsInCart.map(product => (
@@ -125,6 +143,11 @@ export class ProductDescriptionPage extends Component {
         }
     }
 
+    /**
+     * Select an attribute of the product
+     * @function
+     * @param value - a string of the form 'category id' where 'category' is the category in which the attribute belongs and 'id' is the 'id' of this specific attribute
+     */
     selectAttribute = (value) => {
         value = value.split(',');
         const category = value[0];

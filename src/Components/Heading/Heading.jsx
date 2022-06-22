@@ -2,7 +2,14 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import styles from './Heading.module.css';
 
+/**
+ * Component that displays text as heading on different pages
+ */
 export class Heading extends PureComponent {
+    /**
+     * @constructor
+     * @param {any} props
+     **/
     constructor(props) {
         super(props);
     }
@@ -16,5 +23,6 @@ export class Heading extends PureComponent {
 export default Heading;
 
 Heading.propTypes = {
+    /** The text that should be displayed */
     text: PropTypes.string.isRequired
 }

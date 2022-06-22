@@ -7,8 +7,15 @@ import chevron_right from '../../Graphics/chevron_right.svg';
 import chevron_left from '../../Graphics/chevron_left.svg';
 import {getAttributeValue, handleError} from '../../utils/utils';
 
+/**
+ * Component that displays a product's info in a card format inside the cart
+ */
 class CartItemCard extends Component {
     static contextType = DataContext;
+    /**
+     * @constructor
+     * @param {any} props
+     **/
     constructor(props) {
         super(props);
         this.state = {
@@ -17,7 +24,7 @@ class CartItemCard extends Component {
         }
     }
 
-    // increase quantity of a product in cart
+    /** Increase quantity of a product in cart */
     increaseQuantity = () => {
         try {
             const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
@@ -33,7 +40,7 @@ class CartItemCard extends Component {
         }
     };
 
-    // decrease quantity of a product in cart
+    /** Decrease quantity of a product in cart */
     decreaseQuantity = () => {
         try {
             const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
@@ -57,7 +64,7 @@ class CartItemCard extends Component {
         }
     };
 
-    // switch to next image in gallery
+    /** Switch to next image in gallery */
     gallery_next = () => {
         try {
             if (this.state.imageIndex < this.state.totalImageCount - 1) {
@@ -72,7 +79,7 @@ class CartItemCard extends Component {
 
     }
 
-    // switch to previous image in gallery
+    /** Switch to previous image in gallery */
     gallery_previous = () => {
         try {
             if (this.state.imageIndex > 0) {
@@ -167,6 +174,8 @@ class CartItemCard extends Component {
 export default CartItemCard;
 
 CartItemCard.propTypes = {
+    /** An Object consisting of the product's info */
     details: PropTypes.object.isRequired,
+    /** Determines whether the component should be rendered in a big_format styling or not */
     big_format: PropTypes.bool.isRequired
 }

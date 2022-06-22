@@ -47,3 +47,13 @@ export const  querySearchParam = (paramName) => {
     const params = new URLSearchParams(window.location.search);
     return params.get(paramName);
 }
+
+/**
+ * Compare if two entities are equal in value
+ * @param {any} a
+ * @param {any} b
+ * @return {boolean} 'true' if they are equal, 'false' otherwise
+ */
+export const equals = (a, b) => {
+    return JSON.stringify(a) === JSON.stringify(b);
+}

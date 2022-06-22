@@ -5,19 +5,29 @@ import {Link} from "react-router-dom";
 import DataContext from "../../Context/DataContext";
 import ProductImage from "./ProductImage/ProductImage";
 import empty_cart_white from '../../Graphics/empty_cart_white.svg';
-import {handleError, attributeValues} from '../../utils/utils';
+import {handleError, attributeValues, equals} from '../../utils/utils';
 
+/**
+ * Component that displays a product in a card format
+ */
 export class ProductCard extends PureComponent {
     static contextType = DataContext;
+    /**
+     * @constructor
+     * @param {any} props
+     **/
     constructor(props) {
         super(props);
         this.state = {
             isFloatingButtonVisible: false
         }
     }
-    equals = (a, b) => {
-        return JSON.stringify(a) === JSON.stringify(b);
-    }
+
+    /**
+     * Adds the product to cart
+     * @function
+     * @param {Object} details - the product to be added
+     */
     addToCart = (details) => {
         try {
             const productsInCart = JSON.parse(window.sessionStorage.getItem("productsInCart"));
@@ -57,12 +67,12 @@ export class ProductCard extends PureComponent {
             else {
                 const attributesSelect = attributeValues(attributes);
                 const attributesSelectClone = [...attributesSelect];
-                const productAlreadyInCart = productsInCart.find(({id, attributesSelect}) => id === details.id && this.equals(attributesSelect, attributesSelectClone));
+                const productAlreadyInCart = productsInCart.find(({id, attributesSelect}) => id === details.id && equals(attributesSelect, attributesSelectClone));
 
                 /* if product already in cart, increase its quantity */
                 if (productAlreadyInCart) {
                     const updatedCart = productsInCart.map(product => (
-                        (product.id === id && this.equals(product.attributesSelect, attributesSelect)) ? {...product, attributesSelect: attributesSelect, quantity: product.quantity++} : {...product, attributesSelect: attributesSelect}
+                        (product.id === id && equals(product.attributesSelect, attributesSelect)) ? {...product, attributesSelect: attributesSelect, quantity: product.quantity++} : {...product, attributesSelect: attributesSelect}
                     ));
                     this.context.setData({updatedCart});
                     window.sessionStorage.setItem('productsInCart', JSON.stringify(productsInCart));
@@ -93,6 +103,11 @@ export class ProductCard extends PureComponent {
             handleError(`Error on addToCart ${error}`);
         }
     }
+    /**
+     * Switches the visibility of the floating button
+     * @function
+     * @param {boolean} value - true for 'visible', false for 'hidden'
+     */
     switchFloatingButtonVisibility = (value) => {
         try {
             if (value === true && this.props.details.inStock) {
@@ -132,5 +147,6 @@ export class ProductCard extends PureComponent {
 export default ProductCard;
 
 ProductCard.propTypes = {
+    /** An Object consisting of the product's info */
     details: PropTypes.object.isRequired
 }

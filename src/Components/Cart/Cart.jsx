@@ -6,8 +6,15 @@ import Backdrop from '../Backdrop/Backdrop';
 import empty_cart_black from '../../Graphics/empty_cart_black.svg';
 import {handleError} from '../../utils/utils';
 
+/**
+ * Component representing the cart section in the header
+ */
 class Cart extends PureComponent {
     static contextType = DataContext;
+    /**
+     * @constructor
+     * @param {any} props
+     **/
     constructor(props) {
         super(props);
         this.state = {
@@ -16,6 +23,9 @@ class Cart extends PureComponent {
         this.containerRef = React.createRef();
         this.closeCartOverlay = this.closeCartOverlay.bind(this);
     }
+    /** Change visibility to the CartOverlay component
+     * @function
+     */
     toggleCartOverlay = () => {
         if (this.state.showCartOverlay === true) {
             this.setState({
@@ -28,6 +38,10 @@ class Cart extends PureComponent {
             })
         }
     }
+    /** Change visibility to the CartOverlay component
+     * @function
+     * @param {Event} event
+     */
     closeCartOverlay = (event) => {
         try {
             if (this.containerRef && !this.containerRef.current.contains(event.target)) {

@@ -6,11 +6,23 @@ import {client} from "../../index";
 import {PRODUCTS_BY_CATEGORY} from "../../Queries/queries";
 import {handleError, querySearchParam} from '../../utils/utils';
 
+/**
+ * Page displaying various products
+ */
 export class ProductListingPage extends PureComponent {
     static contextType = DataContext;
+    /**
+     * @constructor
+     * @param {any} props
+     **/
     constructor(props) {
         super(props);
     }
+    /**
+     * Queries the list of all available products from the endpoint, that belong to a certain category
+     * @function
+     * @param {string} category - the category name that is queried
+     */
     queryProducts(category) {
         try {
             client.query({query: PRODUCTS_BY_CATEGORY, variables: {title: category}})

@@ -4,8 +4,15 @@ import styles from './ProductGrid.module.css';
 import ProductCard from '../ProductCard/ProductCard';
 import DataContext from '../../Context/DataContext';
 
+/**
+ * Component that displays multiple ProductCard components in grid format
+ */
 export class ProductGrid extends PureComponent {
     static contextType = DataContext;
+    /**
+     * @constructor
+     * @param {any} props
+     **/
     constructor(props) {
         super(props);
     }
@@ -24,5 +31,6 @@ export class ProductGrid extends PureComponent {
 export default ProductGrid;
 
 ProductGrid.propTypes = {
+    /** The list of products that should be displayed */
     products: PropTypes.array.isRequired
 }

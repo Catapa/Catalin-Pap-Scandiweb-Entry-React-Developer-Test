@@ -5,11 +5,21 @@ import CartItemCard from "../CartItemCard/CartItemCard";
 import DataContext from "../../Context/DataContext";
 import {Link} from "react-router-dom";
 
+/**
+ * Component that displays the products in cart in a dropdown overlay
+ */
 export class CartOverlay extends PureComponent {
     static contextType = DataContext;
+    /**
+     * @constructor
+     * @param {any} props
+     **/
     constructor(props) {
         super(props);
     }
+    /** Handles the expected behaviour in case of check out
+     * @function
+     **/
     checkOut = () => {
         alert("Successfully checked out");
         this.props.toggleCartOverlay();
@@ -67,6 +77,8 @@ export class CartOverlay extends PureComponent {
 export default CartOverlay;
 
 CartOverlay.propTypes = {
+    /** Determines whether the component should be visible or not */
     visible: PropTypes.bool.isRequired,
+    /** Reference to toggleCartOverlay handler */
     toggleCartOverlay: PropTypes.func.isRequired
 }
