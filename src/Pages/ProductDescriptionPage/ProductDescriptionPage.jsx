@@ -226,7 +226,7 @@ export class ProductDescriptionPage extends Component {
                                                 (attributeSet.type === 'swatch') ?
                                                     <button key={attribute.id}
                                                             value={id}
-                                                            className={(this.getAttributeValue(category, product) === true) ? swatchButtonActiveStyles : swatchButtonStyles}
+                                                            className={(this.getAttributeValue(category, product) === true && this.state.inStock) ? swatchButtonActiveStyles : swatchButtonStyles}
                                                             style={{backgroundColor: `${attribute.displayValue}`}}
                                                             onClick={(e) => this.selectAttribute(e.target.value)}
                                                             disabled={!this.state.inStock}>
@@ -234,7 +234,7 @@ export class ProductDescriptionPage extends Component {
                                                     :
                                                     <button key={attribute.id}
                                                             value={id}
-                                                            className={(this.getAttributeValue(category, product) === true) ? textButtonActiveStyles : textButtonStyles}
+                                                            className={(this.getAttributeValue(category, product) === true  && this.state.inStock) ? textButtonActiveStyles : textButtonStyles}
                                                             onClick={(e) => this.selectAttribute(e.target.value)}
                                                             disabled={!this.state.inStock}>
                                                         {attribute.displayValue}
